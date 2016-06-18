@@ -1,0 +1,60 @@
+{
+  "name": "hast-util-to-html",
+  "version": "0.0.0",
+  "description": "Transform HAST to HTML",
+  "license": "MIT",
+  "keywords": [
+    "hast",
+    "util",
+    "html"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/hast-util-to-html.git"
+  },
+  "bugs": "https://github.com/wooorm/hast-util-to-html/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "dependencies": {
+    "comma-separated-tokens": "^1.0.1",
+    "html-void-elements": "^1.0.0",
+    "kebab-case": "^1.0.0",
+    "property-information": "^3.1.0",
+    "space-separated-tokens": "^1.0.0",
+    "stringify-entities": "^1.0.1"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "eslint": "^2.0.0",
+    "esmangle": "^1.0.1",
+    "hastscript": "^3.0.0",
+    "istanbul": "^0.4.0",
+    "jscs": "^3.0.0",
+    "jscs-jsdoc": "^2.0.0",
+    "remark-cli": "^1.0.0",
+    "remark-comment-config": "^4.0.0",
+    "remark-github": "^5.0.0",
+    "remark-lint": "^4.0.0",
+    "remark-usage": "^4.0.0",
+    "remark-validate-links": "^4.0.0",
+    "tape": "^4.0.0",
+    "unist-builder": "^1.0.1"
+  },
+  "scripts": {
+    "build-md": "remark . --quiet --frail",
+    "build-bundle": "browserify index.js --bare -s hastUtilToHTML > hast-util-to-html.js",
+    "build-mangle": "esmangle hast-util-to-html.js > hast-util-to-html.min.js",
+    "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
+    "lint-api": "eslint .",
+    "lint-style": "jscs --reporter inline .",
+    "lint": "npm run lint-api && npm run lint-style",
+    "test-api": "node test.js",
+    "test-coverage": "istanbul cover test.js",
+    "test": "npm run build && npm run lint && npm run test-coverage"
+  }
+}
