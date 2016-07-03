@@ -50,9 +50,8 @@ Stringify the given [HAST node][hast].
 
 Configuration for [`stringify-entities`][stringify-entities]
 (`Object`, default: `{}`).  Do not use `escapeOnly`, `attribute`, or
-`subset` must (`toHTML` already passes those) in their correct context.
-However, `useNamedReferences`, `useShortestReferences`, and
-`omitOptionalSemicolons` are all fine.
+`subset` (`toHTML` already passes those).  However, `useNamedReferences`,
+`useShortestReferences`, and `omitOptionalSemicolons` are all fine.
 
 ###### `options.voids`
 
