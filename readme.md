@@ -25,12 +25,12 @@ Transform:
 
 ```javascript
 var tree = h('.alpha', [
-    'bravo ',
-    h('b', 'charlie'),
-    ' delta ',
-    h('a.echo', {
-        download: true
-    }, 'foxtrot')
+  'bravo ',
+  h('b', 'charlie'),
+  ' delta ',
+  h('a.echo', {
+    download: true
+  }, 'foxtrot')
 ]);
 ```
 
@@ -44,28 +44,89 @@ Yields:
 
 ### `toHTML(node[, options])`
 
-Stringify the given [HAST][] tree.
+Stringify the given [HAST node][hast].
 
-###### Parameters
+###### `options.entities`
 
-*   `node` ([`HASTNode`][hast]).
-*   `options` (`object`, optional):
+Configuration for [`stringify-entities`][stringify-entities]
+(`Object`, default: `{}`).  Do not use `escapeOnly`, `attribute`, or
+`subset` must (`toHTML` already passes those) in their correct context.
+However, `useNamedReferences`, `useShortestReferences`, and
+`omitOptionalSemicolons` are all fine.
 
-    *   `allowDangerousHTML` (`boolean`, default: `false`)
-        — Whether to allow `raw` nodes and insert them as raw HTML.
-        When falsey, encodes `raw` nodes.
-    *   `entities` (`Object`, default: `{escapeOnly: true}`)
-        — configuration for [`stringify-entities`][stringify-entities].
-    *   `voids` (`Array.<string>`, default:
-        [`html-void-elements`][html-void-elements])
-        — Tag-names of elements to stringify without closing tag.
-    *   `closeSelfClosing` (`boolean`, default: `false`)
-        Whether to close self-closing nodes with an extra, superfluous
-        slash (`/`): `<img />` instead of `<img>`.
+###### `options.voids`
 
-###### Returns
+Tag-names of elements to stringify without closing tag (`Array.<string>`,
+default: [`html-void-elements`][html-void-elements]).
 
-`string`.
+###### `options.quote`
+
+Preferred quote to use (`'"'` or `'\''`, default: `'"'`).
+
+###### `options.quoteSmart`
+
+Use the other quote if that results in less bytes (`boolean`, default:
+`false`).
+
+###### `options.preferUnquoted`
+
+Leave attributes unquoted if that results in less bytes (`boolean`,
+default: `false`).
+
+###### `options.omitOptionalTags`
+
+Omit optional opening and closing tags (`boolean`, default: `false`).
+For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>`
+closing tags can be omitted.  The first because it’s followed by
+another `li`, the last because it’s followed by nothing.
+
+###### `options.collapseEmptyAttributes`
+
+Collapse empty attributes: `class=""` is stringified as `class` instead
+(`boolean`, default: `false`).  **Note**: boolean attributes, such as
+`hidden`, are always collapsed.
+
+###### `options.closeSelfClosing`
+
+Close self-closing nodes with an extra slash (`/`): `<img />` instead of
+`<img>` (`boolean`, default: `false`).
+
+###### `options.tightSelfClosing`
+
+Do not use an extra space when closing self-closing elements: `<img/>`
+instead of `<img />` (`boolean`, default: `false`).  **Note**: Only used
+if `closeSelfClosing: true`.
+
+###### `options.tightCommaSeparatedLists`
+
+Join known comma-separated attribute values with just a comma (`,`),
+instead of padding them on the right as well (`,`) (`boolean`,
+default: `false`).
+
+###### `options.tightAttributes`
+
+Join attributes together, without white-space, if possible:
+`class="a b" title="c d"` is stringified as `class="a b"title="c d"`
+instead to save bytes (`boolean`, default: `false`).  **Note**: creates
+invalid (but working) markup.
+
+###### `options.allowParseErrors`
+
+Do not encode characters which trigger parse errors (even though they
+work), to save bytes (`boolean`, default: `false`).  **Note**: creates
+invalid (but working) markup.
+
+###### `options.allowDangerousCharacters`
+
+Do not encode some characters which cause XSS vulnerabilities in older
+browsers (`boolean`, default: `false`).  **Note**: Only set this if you
+completely trust the content.
+
+###### `options.allowDangerousHTML`
+
+Allow `raw` nodes and insert them as raw HTML.  When falsey, encodes
+`raw` nodes (`boolean`, default: `false`).  **Note**: Only set this if
+you completely trust the content.
 
 ## Related
 
