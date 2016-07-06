@@ -25,8 +25,8 @@ test('`text`', function (t) {
   );
 
   t.deepEqual(
-    to(u('text', '3 < 5')),
-    '3 &#x3C; 5',
+    to(u('text', '3 < 5 & 7')),
+    '3 &#x3C; 5 &#x26; 7',
     'should encode `text`s'
   );
 
