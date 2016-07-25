@@ -29,7 +29,7 @@
     "property-information": "^3.1.0",
     "space-separated-tokens": "^1.0.0",
     "stringify-entities": "^1.0.1",
-    "unist-util-is": "^1.0.0",
+    "unist-util-is": "^2.0.0",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
@@ -61,16 +61,9 @@
   "xo": {
     "space": true,
     "rules": {
-      "guard-for-in": [
-        0
-      ],
-      "eqeqeq": [
-        0,
-        "allow-null"
-      ],
-      "no-eq-null": [
-        0
-      ]
+      "guard-for-in": "off",
+      "eqeqeq": "off",
+      "no-eq-null": "off"
     },
     "ignores": [
       "hast-util-to-html.js",
