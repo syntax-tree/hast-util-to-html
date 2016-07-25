@@ -14,8 +14,7 @@
 require('./core');
 require('./root');
 require('./comment');
-require('./character-data');
-require('./directive');
+require('./doctype');
 require('./text');
 require('./raw');
 require('./element');
@@ -23,3 +22,7 @@ require('./attribute');
 require('./omission');
 require('./omission-opening');
 require('./omission-closing');
+
+/* Legacy. */
+require('./character-data');
+require('./directive');
