@@ -37,7 +37,7 @@
     "bundle-collapser": "^1.2.1",
     "esmangle": "^1.0.1",
     "hastscript": "^3.0.0",
-    "istanbul": "^0.4.0",
+    "nyc": "^7.1.0",
     "remark-cli": "^1.0.0",
     "remark-comment-config": "^4.0.0",
     "remark-github": "^5.0.0",
@@ -55,7 +55,7 @@
     "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
     "lint": "xo",
     "test-api": "node test",
-    "test-coverage": "istanbul cover test",
+    "test-coverage": "nyc --reporter lcov tape test",
     "test": "npm run build && npm run lint && npm run test-coverage"
   },
   "xo": {
@@ -69,6 +69,12 @@
       "hast-util-to-html.js",
       "hast-util-to-html.min.js"
     ]
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
   },
   "remarkConfig": {
     "output": true,
