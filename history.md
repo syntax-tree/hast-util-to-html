@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings -->
 
+2.1.0 / 2016-07-25
+==================
+
+*   Add support for HAST@2.0.0 `doctype` node ([`15463b5`](https://github.com/wooorm/hast-util-to-html/commit/15463b5))
+
 2.0.1 / 2016-07-06
 ==================
 
