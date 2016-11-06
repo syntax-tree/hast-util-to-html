@@ -37,7 +37,7 @@
     "bundle-collapser": "^1.2.1",
     "esmangle": "^1.0.1",
     "hastscript": "^3.0.0",
-    "nyc": "^7.1.0",
+    "nyc": "^8.0.0",
     "remark-cli": "^2.1.0",
     "remark-preset-wooorm": "^1.0.0",
     "tape": "^4.0.0",
