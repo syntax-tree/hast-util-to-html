@@ -14,7 +14,3 @@ require('./attribute');
 require('./omission');
 require('./omission-opening');
 require('./omission-closing');
-
-/* Legacy. */
-require('./character-data');
-require('./directive');
