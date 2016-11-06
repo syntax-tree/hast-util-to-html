@@ -38,18 +38,14 @@
     "esmangle": "^1.0.1",
     "hastscript": "^3.0.0",
     "nyc": "^7.1.0",
-    "remark-cli": "^1.0.0",
-    "remark-comment-config": "^4.0.0",
-    "remark-github": "^5.0.0",
-    "remark-lint": "^4.0.0",
-    "remark-usage": "^4.0.0",
-    "remark-validate-links": "^4.0.0",
+    "remark-cli": "^2.1.0",
+    "remark-preset-wooorm": "^1.0.0",
     "tape": "^4.0.0",
     "unist-builder": "^1.0.1",
     "xo": "^0.17.0"
   },
   "scripts": {
-    "build-md": "remark . --quiet --frail",
+    "build-md": "remark . --quiet --frail --output",
     "build-bundle": "browserify index.js --bare -s hastUtilToHTML > hast-util-to-html.js",
     "build-mangle": "bundle-collapser hast-util-to-html.js | esmangle > hast-util-to-html.min.js",
     "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
@@ -76,16 +72,6 @@
     "branches": 100
   },
   "remarkConfig": {
-    "output": true,
-    "plugins": [
-      "comment-config",
-      "github",
-      "lint",
-      "usage",
-      "validate-links"
-    ],
-    "settings": {
-      "bullet": "*"
-    }
+    "presets": "wooorm"
   }
 }

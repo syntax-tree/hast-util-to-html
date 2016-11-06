@@ -1,12 +1,10 @@
 # hast-util-to-html [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
 
-<!--lint disable heading-increment list-item-spacing-->
-
 Transform [HAST][] to HTML.
 
 ## Installation
 
-[npm][npm-install]:
+[npm][]:
 
 ```bash
 npm install hast-util-to-html
@@ -14,16 +12,10 @@ npm install hast-util-to-html
 
 ## Usage
 
-Dependencies:
-
 ```javascript
 var h = require('hastscript');
 var toHTML = require('hast-util-to-html');
-```
 
-Transform:
-
-```javascript
 var tree = h('.alpha', [
   'bravo ',
   h('b', 'charlie'),
@@ -32,6 +24,8 @@ var tree = h('.alpha', [
     download: true
   }, 'foxtrot')
 ]);
+
+console.log(toHTML(tree));
 ```
 
 Yields:
@@ -145,7 +139,7 @@ you completely trust the content.
 
 [codecov]: https://codecov.io/github/wooorm/hast-util-to-html
 
-[npm-install]: https://docs.npmjs.com/cli/install
+[npm]: https://docs.npmjs.com/cli/install
 
 [license]: LICENSE
 
