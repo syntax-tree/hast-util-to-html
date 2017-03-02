@@ -131,13 +131,13 @@ you completely trust the content.
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/hast-util-to-html.svg
+[travis-badge]: https://img.shields.io/travis/syntax-tree/hast-util-to-html.svg
 
-[travis]: https://travis-ci.org/wooorm/hast-util-to-html
+[travis]: https://travis-ci.org/syntax-tree/hast-util-to-html
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/hast-util-to-html.svg
+[codecov-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-to-html.svg
 
-[codecov]: https://codecov.io/github/wooorm/hast-util-to-html
+[codecov]: https://codecov.io/github/syntax-tree/hast-util-to-html
 
 [npm]: https://docs.npmjs.com/cli/install
 
@@ -145,10 +145,10 @@ you completely trust the content.
 
 [author]: http://wooorm.com
 
-[hast]: https://github.com/wooorm/hast
+[hast]: https://github.com/syntax-tree/hast
 
 [html-void-elements]: https://github.com/wooorm/html-void-elements
 
 [stringify-entities]: https://github.com/wooorm/stringify-entities
 
-[hast-util-sanitize]: https://github.com/wooorm/hast-util-sanitize
+[hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
