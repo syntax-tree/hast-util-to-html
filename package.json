@@ -8,15 +8,15 @@
     "util",
     "html"
   ],
-  "files": [
-    "lib",
-    "index.js"
-  ],
   "repository": "https://github.com/syntax-tree/hast-util-to-html",
   "bugs": "https://github.com/syntax-tree/hast-util-to-html/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "lib",
+    "index.js"
   ],
   "dependencies": {
     "ccount": "^1.0.0",
@@ -37,9 +37,9 @@
     "bundle-collapser": "^1.2.1",
     "esmangle": "^1.0.1",
     "hastscript": "^3.0.0",
-    "nyc": "^10.0.0",
+    "nyc": "^11.0.0",
     "remark-cli": "^3.0.0",
-    "remark-preset-wooorm": "^2.0.0",
+    "remark-preset-wooorm": "^3.0.0",
     "tape": "^4.0.0",
     "unist-builder": "^1.0.1",
     "xo": "^0.18.0"
