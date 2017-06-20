@@ -124,6 +124,9 @@ you completely trust the content.
 ## Related
 
 *   [`hast-util-sanitize`][hast-util-sanitize]
+    — Sanitize HAST nodes
+*   [`rehype-stringify`](https://github.com/wooorm/rehype/tree/master/packages/rehype-stringify)
+    — Wrapper around this project for [**rehype**](https://github.com/wooorm/rehype)
 
 ## License
 
