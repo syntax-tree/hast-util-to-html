@@ -1,11 +1,9 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var h = require('hastscript');
 var to = require('..');
 
-/* Tests. */
 test('`thead` (closing)', function (t) {
   t.deepEqual(
     to(h('thead'), {omitOptionalTags: true}),

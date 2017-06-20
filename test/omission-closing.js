@@ -2,7 +2,6 @@
 
 /* eslint-disable import/no-unassigned-import */
 
-/* Subtests. */
 require('./omission-closing-body');
 require('./omission-closing-caption');
 require('./omission-closing-colgroup');

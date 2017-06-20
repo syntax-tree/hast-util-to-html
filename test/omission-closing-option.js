@@ -1,11 +1,9 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var h = require('hastscript');
 var to = require('..');
 
-/* Tests. */
 test('`option` (closing)', function (t) {
   t.deepEqual(
     to(h('option'), {omitOptionalTags: true}),

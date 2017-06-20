@@ -1,12 +1,10 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var h = require('hastscript');
 var u = require('unist-builder');
 var to = require('..');
 
-/* Tests. */
 test('`body` (closing)', function (t) {
   t.deepEqual(
     to(h('body'), {omitOptionalTags: true}),

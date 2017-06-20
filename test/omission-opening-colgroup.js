@@ -1,12 +1,10 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var u = require('unist-builder');
 var h = require('hastscript');
 var to = require('..');
 
-/* Tests. */
 test('`colgroup` (opening)', function (t) {
   t.deepEqual(
     to(h('colgroup'), {omitOptionalTags: true}),

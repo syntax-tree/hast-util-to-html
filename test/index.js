@@ -2,7 +2,6 @@
 
 /* eslint-disable import/no-unassigned-import */
 
-/* Subtests. */
 require('./core');
 require('./root');
 require('./comment');

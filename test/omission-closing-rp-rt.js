@@ -1,11 +1,9 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var h = require('hastscript');
 var to = require('..');
 
-/* Tests. */
 ['rp', 'rt'].forEach(function (tagName, index, values) {
   test('`' + tagName + '` (closing)', function (t) {
     var other = values[index ? 0 : 1];

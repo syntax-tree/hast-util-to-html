@@ -1,11 +1,9 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var u = require('unist-builder');
 var to = require('..');
 
-/* Tests. */
 test('`text`', function (t) {
   t.deepEqual(
     to(u('doctype')),

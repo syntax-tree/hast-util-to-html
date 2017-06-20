@@ -1,11 +1,9 @@
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var u = require('unist-builder');
 var to = require('..');
 
-/* Tests. */
 test('`element`', function (t) {
   t.deepEqual(
     to(u('raw', '<script>alert("XSS!")</script>')),
