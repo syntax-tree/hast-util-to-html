@@ -53,5 +53,27 @@ test('`element`', function (t) {
     'attribute ends with `/`'
   );
 
+  t.deepEqual(
+    to({
+      type: 'element',
+      tagName: 'template',
+      properties: {},
+      children: [],
+      content: {
+        type: 'root',
+        children: [
+          h('p', [
+            h('b', 'Bold'),
+            ' and ',
+            h('i', 'italic'),
+            '.'
+          ])
+        ]
+      }
+    }),
+    '<template><p><b>Bold</b> and <i>italic</i>.</p></template>',
+    'should support `<template>`s content'
+  );
+
   t.end();
 });
