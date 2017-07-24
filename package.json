@@ -37,7 +37,7 @@
     "esmangle": "^1.0.1",
     "hastscript": "^3.0.0",
     "nyc": "^11.0.0",
-    "remark-cli": "^3.0.0",
+    "remark-cli": "^4.0.0",
     "remark-preset-wooorm": "^3.0.0",
     "tape": "^4.0.0",
     "unist-builder": "^1.0.1",
