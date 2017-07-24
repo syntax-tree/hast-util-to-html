@@ -43,14 +43,14 @@ test('`element`', function (t) {
   );
 
   t.deepEqual(
-      to(h('img', {title: '/'}), {
-        preferUnquoted: true,
-        closeSelfClosing: true,
-        tightSelfClosing: true
-      }),
-      '<img title=/ />',
-      'should stringify voids with a ` /` in if an unquoted ' +
-      'attribute ends with `/`'
+    to(h('img', {title: '/'}), {
+      preferUnquoted: true,
+      closeSelfClosing: true,
+      tightSelfClosing: true
+    }),
+    '<img title=/ />',
+    'should stringify voids with a ` /` in if an unquoted ' +
+    'attribute ends with `/`'
   );
 
   t.end();

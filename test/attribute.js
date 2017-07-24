@@ -7,27 +7,27 @@ var to = require('..');
 
 test('`element` attributes', function (t) {
   t.deepEqual(
-      to(h('i', {className: ['alpha']}, 'bravo')),
-      '<i class="alpha">bravo</i>',
-      'should stringify special camel-cased properties'
+    to(h('i', {className: ['alpha']}, 'bravo')),
+    '<i class="alpha">bravo</i>',
+    'should stringify special camel-cased properties'
   );
 
   t.deepEqual(
-      to(h('i', {dataFoo: 'alpha'}, 'bravo')),
-      '<i data-foo="alpha">bravo</i>',
-      'should stringify camel-cased properties'
+    to(h('i', {dataFoo: 'alpha'}, 'bravo')),
+    '<i data-foo="alpha">bravo</i>',
+    'should stringify camel-cased properties'
   );
 
   t.deepEqual(
-      to(h('i', {data123: 'alpha'}, 'bravo')),
-      '<i data-123="alpha">bravo</i>',
-      'should stringify numeric `data-` properties'
+    to(h('i', {data123: 'alpha'}, 'bravo')),
+    '<i data-123="alpha">bravo</i>',
+    'should stringify numeric `data-` properties'
   );
 
   t.deepEqual(
-      to(h('img', {alt: ''})),
-      '<img alt="">',
-      'should show empty string attributes'
+    to(h('img', {alt: ''})),
+    '<img alt="">',
+    'should show empty string attributes'
   );
 
   t.deepEqual(
@@ -154,37 +154,37 @@ test('`element` attributes', function (t) {
   );
 
   t.deepEqual(
-      to(h('i', {id: ''}, 'bravo')),
-      '<i id="">bravo</i>',
-      'should stringify other falsey attributes'
+    to(h('i', {id: ''}, 'bravo')),
+    '<i id="">bravo</i>',
+    'should stringify other falsey attributes'
   );
 
   t.deepEqual(
-      to(h('i', {id: true}, 'bravo')),
-      '<i id="true">bravo</i>',
-      'should stringify other non-string attributes'
+    to(h('i', {id: true}, 'bravo')),
+    '<i id="true">bravo</i>',
+    'should stringify other non-string attributes'
   );
 
   t.deepEqual(
-      to(h('img', {alt: ''}), {quote: '\''}),
-      '<img alt=\'\'>',
-      'should quote attribute values with single quotes is ' +
-      '`quote: \'\\\'\'`'
+    to(h('img', {alt: ''}), {quote: '\''}),
+    '<img alt=\'\'>',
+    'should quote attribute values with single quotes is ' +
+    '`quote: \'\\\'\'`'
   );
 
   t.throws(
-      function () {
-        to(h('img'), {quote: '`'});
-      },
-      /Invalid quote ```, expected `'` or `"`/,
-      'should throw on invalid quotes'
+    function () {
+      to(h('img'), {quote: '`'});
+    },
+    /Invalid quote ```, expected `'` or `"`/,
+    'should throw on invalid quotes'
   );
 
   t.deepEqual(
-      to(h('img', {alt: ''}), {quote: '"'}),
-      '<img alt="">',
-      'should quote attribute values with single quotes is ' +
-      '`quote: \'"\'`'
+    to(h('img', {alt: ''}), {quote: '"'}),
+    '<img alt="">',
+    'should quote attribute values with single quotes is ' +
+    '`quote: \'"\'`'
   );
 
   t.deepEqual(
