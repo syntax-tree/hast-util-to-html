@@ -128,6 +128,14 @@ you completely trust the content.
 *   [`rehype-stringify`](https://github.com/wooorm/rehype/tree/master/packages/rehype-stringify)
     — Wrapper around this project for [**rehype**](https://github.com/wooorm/rehype)
 
+## Contribute
+
+See [`contribute.md` in `syntax-tree/hast`][contribute] for ways to get
+started.
+
+This organisation has a [Code of Conduct][coc].  By interacting with this
+repository, organisation, or community you agree to abide by its terms.
+
 ## License
 
 [MIT][license] © [Titus Wormer][author]
@@ -155,3 +163,7 @@ you completely trust the content.
 [stringify-entities]: https://github.com/wooorm/stringify-entities
 
 [hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
+
+[contribute]: https://github.com/syntax-tree/hast/blob/master/contributing.md
+
+[coc]: https://github.com/syntax-tree/hast/blob/master/code-of-conduct.md
