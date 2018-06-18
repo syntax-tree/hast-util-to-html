@@ -75,5 +75,13 @@ test('`element`', function (t) {
     'should support `<template>`s content'
   );
 
+  t.deepEqual(
+    to(h('svg', {viewBox: '0 0 400000 200', preserveAspectRatio: 'xMinYMin slice'}), {
+      allowCamelCasedAttributes: true
+    }),
+    '<svg viewBox="0 0 400000 200" preserveAspectRatio="xMinYMin slice"></svg>',
+    'should support camelCased attribute name like "viewBox"'
+  );
+
   t.end();
 });
