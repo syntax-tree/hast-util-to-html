@@ -121,6 +121,12 @@ Allow `raw` nodes and insert them as raw HTML.  When falsey, encodes
 `raw` nodes (`boolean`, default: `false`).  **Note**: Only set this if
 you completely trust the content.
 
+###### `options.allowCamelCased`
+
+Allow node can use `CamelCased` attribute name.  When falsey, encodes 
+attributeName `viewBox` to `view-box` (`boolean`, default `false`).  
+**Note**: `svg` node alway set `true`.
+
 ## Related
 
 *   [`hast-util-sanitize`][hast-util-sanitize]
