@@ -91,14 +91,20 @@ if `closeSelfClosing: true`.
 ###### `options.tightCommaSeparatedLists`
 
 Join known comma-separated attribute values with just a comma (`,`),
-instead of padding them on the right as well (`,`) (`boolean`,
-default: `false`).
+instead of padding them on the right as well (`,·`, where `·` represents a
+space) (`boolean`, default: `false`).
 
 ###### `options.tightAttributes`
 
 Join attributes together, without white-space, if possible:
 `class="a b" title="c d"` is stringified as `class="a b"title="c d"`
 instead to save bytes (`boolean`, default: `false`).  **Note**: creates
+invalid (but working) markup.
+
+###### `options.tightDoctype`
+
+Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>`
+to save bytes (`boolean`, default: `false`).  **Note**: creates
 invalid (but working) markup.
 
 ###### `options.allowParseErrors`

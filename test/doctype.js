@@ -18,6 +18,12 @@ test('`text`', function(t) {
   )
 
   t.deepEqual(
+    to(u('doctype', {name: 'html'}), {tightDoctype: true}),
+    '<!doctypehtml>',
+    'should stringify doctypes with `name` tightly in `tightDoctype` mode'
+  )
+
+  t.deepEqual(
     to(
       u('doctype', {
         name: 'html',
@@ -32,11 +38,26 @@ test('`text`', function(t) {
     to(
       u('doctype', {
         name: 'html',
-        system: 'about:legacy-compat'
-      })
+        public: '-//W3C//DTD XHTML 1.0 Transitional//EN'
+      }),
+      {tightDoctype: true}
     ),
+    '<!doctypehtml public"-//W3C//DTD XHTML 1.0 Transitional//EN">',
+    'should stringify doctypes with a public identifier tightly in `tightDoctype` mode'
+  )
+
+  t.deepEqual(
+    to(u('doctype', {name: 'html', system: 'about:legacy-compat'})),
     '<!doctype html system "about:legacy-compat">',
     'should stringify doctypes with a system identifier'
+  )
+
+  t.deepEqual(
+    to(u('doctype', {name: 'html', system: 'about:legacy-compat'}), {
+      tightDoctype: true
+    }),
+    '<!doctypehtml system"about:legacy-compat">',
+    'should stringify doctypes with a system identifier tightly in `tightDoctype` mode'
   )
 
   t.deepEqual(
@@ -49,6 +70,19 @@ test('`text`', function(t) {
     ),
     '<!doctype html public "-//W3C//DTD HTML 4.01//" "http://www.w3.org/TR/html4/strict.dtd">',
     'should stringify doctypes with both identifiers'
+  )
+
+  t.deepEqual(
+    to(
+      u('doctype', {
+        name: 'html',
+        public: '-//W3C//DTD HTML 4.01//',
+        system: 'http://www.w3.org/TR/html4/strict.dtd'
+      }),
+      {tightDoctype: true}
+    ),
+    '<!doctypehtml public"-//W3C//DTD HTML 4.01//""http://www.w3.org/TR/html4/strict.dtd">',
+    'should stringify doctypes with both identifiers tightly in `tightDoctype` mode'
   )
 
   t.deepEqual(
