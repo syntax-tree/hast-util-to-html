@@ -13,19 +13,17 @@ npm install hast-util-to-html
 ## Usage
 
 ```javascript
-var h = require('hastscript');
-var toHTML = require('hast-util-to-html');
+var h = require('hastscript')
+var toHTML = require('hast-util-to-html')
 
 var tree = h('.alpha', [
   'bravo ',
   h('b', 'charlie'),
   ' delta ',
-  h('a.echo', {
-    download: true
-  }, 'foxtrot')
-]);
+  h('a.echo', {download: true}, 'foxtrot')
+])
 
-console.log(toHTML(tree));
+console.log(toHTML(tree))
 ```
 
 Yields:
