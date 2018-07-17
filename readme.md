@@ -34,9 +34,17 @@ Yields:
 
 ## API
 
-### `toHTML(node[, options])`
+### `toHTML(tree[, options])`
 
-Stringify the given [HAST node][hast].
+Stringify the given [HAST tree][hast].
+
+###### `options.space`
+
+Whether the root of the given tree is in the `'html'` or `'svg'` space (enum,
+`'svg'` or `'html'`, default: `'html'`).
+
+If an `svg` element is found in the HTML space, `toHTML` automatically switches
+to the SVG space when entering the element, and switches back when leaving.
 
 ###### `options.entities`
 
@@ -49,6 +57,8 @@ Configuration for [`stringify-entities`][stringify-entities]
 
 Tag-names of elements to stringify without closing tag (`Array.<string>`,
 default: [`html-void-elements`][html-void-elements]).
+
+Not used in the SVG space.
 
 ###### `options.quote`
 
@@ -64,6 +74,8 @@ Use the other quote if that results in less bytes (`boolean`, default:
 Leave attributes unquoted if that results in less bytes (`boolean`,
 default: `false`).
 
+Not used in the SVG space.
+
 ###### `options.omitOptionalTags`
 
 Omit optional opening and closing tags (`boolean`, default: `false`).
@@ -71,22 +83,36 @@ For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>`
 closing tags can be omitted.  The first because it’s followed by
 another `li`, the last because it’s followed by nothing.
 
+Not used in the SVG space.
+
 ###### `options.collapseEmptyAttributes`
 
 Collapse empty attributes: `class=""` is stringified as `class` instead
 (`boolean`, default: `false`).  **Note**: boolean attributes, such as
 `hidden`, are always collapsed.
 
+Not used in the SVG space.
+
 ###### `options.closeSelfClosing`
 
 Close self-closing nodes with an extra slash (`/`): `<img />` instead of
 `<img>` (`boolean`, default: `false`).
 
+Not used in the SVG space.
+
+###### `options.closeEmptyElements`
+
+Close SVG elements without any content with slash (`/`) on the opening tag
+instead of an end tag: `<circle />` instead of `<circle></circle>` (`boolean`,
+default: `false`).
+
+Not used in the HTML space.
+
 ###### `options.tightSelfClosing`
 
 Do not use an extra space when closing self-closing elements: `<img/>`
 instead of `<img />` (`boolean`, default: `false`).  **Note**: Only used
-if `closeSelfClosing: true`.
+if `closeSelfClosing: true` or `closeEmptyElements: true`.
 
 ###### `options.tightCommaSeparatedLists`
 
@@ -101,6 +127,8 @@ Join attributes together, without white-space, if possible:
 instead to save bytes (`boolean`, default: `false`).  **Note**: creates
 invalid (but working) markup.
 
+Not used in the SVG space.
+
 ###### `options.tightDoctype`
 
 Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>`
@@ -112,6 +140,8 @@ invalid (but working) markup.
 Do not encode characters which trigger parse errors (even though they
 work), to save bytes (`boolean`, default: `false`).  **Note**: creates
 invalid (but working) markup.
+
+Not used in the SVG space.
 
 ###### `options.allowDangerousCharacters`
 

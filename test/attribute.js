@@ -71,8 +71,8 @@ test('`element` attributes', function(t) {
   )
 
   t.deepEqual(
-    to(h('span', {dataUnknown: ['alpha', 'bravo']})),
-    '<span data-unknown="alpha bravo"></span>',
+    to(h('span', {unknown: ['alpha', 'bravo']})),
+    '<span unknown="alpha bravo"></span>',
     'should stringify unknown lists as space-separated'
   )
 
@@ -101,15 +101,15 @@ test('`element` attributes', function(t) {
   )
 
   t.deepEqual(
-    to(h('i', {dataUnknown: false}, 'bravo')),
-    '<i data-unknown="false">bravo</i>',
-    'should stringify unknown attributes set to `false`'
+    to(h('i', {unknown: false}, 'bravo')),
+    '<i>bravo</i>',
+    'should ignore unknown attributes set to `false`'
   )
 
   t.deepEqual(
-    to(h('i', {dataUnknown: true}, 'bravo')),
-    '<i data-unknown="true">bravo</i>',
-    'should stringify unknown attributes set to `true`'
+    to(h('i', {unknown: true}, 'bravo')),
+    '<i unknown>bravo</i>',
+    'should stringify unknown attributes set to `true` as booleans'
   )
 
   t.deepEqual(
@@ -168,14 +168,14 @@ test('`element` attributes', function(t) {
 
   t.deepEqual(
     to(h('i', {id: true}, 'bravo')),
-    '<i id="true">bravo</i>',
+    '<i id>bravo</i>',
     'should stringify other non-string attributes'
   )
 
   t.deepEqual(
     to(h('img', {alt: ''}), {quote: "'"}),
     "<img alt=''>",
-    'should quote attribute values with single quotes is `quote: "\'"`'
+    'should quote attribute values with single quotes if `quote: "\'"`'
   )
 
   t.throws(
@@ -189,7 +189,7 @@ test('`element` attributes', function(t) {
   t.deepEqual(
     to(h('img', {alt: ''}), {quote: '"'}),
     '<img alt="">',
-    "should quote attribute values with single quotes is `quote: '\"'`"
+    "should quote attribute values with double quotes if `quote: '\"'`"
   )
 
   t.deepEqual(
@@ -252,36 +252,18 @@ test('`element` attributes', function(t) {
   t.deepEqual(
     to(h('i', {title: "3'5"}), {allowDangerousCharacters: true}),
     '<i title="3\'5"></i>',
-    'should not encode characters which cause XSS issues in older browsers, in `allowParseErrors` mode'
+    'should not encode characters which cause XSS issues in older browsers, in `allowDangerousCharacters` mode'
   )
 
   t.deepEqual(
-    to(
-      u(
-        'element',
-        {
-          tagName: 'i',
-          properties: {id: null}
-        },
-        [u('text', 'bravo')]
-      )
-    ),
-    '<i>bravo</i>',
+    to(u('element', {tagName: 'i', properties: {id: null}}, [])),
+    '<i></i>',
     'should ignore attributes set to `null`'
   )
 
   t.deepEqual(
-    to(
-      u(
-        'element',
-        {
-          tagName: 'i',
-          properties: {id: undefined}
-        },
-        [u('text', 'bravo')]
-      )
-    ),
-    '<i>bravo</i>',
+    to(u('element', {tagName: 'i', properties: {id: undefined}}, [])),
+    '<i></i>',
     'should ignore attributes set to `undefined`'
   )
 
