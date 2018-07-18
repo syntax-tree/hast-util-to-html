@@ -164,7 +164,7 @@ test('svg', function(t) {
   )
 
   t.deepEqual(
-    to(s('path', {strokeOpacity: {toString: () => 'yup'}}), {space: 'svg'}),
+    to(s('path', {strokeOpacity: {toString: toString}}), {space: 'svg'}),
     '<path stroke-opacity="yup"></path>',
     'should stringify known numeric attributes set to non-numeric values'
   )
@@ -325,3 +325,7 @@ test('svg', function(t) {
 
   t.end()
 })
+
+function toString() {
+  return 'yup'
+}
