@@ -48,7 +48,7 @@
     "build-mangle": "browserify index.js -p tinyify -s hastUtilToHTML > hast-util-to-html.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
-    "test-coverage": "nyc --reporter lcov tape test",
+    "test-coverage": "nyc --reporter lcov tape test/index.js",
     "test": "npm run format && npm run build && npm run test-coverage"
   },
   "prettier": {
