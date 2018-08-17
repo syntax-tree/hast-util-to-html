@@ -40,7 +40,7 @@
     "tape": "^4.0.0",
     "tinyify": "^2.4.3",
     "unist-builder": "^1.0.1",
-    "xo": "^0.21.0"
+    "xo": "^0.22.0"
   },
   "scripts": {
     "format": "remark . -qfo && prettier --write '**/*.js' && xo --fix",
