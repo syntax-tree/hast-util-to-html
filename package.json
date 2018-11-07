@@ -10,9 +10,9 @@
   ],
   "repository": "syntax-tree/hast-util-to-html",
   "bugs": "https://github.com/syntax-tree/hast-util-to-html/issues",
-  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "files": [
     "lib",
