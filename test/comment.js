@@ -17,7 +17,7 @@ test('`comment`', function(t) {
     'should not encode `comment`s (#1)'
   )
 
-  /* No way to get around this. */
+  // No way to get around this.
   t.deepEqual(
     to(u('comment', '-->')),
     '<!---->-->',
