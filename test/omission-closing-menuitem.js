@@ -43,9 +43,8 @@ test('`menuitem` (closing)', function(t) {
     'should not omit tag followed by others'
   )
 
-  /* This actually tests an edge case where `menuitems`,
-   * which can have children in WHATWG HTML, but not in
-   * W3C HTML, here do not have children. */
+  // This actually tests an edge case where `menuitems`, which can have children
+  // in WHATWG HTML, but not in W3C HTML, here do not have children.
   t.deepEqual(
     to(h('menu', [h('menuitem'), h('p')]), {omitOptionalTags: true}),
     '<menu><menuitem><p></menu>',
