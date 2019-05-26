@@ -1,7 +1,6 @@
 'use strict'
 
 /* eslint-disable import/no-unassigned-import */
-
 require('./core')
 require('./root')
 require('./comment')
@@ -14,3 +13,4 @@ require('./omission')
 require('./omission-opening')
 require('./omission-closing')
 require('./svg')
+/* eslint-enable import/no-unassigned-import */

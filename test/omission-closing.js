@@ -1,7 +1,6 @@
 'use strict'
 
 /* eslint-disable import/no-unassigned-import */
-
 require('./omission-closing-body')
 require('./omission-closing-caption')
 require('./omission-closing-colgroup')
@@ -20,3 +19,4 @@ require('./omission-closing-td-th')
 require('./omission-closing-tfoot')
 require('./omission-closing-thead')
 require('./omission-closing-tr')
+/* eslint-enable import/no-unassigned-import */
