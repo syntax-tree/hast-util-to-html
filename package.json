@@ -1,7 +1,7 @@
 {
   "name": "hast-util-to-html",
   "version": "5.0.0",
-  "description": "Transform HAST to HTML",
+  "description": "Transform hast to HTML",
   "license": "MIT",
   "keywords": [
     "hast",
@@ -44,8 +44,8 @@
   },
   "scripts": {
     "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
-    "build-bundle": "browserify . -s hastUtilToHTML > hast-util-to-html.js",
-    "build-mangle": "browserify . -s hastUtilToHTML -p tinyify > hast-util-to-html.min.js",
+    "build-bundle": "browserify . -s hastUtilToHtml > hast-util-to-html.js",
+    "build-mangle": "browserify . -s hastUtilToHtml -p tinyify > hast-util-to-html.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test/index.js",

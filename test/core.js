@@ -4,7 +4,7 @@ var test = require('tape')
 var u = require('unist-builder')
 var to = require('..')
 
-test('toHTML()', function(t) {
+test('toHtml()', function(t) {
   t.throws(
     function() {
       to(true)

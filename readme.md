@@ -22,7 +22,7 @@ npm install hast-util-to-html
 
 ```js
 var h = require('hastscript')
-var toHTML = require('hast-util-to-html')
+var toHtml = require('hast-util-to-html')
 
 var tree = h('.alpha', [
   'bravo ',
@@ -31,7 +31,7 @@ var tree = h('.alpha', [
   h('a.echo', {download: true}, 'foxtrot')
 ])
 
-console.log(toHTML(tree))
+console.log(toHtml(tree))
 ```
 
 Yields:
@@ -42,7 +42,7 @@ Yields:
 
 ## API
 
-### `toHTML(tree[, options])`
+### `toHtml(tree[, options])`
 
 Stringify the given [**hast**][hast] [*tree*][tree].
 
@@ -51,14 +51,14 @@ Stringify the given [**hast**][hast] [*tree*][tree].
 Whether the [*root*][root] of the [*tree*][tree] is in the `'html'` or `'svg'`
 space (enum, `'svg'` or `'html'`, default: `'html'`).
 
-If an `svg` element is found in the HTML space, `toHTML` automatically switches
+If an `svg` element is found in the HTML space, `toHtml` automatically switches
 to the SVG space when entering the element, and switches back when exiting.
 
 ###### `options.entities`
 
 Configuration for [`stringify-entities`][stringify-entities] (`Object`, default:
 `{}`).
-Do not use `escapeOnly`, `attribute`, or `subset` (`toHTML` already passes
+Do not use `escapeOnly`, `attribute`, or `subset` (`toHtml` already passes
 those, so they won’t work).
 However, `useNamedReferences`, `useShortestReferences`, and
 `omitOptionalSemicolons` are all fine.
@@ -170,7 +170,7 @@ When falsey, encodes `raw` nodes (`boolean`, default: `false`).
 ## Related
 
 *   [`hast-util-sanitize`][hast-util-sanitize]
-    — Sanitize HAST nodes
+    — Sanitize hast nodes
 *   [`rehype-stringify`](https://github.com/wooorm/rehype/tree/master/packages/rehype-stringify)
     — Wrapper around this project for [**rehype**](https://github.com/wooorm/rehype)
 
