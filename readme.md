@@ -3,21 +3,24 @@
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-Transform [HAST][] to HTML.
+[**hast**][hast] utility to transform to HTML.
 
-## Installation
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install hast-util-to-html
 ```
 
 ## Usage
 
-```javascript
+```js
 var h = require('hastscript')
 var toHTML = require('hast-util-to-html')
 
@@ -41,27 +44,29 @@ Yields:
 
 ### `toHTML(tree[, options])`
 
-Stringify the given [HAST tree][hast].
+Stringify the given [**hast**][hast] [*tree*][tree].
 
 ###### `options.space`
 
-Whether the root of the given tree is in the `'html'` or `'svg'` space (enum,
-`'svg'` or `'html'`, default: `'html'`).
+Whether the [*root*][root] of the [*tree*][tree] is in the `'html'` or `'svg'`
+space (enum, `'svg'` or `'html'`, default: `'html'`).
 
 If an `svg` element is found in the HTML space, `toHTML` automatically switches
-to the SVG space when entering the element, and switches back when leaving.
+to the SVG space when entering the element, and switches back when exiting.
 
 ###### `options.entities`
 
-Configuration for [`stringify-entities`][stringify-entities]
-(`Object`, default: `{}`).  Do not use `escapeOnly`, `attribute`, or
-`subset` (`toHTML` already passes those).  However, `useNamedReferences`,
-`useShortestReferences`, and `omitOptionalSemicolons` are all fine.
+Configuration for [`stringify-entities`][stringify-entities] (`Object`, default:
+`{}`).
+Do not use `escapeOnly`, `attribute`, or `subset` (`toHTML` already passes
+those, so they won’t work).
+However, `useNamedReferences`, `useShortestReferences`, and
+`omitOptionalSemicolons` are all fine.
 
 ###### `options.voids`
 
-Tag-names of elements to stringify without closing tag (`Array.<string>`,
-default: [`html-void-elements`][html-void-elements]).
+Tag names of [*elements*][element] to stringify without closing tag
+(`Array.<string>`, default: [`html-void-elements`][html-void-elements]).
 
 Not used in the SVG space.
 
@@ -71,13 +76,12 @@ Preferred quote to use (`'"'` or `'\''`, default: `'"'`).
 
 ###### `options.quoteSmart`
 
-Use the other quote if that results in less bytes (`boolean`, default:
-`false`).
+Use the other quote if that results in less bytes (`boolean`, default: `false`).
 
 ###### `options.preferUnquoted`
 
-Leave attributes unquoted if that results in less bytes (`boolean`,
-default: `false`).
+Leave attributes unquoted if that results in less bytes (`boolean`, default:
+`false`).
 
 Not used in the SVG space.
 
@@ -85,16 +89,17 @@ Not used in the SVG space.
 
 Omit optional opening and closing tags (`boolean`, default: `false`).
 For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>`
-closing tags can be omitted.  The first because it’s followed by
-another `li`, the last because it’s followed by nothing.
+closing tags can be omitted.
+The first because it’s followed by another `li`, the last because it’s followed
+by nothing.
 
 Not used in the SVG space.
 
 ###### `options.collapseEmptyAttributes`
 
 Collapse empty attributes: `class=""` is stringified as `class` instead
-(`boolean`, default: `false`).  **Note**: boolean attributes, such as
-`hidden`, are always collapsed.
+(`boolean`, default: `false`).
+**Note**: boolean attributes, such as `hidden`, are always collapsed.
 
 Not used in the SVG space.
 
@@ -102,6 +107,7 @@ Not used in the SVG space.
 
 Close self-closing nodes with an extra slash (`/`): `<img />` instead of
 `<img>` (`boolean`, default: `false`).
+See `tightSelfClosing` to control whether a space is used before the slash.
 
 Not used in the SVG space.
 
@@ -110,55 +116,56 @@ Not used in the SVG space.
 Close SVG elements without any content with slash (`/`) on the opening tag
 instead of an end tag: `<circle />` instead of `<circle></circle>` (`boolean`,
 default: `false`).
+See `tightSelfClosing` to control whether a space is used before the slash.
 
 Not used in the HTML space.
 
 ###### `options.tightSelfClosing`
 
-Do not use an extra space when closing self-closing elements: `<img/>`
-instead of `<img />` (`boolean`, default: `false`).  **Note**: Only used
-if `closeSelfClosing: true` or `closeEmptyElements: true`.
+Do not use an extra space when closing self-closing elements: `<img/>` instead
+of `<img />` (`boolean`, default: `false`).
+**Note**: Only used if `closeSelfClosing: true` or `closeEmptyElements: true`.
 
 ###### `options.tightCommaSeparatedLists`
 
-Join known comma-separated attribute values with just a comma (`,`),
-instead of padding them on the right as well (`,·`, where `·` represents a
-space) (`boolean`, default: `false`).
+Join known comma-separated attribute values with just a comma (`,`), instead of
+padding them on the right as well (`,·`, where `·` represents a space)
+(`boolean`, default: `false`).
 
 ###### `options.tightAttributes`
 
-Join attributes together, without white-space, if possible:
-`class="a b" title="c d"` is stringified as `class="a b"title="c d"`
-instead to save bytes (`boolean`, default: `false`).  **Note**: creates
-invalid (but working) markup.
+Join attributes together, without white-space, if possible: `class="a b"
+title="c d"` is stringified as `class="a b"title="c d"` instead to save bytes
+(`boolean`, default: `false`).
+**Note**: creates invalid (but working) markup.
 
 Not used in the SVG space.
 
 ###### `options.tightDoctype`
 
 Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>`
-to save bytes (`boolean`, default: `false`).  **Note**: creates
-invalid (but working) markup.
+to save bytes (`boolean`, default: `false`).
+**Note**: creates invalid (but working) markup.
 
 ###### `options.allowParseErrors`
 
-Do not encode characters which trigger parse errors (even though they
-work), to save bytes (`boolean`, default: `false`).  **Note**: creates
-invalid (but working) markup.
+Do not encode characters which cause parse errors (even though they work), to
+save bytes (`boolean`, default: `false`).
+**Note**: creates invalid (but working) markup.
 
 Not used in the SVG space.
 
 ###### `options.allowDangerousCharacters`
 
-Do not encode some characters which cause XSS vulnerabilities in older
-browsers (`boolean`, default: `false`).  **Note**: Only set this if you
-completely trust the content.
+Do not encode some characters which cause XSS vulnerabilities in older browsers
+(`boolean`, default: `false`).
+**Note**: Only set this if you completely trust the content.
 
 ###### `options.allowDangerousHTML`
 
-Allow `raw` nodes and insert them as raw HTML.  When falsey, encodes
-`raw` nodes (`boolean`, default: `false`).  **Note**: Only set this if
-you completely trust the content.
+Allow `raw` nodes and insert them as raw HTML.
+When falsey, encodes `raw` nodes (`boolean`, default: `false`).
+**Note**: Only set this if you completely trust the content.
 
 ## Related
 
@@ -169,11 +176,13 @@ you completely trust the content.
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/hast`][contributing] for ways to get
+See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
 started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -193,9 +202,19 @@ repository, organisation, or community you agree to abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/hast-util-to-html
 
+[size-badge]: https://img.shields.io/bundlephobia/minzip/hast-util-to-html.svg
+
+[size]: https://bundlephobia.com/result?p=hast-util-to-html
+
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
-[chat]: https://spectrum.chat/unified/rehype
+[chat]: https://spectrum.chat/unified/syntax-tree
 
 [npm]: https://docs.npmjs.com/cli/install
 
@@ -203,7 +222,11 @@ repository, organisation, or community you agree to abide by its terms.
 
 [author]: https://wooorm.com
 
-[hast]: https://github.com/syntax-tree/hast
+[contributing]: https://github.com/syntax-tree/.github/blob/master/contributing.md
+
+[support]: https://github.com/syntax-tree/.github/blob/master/support.md
+
+[coc]: https://github.com/syntax-tree/.github/blob/master/code-of-conduct.md
 
 [html-void-elements]: https://github.com/wooorm/html-void-elements
 
@@ -211,6 +234,10 @@ repository, organisation, or community you agree to abide by its terms.
 
 [hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
 
-[contributing]: https://github.com/syntax-tree/hast/blob/master/contributing.md
+[tree]: https://github.com/syntax-tree/unist#tree
 
-[coc]: https://github.com/syntax-tree/hast/blob/master/code-of-conduct.md
+[root]: https://github.com/syntax-tree/unist#root
+
+[hast]: https://github.com/syntax-tree/hast
+
+[element]: https://github.com/syntax-tree/hast#element
