@@ -55,8 +55,8 @@ test('svg', function(t) {
 
   t.deepEqual(
     to(s('circle', {title: ''}), {space: 'svg', collapseEmptyAttributes: true}),
-    '<circle title=""></circle>',
-    'should *not* collapse empty string attributes in `collapseEmptyAttributes` mode'
+    '<circle title></circle>',
+    'should collapse empty string attributes in `collapseEmptyAttributes` mode'
   )
 
   t.deepEqual(
@@ -72,8 +72,8 @@ test('svg', function(t) {
       space: 'svg',
       tightAttributes: true
     }),
-    '<text class="a b" title="c d">bravo</text>',
-    'should *not* stringify multiple properties tightly in `tightAttributes` mode'
+    '<text class="a b"title="c d">bravo</text>',
+    'should stringify multiple properties tightly in `tightAttributes` mode'
   )
 
   t.deepEqual(
@@ -105,7 +105,7 @@ test('svg', function(t) {
 
   t.deepEqual(
     to(s('a', {download: true}, 'bravo'), {space: 'svg'}),
-    '<a download="download">bravo</a>',
+    '<a download>bravo</a>',
     'should stringify known boolean attributes set to `true`'
   )
 
@@ -117,7 +117,7 @@ test('svg', function(t) {
 
   t.deepEqual(
     to(s('a', {download: 1}, 'bravo'), {space: 'svg'}),
-    '<a download="download">bravo</a>',
+    '<a download>bravo</a>',
     'should stringify truthy known boolean attributes'
   )
 
@@ -135,7 +135,7 @@ test('svg', function(t) {
 
   t.deepEqual(
     to(s('a', {unknown: true}, 'bravo'), {space: 'svg'}),
-    '<a unknown="unknown">bravo</a>',
+    '<a unknown>bravo</a>',
     'should stringify unknown attributes set to `true`'
   )
 
@@ -183,7 +183,7 @@ test('svg', function(t) {
 
   t.deepEqual(
     to(s('i', {id: true}, 'bravo'), {space: 'svg'}),
-    '<i id="id">bravo</i>',
+    '<i id>bravo</i>',
     'should stringify other non-string attributes'
   )
 
@@ -221,8 +221,8 @@ test('svg', function(t) {
 
   t.deepEqual(
     to(s('circle', {cx: 2}), {space: 'svg', preferUnquoted: true}),
-    '<circle cx="2"></circle>',
-    'should *not* omit quotes in `preferUnquoted`'
+    '<circle cx=2></circle>',
+    'should omit quotes in `preferUnquoted`'
   )
 
   t.deepEqual(
