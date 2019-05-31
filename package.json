@@ -27,7 +27,7 @@
     "property-information": "^5.0.0",
     "space-separated-tokens": "^1.0.0",
     "stringify-entities": "^2.0.0",
-    "unist-util-is": "^2.0.0",
+    "unist-util-is": "^3.0.0",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
