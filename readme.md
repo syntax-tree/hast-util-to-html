@@ -167,6 +167,12 @@ Allow `raw` nodes and insert them as raw HTML.
 When falsey, encodes `raw` nodes (`boolean`, default: `false`).
 **Note**: Only set this if you completely trust the content.
 
+## Security
+
+Use of `hast-util-to-html` can open you up to a
+[cross-site scripting (XSS)][xss] attack if the hast tree is unsafe.
+Use [`hast-util-santize`][sanitize] to make the hast tree safe.
+
 ## Related
 
 *   [`hast-util-sanitize`][hast-util-sanitize]
@@ -241,3 +247,7 @@ abide by its terms.
 [hast]: https://github.com/syntax-tree/hast
 
 [element]: https://github.com/syntax-tree/hast#element
+
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[sanitize]: https://github.com/syntax-tree/hast-util-sanitize

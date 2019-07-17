@@ -13,4 +13,5 @@ require('./omission')
 require('./omission-opening')
 require('./omission-closing')
 require('./svg')
+require('./security')
 /* eslint-enable import/no-unassigned-import */
