@@ -38,7 +38,18 @@ test('svg', function(t) {
       tightSelfClosing: true
     }),
     '<circle/>',
-    'should stringify voids with `/` in `closeEmptyElements` and `tightSelfClosing` mode'
+    'should stringify empties with `/` in `closeEmptyElements` and `tightSelfClosing` mode'
+  )
+
+  // `<circle cx=2 cy=2 r=1/>` does not work in browsers.  Needs a space.
+  t.deepEqual(
+    to(s('svg', {viewBox: '0 0 4 4'}, s('circle', {cx: 2, cy: 2, r: 1})), {
+      preferUnquoted: true,
+      closeEmptyElements: true,
+      tightSelfClosing: true
+    }),
+    '<svg viewBox="0 0 4 4"><circle cx=2 cy=2 r=1 /></svg>',
+    'should stringify empties with `/` in `closeEmptyElements` and `tightSelfClosing` mode, *with* a space after an unquoted attribute'
   )
 
   t.deepEqual(

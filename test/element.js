@@ -37,6 +37,17 @@ test('`element`', function(t) {
     'should stringify voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode'
   )
 
+  // This works in a browser.  The `/` is not part of the `[src]`.
+  t.deepEqual(
+    to(h('img', {src: 'index.jpg'}), {
+      preferUnquoted: true,
+      closeSelfClosing: true,
+      tightSelfClosing: true
+    }),
+    '<img src=index.jpg/>',
+    'should stringify voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, without space after an unquoted attribute'
+  )
+
   t.deepEqual(
     to(h('img', {title: '/'}), {
       preferUnquoted: true,
