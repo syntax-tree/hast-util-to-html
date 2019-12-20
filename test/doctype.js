@@ -24,6 +24,12 @@ test('`text`', function(t) {
   )
 
   t.deepEqual(
+    to(u('doctype', {name: 'html'}), {upperDoctype: true}),
+    '<!DOCTYPE html>',
+    'should stringify uppercase doctypes in `upperDoctype` mode'
+  )
+
+  t.deepEqual(
     to(
       u('doctype', {
         name: 'html',

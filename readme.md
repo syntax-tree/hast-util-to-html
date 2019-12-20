@@ -70,6 +70,11 @@ Tag names of [*elements*][element] to stringify without closing tag
 
 Not used in the SVG space.
 
+###### `options.upperDoctype`
+
+Use an `<!DOCTYPE…` instead of `<!doctype…`.
+Useless except for XHTML (`boolean`, default: `false`).
+
 ###### `options.quote`
 
 Preferred quote to use (`'"'` or `'\''`, default: `'"'`).
