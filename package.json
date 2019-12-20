@@ -1,6 +1,6 @@
 {
   "name": "hast-util-to-html",
-  "version": "6.0.2",
+  "version": "6.1.0",
   "description": "Transform hast to HTML",
   "license": "MIT",
   "keywords": [
