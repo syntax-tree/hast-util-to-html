@@ -20,8 +20,10 @@
   ],
   "files": [
     "lib",
-    "index.js"
+    "index.js",
+    "types/index.d.ts"
   ],
+  "types": "types/index.d.ts",
   "dependencies": {
     "ccount": "^1.0.0",
     "comma-separated-tokens": "^1.0.1",
@@ -30,12 +32,14 @@
     "html-void-elements": "^1.0.0",
     "property-information": "^5.2.0",
     "space-separated-tokens": "^1.0.0",
-    "stringify-entities": "^2.0.0",
+    "stringify-entities": "^3.0.0",
     "unist-util-is": "^3.0.0",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
+    "@types/unist": "^2.0.3",
     "browserify": "^16.0.0",
+    "dtslint": "^2.0.5",
     "hastscript": "^5.0.0",
     "nyc": "^14.0.0",
     "prettier": "^1.0.0",
@@ -47,13 +51,14 @@
     "xo": "^0.25.0"
   },
   "scripts": {
-    "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
+    "format": "remark . -qfo && prettier --write \"**/*.{js,ts}\" && xo --fix",
     "build-bundle": "browserify . -s hastUtilToHtml > hast-util-to-html.js",
     "build-mangle": "browserify . -s hastUtilToHtml -p tinyify > hast-util-to-html.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test/index.js",
-    "test": "npm run format && npm run build && npm run test-coverage"
+    "test-types": "dtslint types",
+    "test": "npm run format && npm run build && npm run test-coverage && npm run test-types"
   },
   "prettier": {
     "tabWidth": 2,
