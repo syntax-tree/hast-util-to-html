@@ -16,11 +16,13 @@ toHtml(node, {
 toHtml(node, {
   space: 'svg'
 })
-toHtml(node, {
-  entities: {
-    escapeOnly: true
-  }
-})
+toHtml(node, {entities: {useNamedReferences: true}})
+// $ExpectError
+toHtml(node, {entities: {escapeOnly: true}})
+// $ExpectError
+toHtml(node, {entities: {attribute: true}})
+// $ExpectError
+toHtml(node, {entities: {subset: ['subset']}})
 toHtml(node, {
   voids: ['hr']
 })

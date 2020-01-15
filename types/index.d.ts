@@ -1,7 +1,7 @@
-// TypeScript Version: 3.0
+// TypeScript Version: 3.5
 
 import {Node} from 'unist'
-import stringifyEntities = require('stringify-entities')
+import {StringifyEntitiesOptions} from 'stringify-entities'
 
 declare namespace hastUtilToHtml {
   interface HastUtilToHtmlOptions {
@@ -17,7 +17,9 @@ declare namespace hastUtilToHtml {
      * Do not use `escapeOnly`, `attribute`, or `subset` (`toHtml` already passes those, so they won’t work).
      * However, `useNamedReferences`, `useShortestReferences`, and `omitOptionalSemicolons` are all fine.
      */
-    entities: Partial<stringifyEntities.StringifyEntitiesOptions>
+    entities: Partial<
+      Omit<StringifyEntitiesOptions, 'escapeOnly' | 'attribute' | 'subset'>
+    >
 
     /**
      * Tag names of *elements* to stringify without closing tag(`Array.<string>`, default: `html-void-elements`).
@@ -35,7 +37,7 @@ declare namespace hastUtilToHtml {
     /**
      * Preferred quote to use (`'"'` or `'\''`, default: `'"'`).
      */
-    quote: string
+    quote: '"' | "'"
 
     /**
      * Use the other quote if that results in less bytes (`boolean`, default: `false`).
