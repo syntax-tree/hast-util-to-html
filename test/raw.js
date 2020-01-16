@@ -12,9 +12,20 @@ test('`element`', function(t) {
   )
 
   t.deepEqual(
+    to(u('raw', '<script>alert("XSS!")</script>'), {allowDangerousHtml: true}),
+    '<script>alert("XSS!")</script>',
+    'should not encode `raw`s in `allowDangerousHtml` mode'
+  )
+
+  t.deepEqual(
     to(u('raw', '<script>alert("XSS!")</script>'), {allowDangerousHTML: true}),
     '<script>alert("XSS!")</script>',
-    'should not encode `raw`s in `allowDangerousHTML` mode'
+    'should support the legacy `allowDangerousHTML` (#1)'
+  )
+  t.deepEqual(
+    to(u('raw', '<script>alert("XSS!")</script>'), {allowDangerousHTML: true}),
+    '<script>alert("XSS!")</script>',
+    'should support the legacy `allowDangerousHTML` (#2)'
   )
 
   t.end()

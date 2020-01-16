@@ -166,7 +166,7 @@ Do not encode some characters which cause XSS vulnerabilities in older browsers
 (`boolean`, default: `false`).
 **Note**: Only set this if you completely trust the content.
 
-###### `options.allowDangerousHTML`
+###### `options.allowDangerousHtml`
 
 Allow `raw` nodes and insert them as raw HTML.
 When falsey, encodes `raw` nodes (`boolean`, default: `false`).

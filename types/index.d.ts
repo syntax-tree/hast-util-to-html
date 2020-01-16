@@ -164,7 +164,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    allowDangerousHTML: boolean
+    allowDangerousHtml: boolean
   }
 }
 

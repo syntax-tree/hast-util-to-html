@@ -69,5 +69,5 @@ toHtml(node, {
   allowDangerousCharacters: true
 })
 toHtml(node, {
-  allowDangerousHTML: true
+  allowDangerousHtml: true
 })
