@@ -41,7 +41,7 @@
     "browserify": "^16.0.0",
     "dtslint": "^2.0.5",
     "hastscript": "^5.0.0",
-    "nyc": "^14.0.0",
+    "nyc": "^15.0.0",
     "prettier": "^1.0.0",
     "remark-cli": "^7.0.0",
     "remark-preset-wooorm": "^6.0.0",
