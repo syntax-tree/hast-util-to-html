@@ -26,7 +26,7 @@ declare namespace hastUtilToHtml {
     >
 
     /**
-     * Tag names of *elements* to stringify without closing tag.
+     * Tag names of *elements* to serialize without closing tag.
      *
      * Not used in the SVG space.
      *
@@ -169,7 +169,7 @@ declare namespace hastUtilToHtml {
 }
 
 /**
- * Stringify the given **hast** *tree*.
+ * Serialize the given **hast** *tree*.
  *
  * @param tree given hast tree
  * @param options configuration for stringifier

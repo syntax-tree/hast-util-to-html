@@ -8,25 +8,25 @@ test('`text`', function(t) {
   t.deepEqual(
     to(u('doctype')),
     '<!doctype>',
-    'should stringify doctypes without `name`'
+    'should serialize doctypes without `name`'
   )
 
   t.deepEqual(
     to(u('doctype', {name: 'html'})),
     '<!doctype html>',
-    'should stringify doctypes with `name`'
+    'should serialize doctypes with `name`'
   )
 
   t.deepEqual(
     to(u('doctype', {name: 'html'}), {tightDoctype: true}),
     '<!doctypehtml>',
-    'should stringify doctypes with `name` tightly in `tightDoctype` mode'
+    'should serialize doctypes with `name` tightly in `tightDoctype` mode'
   )
 
   t.deepEqual(
     to(u('doctype', {name: 'html'}), {upperDoctype: true}),
     '<!DOCTYPE html>',
-    'should stringify uppercase doctypes in `upperDoctype` mode'
+    'should serialize uppercase doctypes in `upperDoctype` mode'
   )
 
   t.deepEqual(
@@ -37,7 +37,7 @@ test('`text`', function(t) {
       })
     ),
     '<!doctype html public "-//W3C//DTD XHTML 1.0 Transitional//EN">',
-    'should stringify doctypes with a public identifier'
+    'should serialize doctypes with a public identifier'
   )
 
   t.deepEqual(
@@ -49,13 +49,13 @@ test('`text`', function(t) {
       {tightDoctype: true}
     ),
     '<!doctypehtml public"-//W3C//DTD XHTML 1.0 Transitional//EN">',
-    'should stringify doctypes with a public identifier tightly in `tightDoctype` mode'
+    'should serialize doctypes with a public identifier tightly in `tightDoctype` mode'
   )
 
   t.deepEqual(
     to(u('doctype', {name: 'html', system: 'about:legacy-compat'})),
     '<!doctype html system "about:legacy-compat">',
-    'should stringify doctypes with a system identifier'
+    'should serialize doctypes with a system identifier'
   )
 
   t.deepEqual(
@@ -63,7 +63,7 @@ test('`text`', function(t) {
       tightDoctype: true
     }),
     '<!doctypehtml system"about:legacy-compat">',
-    'should stringify doctypes with a system identifier tightly in `tightDoctype` mode'
+    'should serialize doctypes with a system identifier tightly in `tightDoctype` mode'
   )
 
   t.deepEqual(
@@ -75,7 +75,7 @@ test('`text`', function(t) {
       })
     ),
     '<!doctype html public "-//W3C//DTD HTML 4.01//" "http://www.w3.org/TR/html4/strict.dtd">',
-    'should stringify doctypes with both identifiers'
+    'should serialize doctypes with both identifiers'
   )
 
   t.deepEqual(
@@ -88,7 +88,7 @@ test('`text`', function(t) {
       {tightDoctype: true}
     ),
     '<!doctypehtml public"-//W3C//DTD HTML 4.01//""http://www.w3.org/TR/html4/strict.dtd">',
-    'should stringify doctypes with both identifiers tightly in `tightDoctype` mode'
+    'should serialize doctypes with both identifiers tightly in `tightDoctype` mode'
   )
 
   t.deepEqual(

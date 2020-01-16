@@ -13,19 +13,19 @@ test('`element` attributes', function(t) {
       'should ignore unknowns set to `false`'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {unknown: null}}, [])),
       '<i></i>',
       'should ignore unknowns set to `null`'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {unknown: undefined}}, [])),
       '<i></i>',
       'should ignore unknowns set to `undefined`'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {unknown: NaN}}, [])),
       '<i></i>',
       'should ignore unknowns set to `NaN`'
@@ -34,34 +34,34 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {unknown: true}}, [])),
       '<i unknown></i>',
-      'should stringify unknowns set to `true` without value'
+      'should serialize unknowns set to `true` without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {unknown: 'unknown'}}, [])),
       '<i unknown="unknown"></i>',
-      'should stringify unknowns set to their name as their name'
+      'should serialize unknowns set to their name as their name'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {unknown: ['a', 'b']}}, [])),
       '<i unknown="a b"></i>',
-      'should stringify unknown lists as space-separated'
+      'should serialize unknown lists as space-separated'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {unknown: 1}}, [])),
       '<i unknown="1"></i>',
-      'should stringify unknowns set to an integer as it’s string version'
+      'should serialize unknowns set to an integer as it’s string version'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {unknown: 0}}, [])),
       '<i unknown="0"></i>',
-      'should stringify unknowns set to `0`'
+      'should serialize unknowns set to `0`'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(
         u(
           'element',
@@ -70,7 +70,7 @@ test('`element` attributes', function(t) {
         )
       ),
       '<i unknown="yup"></i>',
-      'should stringify unknowns set to objects'
+      'should serialize unknowns set to objects'
     )
 
     st.end()
@@ -98,19 +98,19 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {hidden: true}}, [])),
       '<i hidden></i>',
-      'should stringify known booleans set to `true` without value'
+      'should serialize known booleans set to `true` without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {hidden: 'hidden'}}, [])),
       '<i hidden></i>',
-      'should stringify known booleans set to their name without value'
+      'should serialize known booleans set to their name without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {hidden: 1}}, [])),
       '<i hidden></i>',
-      'should stringify truthy known booleans without value'
+      'should serialize truthy known booleans without value'
     )
 
     st.end()
@@ -138,31 +138,31 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'a', properties: {download: true}}, [])),
       '<a download></a>',
-      'should stringify known overloaded booleans set to `true` without value'
+      'should serialize known overloaded booleans set to `true` without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'a', properties: {download: 'download'}}, [])),
       '<a download></a>',
-      'should stringify known overloaded booleans set to their name without value'
+      'should serialize known overloaded booleans set to their name without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'a', properties: {download: ''}}, [])),
       '<a download></a>',
-      'should stringify known overloaded booleans set to an empty string without value'
+      'should serialize known overloaded booleans set to an empty string without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'a', properties: {download: 1}}, [])),
       '<a download></a>',
-      'should stringify truthy known overloaded booleans without value'
+      'should serialize truthy known overloaded booleans without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'a', properties: {download: 'another'}}, [])),
       '<a download="another"></a>',
-      'should stringify known overloaded booleans set to another string'
+      'should serialize known overloaded booleans set to another string'
     )
 
     st.end()
@@ -184,52 +184,52 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: 0}}, [])),
       '<i cols="0"></i>',
-      'should stringify known numbers set to `0`'
+      'should serialize known numbers set to `0`'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: -1}}, [])),
       '<i cols="-1"></i>',
-      'should stringify known numbers set to `-1`'
+      'should serialize known numbers set to `-1`'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: 1}}, [])),
       '<i cols="1"></i>',
-      'should stringify known numbers set to `1`'
+      'should serialize known numbers set to `1`'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: Math.PI}}, [])),
       '<i cols="3.141592653589793"></i>',
-      'should stringify known numbers set to `Math.PI`'
+      'should serialize known numbers set to `Math.PI`'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: true}}, [])),
       '<i cols></i>',
-      'should stringify known numbers set to `true` as without value'
+      'should serialize known numbers set to `true` as without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: ''}}, [])),
       '<i cols=""></i>',
-      'should stringify known numbers set to an empty string'
+      'should serialize known numbers set to an empty string'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: 'cols'}}, [])),
       '<i cols="cols"></i>',
-      'should stringify known numbers set to their name'
+      'should serialize known numbers set to their name'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: 'another'}}, [])),
       '<i cols="another"></i>',
-      'should stringify known numbers set to a string'
+      'should serialize known numbers set to a string'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(
         u(
           'element',
@@ -238,25 +238,25 @@ test('`element` attributes', function(t) {
         )
       ),
       '<i cols="yup"></i>',
-      'should stringify known numbers set to an object'
+      'should serialize known numbers set to an object'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: ['a', 'b']}}, [])),
       '<i cols="a b"></i>',
-      'should stringify known numbers set to an array of strings'
+      'should serialize known numbers set to an array of strings'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: [0, 50]}}, [])),
       '<i cols="0 50"></i>',
-      'should stringify known numbers set to an array of numbers'
+      'should serialize known numbers set to an array of numbers'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {cols: [true, false]}}, [])),
       '<i cols="true false"></i>',
-      'should stringify known numbers set to an array of booleans'
+      'should serialize known numbers set to an array of booleans'
     )
 
     st.end()
@@ -278,25 +278,25 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {className: 0}}, [])),
       '<i class="0"></i>',
-      'should stringify known space-separated lists set to `0`'
+      'should serialize known space-separated lists set to `0`'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {className: true}}, [])),
       '<i class></i>',
-      'should stringify known space-separated lists set to `true` as without value'
+      'should serialize known space-separated lists set to `true` as without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {className: ''}}, [])),
       '<i class=""></i>',
-      'should stringify known space-separated lists set to an empty string'
+      'should serialize known space-separated lists set to an empty string'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {className: 'class'}}, [])),
       '<i class="class"></i>',
-      'should stringify known space-separated lists set to their attribute name'
+      'should serialize known space-separated lists set to their attribute name'
     )
 
     st.deepEqual(
@@ -304,16 +304,16 @@ test('`element` attributes', function(t) {
         u('element', {tagName: 'i', properties: {className: 'className'}}, [])
       ),
       '<i class="className"></i>',
-      'should stringify known space-separated lists set to their property name'
+      'should serialize known space-separated lists set to their property name'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {className: 'another'}}, [])),
       '<i class="another"></i>',
-      'should stringify known space-separated lists set to a string'
+      'should serialize known space-separated lists set to a string'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(
         u(
           'element',
@@ -322,27 +322,27 @@ test('`element` attributes', function(t) {
         )
       ),
       '<i class="yup"></i>',
-      'should stringify known space-separated lists set to an object'
+      'should serialize known space-separated lists set to an object'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {className: ['a', 'b']}}, [])),
       '<i class="a b"></i>',
-      'should stringify known space-separated lists set to an array of strings'
+      'should serialize known space-separated lists set to an array of strings'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {className: [0, 50]}}, [])),
       '<i class="0 50"></i>',
-      'should stringify known space-separated lists set to an array of numbers'
+      'should serialize known space-separated lists set to an array of numbers'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(
         u('element', {tagName: 'i', properties: {className: [true, false]}}, [])
       ),
       '<i class="true false"></i>',
-      'should stringify known space-separated lists set to an array of booleans'
+      'should serialize known space-separated lists set to an array of booleans'
     )
 
     st.end()
@@ -364,34 +364,34 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: 0}}, [])),
       '<i accept="0"></i>',
-      'should stringify known comma-separated lists set to `0`'
+      'should serialize known comma-separated lists set to `0`'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: true}}, [])),
       '<i accept></i>',
-      'should stringify known comma-separated lists set to `true` as without value'
+      'should serialize known comma-separated lists set to `true` as without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: ''}}, [])),
       '<i accept=""></i>',
-      'should stringify known comma-separated lists set to an empty string'
+      'should serialize known comma-separated lists set to an empty string'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: 'accept'}}, [])),
       '<i accept="accept"></i>',
-      'should stringify known comma-separated lists set to their name'
+      'should serialize known comma-separated lists set to their name'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: 'another'}}, [])),
       '<i accept="another"></i>',
-      'should stringify known comma-separated lists set to a string'
+      'should serialize known comma-separated lists set to a string'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(
         u(
           'element',
@@ -400,25 +400,25 @@ test('`element` attributes', function(t) {
         )
       ),
       '<i accept="yup"></i>',
-      'should stringify known comma-separated lists set to an object'
+      'should serialize known comma-separated lists set to an object'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])),
       '<i accept="a, b"></i>',
-      'should stringify known comma-separated lists set to an array of strings'
+      'should serialize known comma-separated lists set to an array of strings'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: [0, 50]}}, [])),
       '<i accept="0, 50"></i>',
-      'should stringify known comma-separated lists set to an array of numbers'
+      'should serialize known comma-separated lists set to an array of numbers'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: [true, false]}}, [])),
       '<i accept="true, false"></i>',
-      'should stringify known comma-separated lists set to an array of booleans'
+      'should serialize known comma-separated lists set to an array of booleans'
     )
 
     st.end()
@@ -440,57 +440,57 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {id: 0}}, [])),
       '<i id="0"></i>',
-      'should stringify known normals set to `0`'
+      'should serialize known normals set to `0`'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {id: true}}, [])),
       '<i id></i>',
-      'should stringify known normals set to `true` as without value'
+      'should serialize known normals set to `true` as without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {id: ''}}, [])),
       '<i id=""></i>',
-      'should stringify known normals set to an empty string'
+      'should serialize known normals set to an empty string'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {id: 'id'}}, [])),
       '<i id="id"></i>',
-      'should stringify known normals set to their name'
+      'should serialize known normals set to their name'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {id: 'another'}}, [])),
       '<i id="another"></i>',
-      'should stringify known normals set to a string'
+      'should serialize known normals set to a string'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(
         u('element', {tagName: 'i', properties: {id: {toString: toString}}}, [])
       ),
       '<i id="yup"></i>',
-      'should stringify known normals set to an object'
+      'should serialize known normals set to an object'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {id: ['a', 'b']}}, [])),
       '<i id="a b"></i>',
-      'should stringify known normals set to an array of strings as a space-separated list'
+      'should serialize known normals set to an array of strings as a space-separated list'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {id: [0, 50]}}, [])),
       '<i id="0 50"></i>',
-      'should stringify known normals set to an array of numbers as a space-separated list'
+      'should serialize known normals set to an array of numbers as a space-separated list'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {id: [true, false]}}, [])),
       '<i id="true false"></i>',
-      'should stringify known normals set to an array of booleans as a space-separated list'
+      'should serialize known normals set to an array of booleans as a space-separated list'
     )
 
     st.end()
@@ -512,46 +512,46 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: 0}}, [])),
       '<i data-id="0"></i>',
-      'should stringify data properties set to `0`'
+      'should serialize data properties set to `0`'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: true}}, [])),
       '<i data-id></i>',
-      'should stringify data properties set to `true` as without value'
+      'should serialize data properties set to `true` as without value'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: ''}}, [])),
       '<i data-id=""></i>',
-      'should stringify data properties set to an empty string'
+      'should serialize data properties set to an empty string'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: 'dataId'}}, [])),
       '<i data-id="dataId"></i>',
-      'should stringify data properties set to their property name'
+      'should serialize data properties set to their property name'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: 'data-id'}}, [])),
       '<i data-id="data-id"></i>',
-      'should stringify data properties set to their attribute name'
+      'should serialize data properties set to their attribute name'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: 'another'}}, [])),
       '<i data-id="another"></i>',
-      'should stringify data properties set to a string'
+      'should serialize data properties set to a string'
     )
 
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {data123: 'a'}}, [])),
       '<i data-123="a"></i>',
-      'should stringify numeric-first data properties set to a string'
+      'should serialize numeric-first data properties set to a string'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(
         u(
           'element',
@@ -560,25 +560,25 @@ test('`element` attributes', function(t) {
         )
       ),
       '<i data-id="yup"></i>',
-      'should stringify data properties set to an object'
+      'should serialize data properties set to an object'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: ['a', 'b']}}, [])),
       '<i data-id="a b"></i>',
-      'should stringify data properties set to an array of strings as a space-separated list'
+      'should serialize data properties set to an array of strings as a space-separated list'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: [0, 50]}}, [])),
       '<i data-id="0 50"></i>',
-      'should stringify data properties set to an array of numbers as a space-separated list'
+      'should serialize data properties set to an array of numbers as a space-separated list'
     )
 
-    t.deepEqual(
+    st.deepEqual(
       to(u('element', {tagName: 'i', properties: {dataId: [true, false]}}, [])),
       '<i data-id="true false"></i>',
-      'should stringify data properties set to an array of booleans as a space-separated list'
+      'should serialize data properties set to an array of booleans as a space-separated list'
     )
 
     st.end()
@@ -606,7 +606,7 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {title: 'a', id: 'b'}}, [])),
       '<i title="a" id="b"></i>',
-      'should stringify multiple properties'
+      'should serialize multiple properties'
     )
 
     st.deepEqual(
@@ -614,7 +614,7 @@ test('`element` attributes', function(t) {
         tightAttributes: true
       }),
       '<i title="a"id="b"></i>',
-      'should stringify multiple properties tightly in `tightAttributes` mode'
+      'should serialize multiple properties tightly in `tightAttributes` mode'
     )
 
     st.end()
@@ -624,7 +624,7 @@ test('`element` attributes', function(t) {
     st.deepEqual(
       to(u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])),
       '<i accept="a, b"></i>',
-      'should stringify comma-separated attributes'
+      'should serialize comma-separated attributes'
     )
 
     st.deepEqual(
@@ -632,7 +632,7 @@ test('`element` attributes', function(t) {
         tightCommaSeparatedLists: true
       }),
       '<i accept="a,b"></i>',
-      'should stringify comma-separated attributes tighly in `tightCommaSeparatedLists` mode'
+      'should serialize comma-separated attributes tighly in `tightCommaSeparatedLists` mode'
     )
 
     st.end()

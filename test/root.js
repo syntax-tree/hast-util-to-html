@@ -11,7 +11,7 @@ test('`root`', function(t) {
       u('root', [u('text', 'alpha '), h('i', 'bravo'), u('text', ' charlie')])
     ),
     'alpha <i>bravo</i> charlie',
-    'should stringify `root`s'
+    'should serialize `root`s'
   )
 
   t.end()

@@ -44,7 +44,7 @@ Yields:
 
 ### `toHtml(tree[, options])`
 
-Stringify the given [**hast**][hast] [*tree*][tree].
+Serialize the given [**hast**][hast] [*tree*][tree].
 
 ###### `options.space`
 
@@ -65,7 +65,7 @@ However, `useNamedReferences`, `useShortestReferences`, and
 
 ###### `options.voids`
 
-Tag names of [*elements*][element] to stringify without closing tag
+Tag names of [*elements*][element] to serialize without closing tag
 (`Array.<string>`, default: [`html-void-elements`][html-void-elements]).
 
 Not used in the SVG space.

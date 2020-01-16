@@ -73,8 +73,6 @@
     "esnext": false,
     "rules": {
       "guard-for-in": "off",
-      "eqeqeq": "off",
-      "no-eq-null": "off",
       "unicorn/prefer-includes": "off"
     },
     "ignores": [

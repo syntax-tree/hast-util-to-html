@@ -10,25 +10,25 @@ test('svg', function(t) {
   t.deepEqual(
     to(s('path'), {space: 'svg'}),
     '<path></path>',
-    'should stringify `element`s'
+    'should serialize `element`s'
   )
 
   t.deepEqual(
     to(s('foo'), {space: 'svg'}),
     '<foo></foo>',
-    'should stringify unknown `element`s'
+    'should serialize unknown `element`s'
   )
 
   t.deepEqual(
     to(s('g', s('circle')), {space: 'svg'}),
     '<g><circle></circle></g>',
-    'should stringify `element`s with content'
+    'should serialize `element`s with content'
   )
 
   t.deepEqual(
     to(s('circle'), {space: 'svg', closeEmptyElements: true}),
     '<circle />',
-    'should stringify with ` /` in `closeEmptyElements` mode'
+    'should serialize with ` /` in `closeEmptyElements` mode'
   )
 
   t.deepEqual(
@@ -38,7 +38,7 @@ test('svg', function(t) {
       tightSelfClosing: true
     }),
     '<circle/>',
-    'should stringify empties with `/` in `closeEmptyElements` and `tightSelfClosing` mode'
+    'should serialize empties with `/` in `closeEmptyElements` and `tightSelfClosing` mode'
   )
 
   // `<circle cx=2 cy=2 r=1/>` does not work in browsers.  Needs a space.
@@ -49,19 +49,19 @@ test('svg', function(t) {
       tightSelfClosing: true
     }),
     '<svg viewBox="0 0 4 4"><circle cx=2 cy=2 r=1 /></svg>',
-    'should stringify empties with `/` in `closeEmptyElements` and `tightSelfClosing` mode, *with* a space after an unquoted attribute'
+    'should serialize empties with `/` in `closeEmptyElements` and `tightSelfClosing` mode, *with* a space after an unquoted attribute'
   )
 
   t.deepEqual(
     to(s('text', {dataFoo: 'alpha'}, 'bravo')),
     '<text data-foo="alpha">bravo</text>',
-    'should stringify properties'
+    'should serialize properties'
   )
 
   t.deepEqual(
     to(s('text', {className: ['alpha']}, 'bravo'), {space: 'svg'}),
     '<text class="alpha">bravo</text>',
-    'should stringify special properties'
+    'should serialize special properties'
   )
 
   t.deepEqual(
@@ -75,7 +75,7 @@ test('svg', function(t) {
       space: 'svg'
     }),
     '<text class="a b" title="c d">bravo</text>',
-    'should stringify multiple properties'
+    'should serialize multiple properties'
   )
 
   t.deepEqual(
@@ -84,19 +84,19 @@ test('svg', function(t) {
       tightAttributes: true
     }),
     '<text class="a b"title="c d">bravo</text>',
-    'should stringify multiple properties tightly in `tightAttributes` mode'
+    'should serialize multiple properties tightly in `tightAttributes` mode'
   )
 
   t.deepEqual(
     to(s('text', {className: ['alpha', 'charlie']}, 'bravo'), {space: 'svg'}),
     '<text class="alpha charlie">bravo</text>',
-    'should stringify space-separated attributes'
+    'should serialize space-separated attributes'
   )
 
   t.deepEqual(
     to(s('glyph', {glyphName: ['foo', 'bar']}), {space: 'svg'}),
     '<glyph glyph-name="foo, bar"></glyph>',
-    'should stringify comma-separated attributes'
+    'should serialize comma-separated attributes'
   )
 
   t.deepEqual(
@@ -105,19 +105,19 @@ test('svg', function(t) {
       space: 'svg'
     }),
     '<glyph glyph-name="foo,bar"></glyph>',
-    'should stringify comma-separated attributes tighly in `tightCommaSeparatedLists` mode'
+    'should serialize comma-separated attributes tighly in `tightCommaSeparatedLists` mode'
   )
 
   t.deepEqual(
     to(s('circle', {unknown: ['alpha', 'bravo']}), {space: true}),
     '<circle unknown="alpha bravo"></circle>',
-    'should stringify unknown lists as space-separated'
+    'should serialize unknown lists as space-separated'
   )
 
   t.deepEqual(
     to(s('a', {download: true}, 'bravo'), {space: 'svg'}),
     '<a download>bravo</a>',
-    'should stringify known boolean attributes set to `true`'
+    'should serialize known boolean attributes set to `true`'
   )
 
   t.deepEqual(
@@ -129,7 +129,7 @@ test('svg', function(t) {
   t.deepEqual(
     to(s('a', {download: 1}, 'bravo'), {space: 'svg'}),
     '<a download>bravo</a>',
-    'should stringify truthy known boolean attributes'
+    'should serialize truthy known boolean attributes'
   )
 
   t.deepEqual(
@@ -147,25 +147,25 @@ test('svg', function(t) {
   t.deepEqual(
     to(s('a', {unknown: true}, 'bravo'), {space: 'svg'}),
     '<a unknown>bravo</a>',
-    'should stringify unknown attributes set to `true`'
+    'should serialize unknown attributes set to `true`'
   )
 
   t.deepEqual(
     to(s('path', {strokeOpacity: 0.7}), {space: 'svg'}),
     '<path stroke-opacity="0.7"></path>',
-    'should stringify positive known numeric attributes'
+    'should serialize positive known numeric attributes'
   )
 
   t.deepEqual(
     to(s('path', {strokeMiterLimit: -1}), {space: 'svg'}),
     '<path stroke-miterlimit="-1"></path>',
-    'should stringify negative known numeric attributes'
+    'should serialize negative known numeric attributes'
   )
 
   t.deepEqual(
     to(s('path', {strokeOpacity: 0}), {space: 'svg'}),
     '<path stroke-opacity="0"></path>',
-    'should stringify known numeric attributes set to `0`'
+    'should serialize known numeric attributes set to `0`'
   )
 
   t.deepEqual(
@@ -177,25 +177,25 @@ test('svg', function(t) {
   t.deepEqual(
     to(s('path', {strokeOpacity: {toString: toString}}), {space: 'svg'}),
     '<path stroke-opacity="yup"></path>',
-    'should stringify known numeric attributes set to non-numeric values'
+    'should serialize known numeric attributes set to non-numeric values'
   )
 
   t.deepEqual(
     to(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg'}),
     '<svg viewBox="0 0 10 10"></svg>',
-    'should stringify other attributes'
+    'should serialize other attributes'
   )
 
   t.deepEqual(
     to(s('svg', {viewBox: ''}), {space: 'svg'}),
     '<svg viewBox=""></svg>',
-    'should stringify other falsey attributes'
+    'should serialize other falsey attributes'
   )
 
   t.deepEqual(
     to(s('i', {id: true}, 'bravo'), {space: 'svg'}),
     '<i id>bravo</i>',
-    'should stringify other non-string attributes'
+    'should serialize other non-string attributes'
   )
 
   t.deepEqual(
@@ -305,7 +305,7 @@ test('svg', function(t) {
       '<circle cx="120" cy="120" r="100"></circle>',
       '</svg>'
     ].join(''),
-    'should stringify an SVG tree'
+    'should serialize an SVG tree'
   )
 
   t.deepEqual(
@@ -331,7 +331,7 @@ test('svg', function(t) {
       '</svg>',
       '</body>'
     ].join(''),
-    'should stringify an HTML tree with embedded HTML'
+    'should serialize an HTML tree with embedded HTML'
   )
 
   t.end()

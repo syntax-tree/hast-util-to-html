@@ -8,33 +8,33 @@ test('`element`', function(t) {
   t.deepEqual(
     to(h('i', 'bravo')),
     '<i>bravo</i>',
-    'should stringify `element`s'
+    'should serialize `element`s'
   )
 
   t.deepEqual(
     to(h('foo')),
     '<foo></foo>',
-    'should stringify unknown `element`s'
+    'should serialize unknown `element`s'
   )
 
-  t.deepEqual(to(h('img')), '<img>', 'should stringify void `element`s')
+  t.deepEqual(to(h('img')), '<img>', 'should serialize void `element`s')
 
   t.deepEqual(
     to(h('foo'), {voids: ['foo']}),
     '<foo>',
-    'should stringify given void `element`s'
+    'should serialize given void `element`s'
   )
 
   t.deepEqual(
     to(h('img'), {closeSelfClosing: true}),
     '<img />',
-    'should stringify with ` /` in `closeSelfClosing` mode'
+    'should serialize with ` /` in `closeSelfClosing` mode'
   )
 
   t.deepEqual(
     to(h('img'), {closeSelfClosing: true, tightSelfClosing: true}),
     '<img/>',
-    'should stringify voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode'
+    'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode'
   )
 
   // This works in a browser.  The `/` is not part of the `[src]`.
@@ -45,7 +45,7 @@ test('`element`', function(t) {
       tightSelfClosing: true
     }),
     '<img src=index.jpg/>',
-    'should stringify voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, without space after an unquoted attribute'
+    'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, without space after an unquoted attribute'
   )
 
   t.deepEqual(
@@ -55,7 +55,7 @@ test('`element`', function(t) {
       tightSelfClosing: true
     }),
     '<img title=/ />',
-    'should stringify voids with a ` /` in if an unquoted attribute ends with `/`'
+    'should serialize voids with a ` /` in if an unquoted attribute ends with `/`'
   )
 
   t.deepEqual(

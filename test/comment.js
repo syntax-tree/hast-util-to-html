@@ -8,7 +8,7 @@ test('`comment`', function(t) {
   t.deepEqual(
     to(u('comment', 'alpha')),
     '<!--alpha-->',
-    'should stringify `comment`s'
+    'should serialize `comment`s'
   )
 
   t.deepEqual(
