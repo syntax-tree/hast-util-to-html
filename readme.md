@@ -44,7 +44,7 @@ Yields:
 
 ### `toHtml(tree[, options])`
 
-Serialize the given [**hast**][hast] [*tree*][tree].
+Serialize the given [**hast**][hast] [*tree*][tree] (or list of nodes).
 
 ###### `options.space`
 

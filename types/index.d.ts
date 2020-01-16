@@ -175,7 +175,7 @@ declare namespace hastUtilToHtml {
  * @param options configuration for stringifier
  */
 declare function hastUtilToHtml(
-  tree: Node,
+  tree: Node | Node[],
   options?: Partial<hastUtilToHtml.HastUtilToHtmlOptions>
 ): string
 
