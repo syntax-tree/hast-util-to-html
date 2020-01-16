@@ -8,8 +8,8 @@ var to = require('..')
 test('security', function(t) {
   t.equal(
     to(u('root', [u('comment', '--><script>alert(1)</script><!--')])),
-    '<!----><script>alert(1)</script><!---->',
-    'comments can break out of their context (unsafe)'
+    '<!----&#x3E;<script>alert(1)</script>&#x3C;!---->',
+    'comments cannot break out of their context (safe)'
   )
 
   t.equal(

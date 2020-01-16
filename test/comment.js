@@ -14,15 +14,38 @@ test('`comment`', function(t) {
   t.deepEqual(
     to(u('comment', 'AT&T')),
     '<!--AT&T-->',
-    'should not encode `comment`s (#1)'
+    'should not encode `comment`s'
   )
 
-  // No way to get around this.
-  t.deepEqual(
-    to(u('comment', '-->')),
-    '<!---->-->',
-    'should not encode `comment`s (#2)'
-  )
+  // https://html.spec.whatwg.org/multipage/syntax.html#comments
+  // Optionally, text, with the additional restriction that the text must not
+  // start with the string `>`, nor start with the string `->`, nor contain the
+  // strings `<!--`, `-->`, or `--!>`, nor end with the string `<!-`.
+  var matrix = [
+    ['>a', '&#x3E;a'],
+    ['->a', '-&#x3E;a'],
+    ['a<!--b', 'a&#x3C;!--b'],
+    ['a-->b', 'a--&#x3E;b'],
+    ['a--!>b', 'a--!&#x3E;b'],
+    ['a<!-', 'a&#x3C;!-'],
+    // Not at start:
+    ['a>'],
+    ['a->'],
+    // Not at end:
+    ['a<!-b']
+  ]
+
+  matrix.forEach(function(d) {
+    var input = d[0]
+    var output = d[1] || d[0]
+    var ok = d[1] === undefined
+
+    t.deepEqual(
+      to(u('comment', input)),
+      '<!--' + output + '-->',
+      'security: should ' + (ok ? 'allow' : 'prevent') + ' `' + input + '`'
+    )
+  })
 
   t.end()
 })
