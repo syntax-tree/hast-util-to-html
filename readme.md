@@ -72,7 +72,7 @@ Not used in the SVG space.
 
 ###### `options.upperDoctype`
 
-Use an `<!DOCTYPE…` instead of `<!doctype…`.
+Use a `<!DOCTYPE…` instead of `<!doctype…`.
 Useless except for XHTML (`boolean`, default: `false`).
 
 ###### `options.quote`

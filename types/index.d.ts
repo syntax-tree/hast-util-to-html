@@ -35,7 +35,7 @@ declare namespace hastUtilToHtml {
     voids: string[]
 
     /**
-     * Use an `<!DOCTYPE…` instead of `<!doctype…`.
+     * Use a `<!DOCTYPE…` instead of `<!doctype…`.
      * Useless except for XHTML.
      *
      * @defaultValue false
