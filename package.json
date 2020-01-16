@@ -33,7 +33,7 @@
     "property-information": "^5.2.0",
     "space-separated-tokens": "^1.0.0",
     "stringify-entities": "^3.0.0",
-    "unist-util-is": "^3.0.0",
+    "unist-util-is": "^4.0.0",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
