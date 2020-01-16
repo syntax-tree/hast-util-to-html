@@ -18,7 +18,7 @@
 npm install hast-util-to-html
 ```
 
-## Usage
+## Use
 
 ```js
 var h = require('hastscript')
