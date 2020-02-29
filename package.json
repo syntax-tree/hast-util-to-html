@@ -1,12 +1,18 @@
 {
   "name": "hast-util-to-html",
   "version": "7.0.0",
-  "description": "Transform hast to HTML",
+  "description": "hast utility to serialize to HTML",
   "license": "MIT",
   "keywords": [
+    "unist",
     "hast",
+    "hast-util",
     "util",
-    "html"
+    "utility",
+    "html",
+    "serialize",
+    "stringify",
+    "tostring"
   ],
   "repository": "syntax-tree/hast-util-to-html",
   "bugs": "https://github.com/syntax-tree/hast-util-to-html/issues",
