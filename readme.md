@@ -8,7 +8,7 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**hast**][hast] utility to transform to HTML.
+[**hast**][hast] utility to serialize to HTML.
 
 ## Install
 
@@ -102,8 +102,8 @@ Not used in the SVG space.
 
 ###### `options.collapseEmptyAttributes`
 
-Collapse empty attributes: `class=""` is stringified as `class` instead
-(`boolean`, default: `false`).
+Collapse empty attributes: get `class` instead of `class=""` (`boolean`,
+default: `false`).
 **Note**: boolean attributes, such as `hidden`, are always collapsed.
 
 Not used in the SVG space.
@@ -139,8 +139,8 @@ padding them on the right as well (`,·`, where `·` represents a space)
 
 ###### `options.tightAttributes`
 
-Join attributes together, without white-space, if possible: `class="a b"
-title="c d"` is stringified as `class="a b"title="c d"` instead to save bytes
+Join attributes together, without white-space, if possible: get
+`class="a b"title="c d"` instead of `class="a b" title="c d"` to save bytes
 (`boolean`, default: `false`).
 **Note**: creates invalid (but working) markup.
 
@@ -191,8 +191,8 @@ See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
 started.
 See [`support.md`][support] for ways to get help.
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -223,7 +223,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/syntax-tree
 
