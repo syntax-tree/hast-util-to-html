@@ -152,6 +152,12 @@ Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>`
 to save bytes (`boolean`, default: `false`).
 **Note**: creates invalid (but working) markup.
 
+###### `options.bogusComments`
+
+Use “bogus comments” instead of comments to save byes: `<?charlie>` instead of
+`<!--charlie-->` (`boolean`, default: `false`).
+**Note**: creates invalid (but working) markup.
+
 ###### `options.allowParseErrors`
 
 Do not encode characters which cause parse errors (even though they work), to

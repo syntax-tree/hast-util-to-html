@@ -17,6 +17,18 @@ test('`comment`', function(t) {
     'should not encode `comment`s'
   )
 
+  t.deepEqual(
+    to(u('comment', 'asd'), {bogusComments: true}),
+    '<?asd>',
+    '`bogusComments`: should serialize bogus comments'
+  )
+
+  t.deepEqual(
+    to(u('comment', 'a<s>d'), {bogusComments: true}),
+    '<?a<s&#x3E;d>',
+    '`bogusComments`: should prevent breaking out of bogus comments'
+  )
+
   // https://html.spec.whatwg.org/multipage/syntax.html#comments
   // Optionally, text, with the additional restriction that the text must not
   // start with the string `>`, nor start with the string `->`, nor contain the
