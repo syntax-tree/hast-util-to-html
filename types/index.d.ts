@@ -22,6 +22,7 @@ declare namespace hastUtilToHtml {
      * @defaultValue {}
      */
     entities: Partial<
+      /* eslint-disable-next-line @typescript-eslint/ban-types */
       Omit<StringifyEntitiesOptions, 'escapeOnly' | 'attribute' | 'subset'>
     >
 
