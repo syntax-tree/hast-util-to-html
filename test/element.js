@@ -4,7 +4,7 @@ var test = require('tape')
 var h = require('hastscript')
 var to = require('..')
 
-test('`element`', function(t) {
+test('`element`', function (t) {
   t.deepEqual(
     to(h('i', 'bravo')),
     '<i>bravo</i>',

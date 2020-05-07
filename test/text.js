@@ -5,7 +5,7 @@ var h = require('hastscript')
 var u = require('unist-builder')
 var to = require('..')
 
-test('`text`', function(t) {
+test('`text`', function (t) {
   t.deepEqual(to(u('text', 'alpha')), 'alpha', 'should serialize `text`s')
 
   t.deepEqual(

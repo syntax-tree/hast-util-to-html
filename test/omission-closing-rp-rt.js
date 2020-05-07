@@ -4,8 +4,8 @@ var test = require('tape')
 var h = require('hastscript')
 var to = require('..')
 
-'rp,rt'.split(',').forEach(function(tagName, index, values) {
-  test('`' + tagName + '` (closing)', function(t) {
+'rp,rt'.split(',').forEach(function (tagName, index, values) {
+  test('`' + tagName + '` (closing)', function (t) {
     var other = values[index ? 0 : 1]
 
     t.deepEqual(

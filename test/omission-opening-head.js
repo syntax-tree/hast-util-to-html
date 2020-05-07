@@ -4,7 +4,7 @@ var test = require('tape')
 var h = require('hastscript')
 var to = require('..')
 
-test('`head` (opening)', function(t) {
+test('`head` (opening)', function (t) {
   t.deepEqual(
     to(h('head', h('meta', {charSet: 'utf8'})), {omitOptionalTags: true}),
     '<meta charset="utf8">',

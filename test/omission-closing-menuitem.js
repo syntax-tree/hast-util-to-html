@@ -4,7 +4,7 @@ var test = require('tape')
 var h = require('hastscript')
 var to = require('..')
 
-test('`menuitem` (closing)', function(t) {
+test('`menuitem` (closing)', function (t) {
   t.deepEqual(
     to(h('menuitem', 'alpha'), {omitOptionalTags: true}),
     '<menuitem>alpha',

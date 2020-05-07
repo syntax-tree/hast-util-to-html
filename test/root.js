@@ -5,7 +5,7 @@ var h = require('hastscript')
 var u = require('unist-builder')
 var to = require('..')
 
-test('`root`', function(t) {
+test('`root`', function (t) {
   t.deepEqual(
     to(
       u('root', [u('text', 'alpha '), h('i', 'bravo'), u('text', ' charlie')])

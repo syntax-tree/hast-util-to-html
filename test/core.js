@@ -5,9 +5,9 @@ var u = require('unist-builder')
 var h = require('hastscript')
 var to = require('..')
 
-test('toHtml()', function(t) {
+test('toHtml()', function (t) {
   t.throws(
-    function() {
+    function () {
       to(true)
     },
     /Expected node, not `true`/,
@@ -15,7 +15,7 @@ test('toHtml()', function(t) {
   )
 
   t.throws(
-    function() {
+    function () {
       to(u('foo', []))
     },
     /Cannot compile unknown node `foo`/,

@@ -5,7 +5,7 @@ var h = require('hastscript')
 var u = require('unist-builder')
 var to = require('..')
 
-test('`colgroup` (closing)', function(t) {
+test('`colgroup` (closing)', function (t) {
   t.deepEqual(
     to(h('colgroup'), {omitOptionalTags: true}),
     '<colgroup>',

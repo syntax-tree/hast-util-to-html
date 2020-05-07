@@ -5,7 +5,7 @@ var h = require('hastscript')
 var u = require('unist-builder')
 var to = require('..')
 
-test('security', function(t) {
+test('security', function (t) {
   t.equal(
     to(u('root', [u('comment', '--><script>alert(1)</script><!--')])),
     '<!----&#x3E;<script>alert(1)</script>&#x3C;!---->',

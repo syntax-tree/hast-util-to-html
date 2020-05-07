@@ -4,7 +4,7 @@ var test = require('tape')
 var u = require('unist-builder')
 var to = require('..')
 
-test('`comment`', function(t) {
+test('`comment`', function (t) {
   t.deepEqual(
     to(u('comment', 'alpha')),
     '<!--alpha-->',
@@ -47,7 +47,7 @@ test('`comment`', function(t) {
     ['a<!-b']
   ]
 
-  matrix.forEach(function(d) {
+  matrix.forEach(function (d) {
     var input = d[0]
     var output = d[1] || d[0]
     var ok = d[1] === undefined

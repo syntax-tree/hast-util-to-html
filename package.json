@@ -48,16 +48,16 @@
     "dtslint": "^3.0.0",
     "hastscript": "^5.0.0",
     "nyc": "^15.0.0",
-    "prettier": "^1.0.0",
-    "remark-cli": "^7.0.0",
-    "remark-preset-wooorm": "^6.0.0",
-    "tape": "^4.0.0",
+    "prettier": "^2.0.0",
+    "remark-cli": "^8.0.0",
+    "remark-preset-wooorm": "^7.0.0",
+    "tape": "^5.0.0",
     "tinyify": "^2.0.0",
     "unist-builder": "^2.0.0",
-    "xo": "^0.27.0"
+    "xo": "^0.30.0"
   },
   "scripts": {
-    "format": "remark . -qfo && prettier --write \"**/*.{js,ts}\" && xo --fix",
+    "format": "remark . -qfo && prettier --write . && xo --fix",
     "build-bundle": "browserify . -s hastUtilToHtml > hast-util-to-html.js",
     "build-mangle": "browserify . -s hastUtilToHtml -p tinyify > hast-util-to-html.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
@@ -78,8 +78,9 @@
     "prettier": true,
     "esnext": false,
     "rules": {
-      "guard-for-in": "off",
-      "unicorn/prefer-includes": "off"
+      "unicorn/prefer-includes": "off",
+      "unicorn/prefer-number-properties": "off",
+      "guard-for-in": "off"
     },
     "ignores": [
       "hast-util-to-html.js"

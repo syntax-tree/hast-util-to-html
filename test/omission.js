@@ -4,7 +4,7 @@ var test = require('tape')
 var h = require('hastscript')
 var to = require('..')
 
-test('`omitOptionalTags` mode', function(t) {
+test('`omitOptionalTags` mode', function (t) {
   t.deepEqual(
     to(h('html'), {omitOptionalTags: true}),
     '',

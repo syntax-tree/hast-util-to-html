@@ -4,7 +4,7 @@ var test = require('tape')
 var h = require('hastscript')
 var to = require('..')
 
-test('`optgroup` (closing)', function(t) {
+test('`optgroup` (closing)', function (t) {
   t.deepEqual(
     to(h('optgroup'), {omitOptionalTags: true}),
     '<optgroup>',

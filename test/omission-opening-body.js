@@ -5,7 +5,7 @@ var u = require('unist-builder')
 var h = require('hastscript')
 var to = require('..')
 
-test('`body` (opening)', function(t) {
+test('`body` (opening)', function (t) {
   t.deepEqual(
     to(h('body'), {omitOptionalTags: true}),
     '',

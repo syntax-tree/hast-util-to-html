@@ -186,7 +186,7 @@ Use [`hast-util-santize`][sanitize] to make the hast tree safe.
 
 ## Related
 
-*   [`hast-util-sanitize`][hast-util-sanitize]
+*   [`hast-util-sanitize`][sanitize]
     — Sanitize hast nodes
 *   [`rehype-stringify`](https://github.com/wooorm/rehype/tree/master/packages/rehype-stringify)
     — Wrapper around this project for [**rehype**](https://github.com/wooorm/rehype)
@@ -248,8 +248,6 @@ abide by its terms.
 [html-void-elements]: https://github.com/wooorm/html-void-elements
 
 [stringify-entities]: https://github.com/wooorm/stringify-entities
-
-[hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
 
 [tree]: https://github.com/syntax-tree/unist#tree
 

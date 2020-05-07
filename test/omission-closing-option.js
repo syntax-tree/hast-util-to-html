@@ -4,7 +4,7 @@ var test = require('tape')
 var h = require('hastscript')
 var to = require('..')
 
-test('`option` (closing)', function(t) {
+test('`option` (closing)', function (t) {
   t.deepEqual(
     to(h('option'), {omitOptionalTags: true}),
     '<option>',

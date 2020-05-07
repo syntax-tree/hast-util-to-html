@@ -4,7 +4,7 @@ var test = require('tape')
 var h = require('hastscript')
 var to = require('..')
 
-test('`tr` (closing)', function(t) {
+test('`tr` (closing)', function (t) {
   t.deepEqual(
     to(h('tr'), {omitOptionalTags: true}),
     '<tr>',

@@ -6,7 +6,7 @@ var s = require('hastscript/svg')
 var h = require('hastscript')
 var to = require('..')
 
-test('svg', function(t) {
+test('svg', function (t) {
   t.deepEqual(
     to(s('path'), {space: 'svg'}),
     '<path></path>',
