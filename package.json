@@ -1,6 +1,6 @@
 {
   "name": "hast-util-to-html",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "description": "hast utility to serialize to HTML",
   "license": "MIT",
   "keywords": [
