@@ -12,7 +12,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue 'html'
      */
-    space: 'html' | 'svg'
+    space?: 'html' | 'svg'
 
     /**
      * Configuration for `stringify-entities`.
@@ -21,9 +21,10 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue {}
      */
-    entities: Partial<
-      /* eslint-disable-next-line @typescript-eslint/ban-types */
-      Omit<StringifyEntitiesOptions, 'escapeOnly' | 'attribute' | 'subset'>
+    /* eslint-disable-next-line @typescript-eslint/ban-types */
+    entities?: Omit<
+      StringifyEntitiesOptions,
+      'escapeOnly' | 'attribute' | 'subset'
     >
 
     /**
@@ -33,7 +34,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue `require('html-void-elements')`
      */
-    voids: string[]
+    voids?: string[]
 
     /**
      * Use a `<!DOCTYPE…` instead of `<!doctype…`.
@@ -41,21 +42,21 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    upperDoctype: boolean
+    upperDoctype?: boolean
 
     /**
      * Preferred quote to use.
      *
      * @defaultValue '"'
      */
-    quote: '"' | "'"
+    quote?: '"' | "'"
 
     /**
      * Use the other quote if that results in less bytes.
      *
      * @defaultValue false
      */
-    quoteSmart: boolean
+    quoteSmart?: boolean
 
     /**
      * Leave attributes unquoted if that results in less bytes.
@@ -64,7 +65,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    preferUnquoted: boolean
+    preferUnquoted?: boolean
 
     /**
      * Omit optional opening and closing tags.
@@ -75,7 +76,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    omitOptionalTags: boolean
+    omitOptionalTags?: boolean
 
     /**
      * Collapse empty attributes: `class=""` is stringified as `class` instead.
@@ -85,7 +86,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    collapseEmptyAttributes: boolean
+    collapseEmptyAttributes?: boolean
 
     /**
      * Close self-closing nodes with an extra slash (`/`): `<img />` instead of `<img>`.
@@ -95,7 +96,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    closeSelfClosing: boolean
+    closeSelfClosing?: boolean
 
     /**
      * Close SVG elements without any content with slash (`/`) on the opening tag instead of an end tag: `<circle />` instead of `<circle></circle>`.
@@ -105,7 +106,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    closeEmptyElements: boolean
+    closeEmptyElements?: boolean
 
     /**
      * Do not use an extra space when closing self-closing elements: `<img/>` instead of `<img />`.
@@ -113,14 +114,14 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    tightSelfClosing: boolean
+    tightSelfClosing?: boolean
 
     /**
      * Join known comma-separated attribute values with just a comma (`,`), instead of padding them on the right as well (`,·`, where `·` represents a space).
      *
      * @defaultValue false
      */
-    tightCommaSeparatedLists: boolean
+    tightCommaSeparatedLists?: boolean
 
     /**
      * Join attributes together, without white-space, if possible: `class="a b" title="c d"` is stringified as `class="a b"title="c d"` instead to save bytes.
@@ -130,7 +131,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    tightAttributes: boolean
+    tightAttributes?: boolean
 
     /**
      * Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>` to save bytes.
@@ -138,7 +139,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    tightDoctype: boolean
+    tightDoctype?: boolean
 
     /**
      * Do not encode characters which cause parse errors (even though they work), to save bytes.
@@ -148,7 +149,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    allowParseErrors: boolean
+    allowParseErrors?: boolean
 
     /**
      * Do not encode some characters which cause XSS vulnerabilities in older browsers.
@@ -156,7 +157,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    allowDangerousCharacters: boolean
+    allowDangerousCharacters?: boolean
 
     /**
      * Allow `raw` nodes and insert them as raw HTML.
@@ -165,7 +166,7 @@ declare namespace hastUtilToHtml {
      *
      * @defaultValue false
      */
-    allowDangerousHtml: boolean
+    allowDangerousHtml?: boolean
   }
 }
 
@@ -177,7 +178,7 @@ declare namespace hastUtilToHtml {
  */
 declare function hastUtilToHtml(
   tree: Node | Node[],
-  options?: Partial<hastUtilToHtml.HastUtilToHtmlOptions>
+  options?: hastUtilToHtml.HastUtilToHtmlOptions
 ): string
 
 export = hastUtilToHtml
