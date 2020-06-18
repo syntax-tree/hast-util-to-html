@@ -54,10 +54,10 @@
     "tape": "^5.0.0",
     "tinyify": "^2.0.0",
     "unist-builder": "^2.0.0",
-    "xo": "^0.30.0"
+    "xo": "^0.32.0"
   },
   "scripts": {
-    "format": "remark . -qfo && prettier --write . && xo --fix",
+    "format": "remark . -qfo && prettier . --write && xo --fix",
     "build-bundle": "browserify . -s hastUtilToHtml > hast-util-to-html.js",
     "build-mangle": "browserify . -s hastUtilToHtml -p tinyify > hast-util-to-html.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
