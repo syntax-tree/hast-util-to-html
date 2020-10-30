@@ -78,9 +78,19 @@
     "prettier": true,
     "esnext": false,
     "rules": {
+      "complexity": "off",
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "ignore"
+        }
+      ],
+      "guard-for-in": "off",
+      "no-eq-null": "off",
+      "no-self-compare": "off",
       "unicorn/prefer-includes": "off",
-      "unicorn/prefer-number-properties": "off",
-      "guard-for-in": "off"
+      "unicorn/prefer-number-properties": "off"
     },
     "ignores": [
       "hast-util-to-html.js"

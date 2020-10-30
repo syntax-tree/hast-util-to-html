@@ -14,5 +14,7 @@ test('`root`', function (t) {
     'should serialize `root`s'
   )
 
+  t.deepEqual(to(u('root')), '', 'should serialize `root`s w/o children')
+
   t.end()
 })
