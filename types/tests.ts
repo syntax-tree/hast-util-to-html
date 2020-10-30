@@ -6,7 +6,6 @@ const node: Node = {
   tagName: 'div'
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 const result: string = toHtml(node)
 
 toHtml(node, {
