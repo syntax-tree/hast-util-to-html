@@ -54,12 +54,12 @@
     "tape": "^5.0.0",
     "tinyify": "^3.0.0",
     "unist-builder": "^2.0.0",
-    "xo": "^0.34.0"
+    "xo": "^0.35.0"
   },
   "scripts": {
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
-    "build-bundle": "browserify . -s hastUtilToHtml > hast-util-to-html.js",
-    "build-mangle": "browserify . -s hastUtilToHtml -p tinyify > hast-util-to-html.min.js",
+    "build-bundle": "browserify . -s hastUtilToHtml -o hast-util-to-html.js",
+    "build-mangle": "browserify . -s hastUtilToHtml -o hast-util-to-html.min.js -p tinyify",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test/index.js",
