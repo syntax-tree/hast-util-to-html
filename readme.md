@@ -207,9 +207,9 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/syntax-tree/hast-util-to-html.svg
+[build-badge]: https://github.com/syntax-tree/hast-util-to-html/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/syntax-tree/hast-util-to-html
+[build]: https://github.com/syntax-tree/hast-util-to-html/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/hast-util-to-html.svg
 
