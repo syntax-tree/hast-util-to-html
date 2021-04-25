@@ -310,6 +310,25 @@ test('svg', function (t) {
 
   t.deepEqual(
     to(
+      h('div', [
+        s(
+          'svg',
+          {
+            xlmns: 'http://www.w3.org/2000/svg',
+            strokeLineCap: 'round',
+            strokeLineJoin: 'round',
+            viewBox: [0, 0, 8, 8]
+          },
+          [s('path', {stroke: 'blue', d: 'M0 6V3h1l1 1v2'})]
+        )
+      ])
+    ),
+    '<div><svg xlmns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 8 8"><path stroke="blue" d="M0 6V3h1l1 1v2"></path></svg></div>',
+    'should serialize SVG props on an `svg` element in HTML'
+  )
+
+  t.deepEqual(
+    to(
       u('root', [
         u('doctype', {name: 'html'}),
         h('head', h('title', 'The SVG `<circle>` element')),
