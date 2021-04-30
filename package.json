@@ -24,47 +24,42 @@
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "types": "types/index.d.ts",
   "files": [
     "lib",
-    "index.js",
-    "types/index.d.ts"
+    "types/index.d.ts",
+    "index.js"
   ],
-  "types": "types/index.d.ts",
   "dependencies": {
-    "ccount": "^1.0.0",
-    "comma-separated-tokens": "^1.0.0",
-    "hast-util-is-element": "^1.0.0",
-    "hast-util-whitespace": "^1.0.0",
-    "html-void-elements": "^1.0.0",
-    "property-information": "^5.0.0",
-    "space-separated-tokens": "^1.0.0",
-    "stringify-entities": "^3.0.1",
-    "unist-util-is": "^4.0.0",
-    "xtend": "^4.0.0"
+    "ccount": "^2.0.0",
+    "comma-separated-tokens": "^2.0.0",
+    "hast-util-is-element": "^2.0.0",
+    "hast-util-whitespace": "^2.0.0",
+    "html-void-elements": "^2.0.0",
+    "property-information": "^6.0.0",
+    "space-separated-tokens": "^2.0.0",
+    "stringify-entities": "^4.0.0",
+    "unist-util-is": "^5.0.0"
   },
   "devDependencies": {
     "@types/unist": "^2.0.0",
-    "browserify": "^17.0.0",
-    "dtslint": "^4.0.0",
-    "hastscript": "^6.0.0",
-    "nyc": "^15.0.0",
+    "c8": "^7.0.0",
+    "hastscript": "^7.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^9.0.0",
     "remark-preset-wooorm": "^8.0.0",
     "tape": "^5.0.0",
-    "tinyify": "^3.0.0",
-    "unist-builder": "^2.0.0",
-    "xo": "^0.38.0"
+    "unist-builder": "^3.0.0",
+    "xo": "^0.39.0"
   },
   "scripts": {
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
-    "build-bundle": "browserify . -s hastUtilToHtml -o hast-util-to-html.js",
-    "build-mangle": "browserify . -s hastUtilToHtml -o hast-util-to-html.min.js -p tinyify",
-    "build": "npm run build-bundle && npm run build-mangle",
-    "test-api": "node test",
-    "test-coverage": "nyc --reporter lcov tape test/index.js",
-    "test-types": "dtslint types",
-    "test": "npm run format && npm run build && npm run test-coverage && npm run test-types"
+    "test-api": "node test/index.js",
+    "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov node test/index.js",
+    "test": "npm run format && npm run test-coverage"
   },
   "prettier": {
     "tabWidth": 2,
@@ -76,32 +71,13 @@
   },
   "xo": {
     "prettier": true,
-    "esnext": false,
     "rules": {
-      "complexity": "off",
-      "eqeqeq": [
-        "error",
-        "always",
-        {
-          "null": "ignore"
-        }
-      ],
-      "guard-for-in": "off",
-      "no-eq-null": "off",
-      "no-self-compare": "off",
-      "unicorn/no-array-for-each": "off",
-      "unicorn/prefer-includes": "off",
-      "unicorn/prefer-number-properties": "off"
+      "no-var": "off",
+      "prefer-arrow-callback": "off"
     },
     "ignores": [
-      "hast-util-to-html.js"
+      "types/"
     ]
-  },
-  "nyc": {
-    "check-coverage": true,
-    "lines": 100,
-    "functions": 100,
-    "branches": 100
   },
   "remarkConfig": {
     "plugins": [

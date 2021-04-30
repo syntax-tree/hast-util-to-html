@@ -32,7 +32,7 @@ declare namespace hastUtilToHtml {
      *
      * Not used in the SVG space.
      *
-     * @defaultValue `require('html-void-elements')`
+     * @defaultValue `import {htmlVoidElements} from 'html-void-elements'`
      */
     voids?: string[]
 
@@ -124,7 +124,7 @@ declare namespace hastUtilToHtml {
     tightCommaSeparatedLists?: boolean
 
     /**
-     * Join attributes together, without white-space, if possible: `class="a b" title="c d"` is stringified as `class="a b"title="c d"` instead to save bytes.
+     * Join attributes together, without whitespace, if possible: `class="a b" title="c d"` is stringified as `class="a b"title="c d"` instead to save bytes.
      * **Note**: creates invalid (but working) markup.
      *
      * Not used in the SVG space.

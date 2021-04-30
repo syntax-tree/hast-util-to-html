@@ -1,36 +1,34 @@
-'use strict'
-
-var test = require('tape')
-var u = require('unist-builder')
-var to = require('..')
+import test from 'tape'
+import {u} from 'unist-builder'
+import {toHtml} from '../index.js'
 
 test('`text`', function (t) {
   t.deepEqual(
-    to(u('doctype')),
+    toHtml(u('doctype')),
     '<!doctype>',
     'should serialize doctypes without `name`'
   )
 
   t.deepEqual(
-    to(u('doctype', {name: 'html'})),
+    toHtml(u('doctype', {name: 'html'})),
     '<!doctype html>',
     'should serialize doctypes with `name`'
   )
 
   t.deepEqual(
-    to(u('doctype', {name: 'html'}), {tightDoctype: true}),
+    toHtml(u('doctype', {name: 'html'}), {tightDoctype: true}),
     '<!doctypehtml>',
     'should serialize doctypes with `name` tightly in `tightDoctype` mode'
   )
 
   t.deepEqual(
-    to(u('doctype', {name: 'html'}), {upperDoctype: true}),
+    toHtml(u('doctype', {name: 'html'}), {upperDoctype: true}),
     '<!DOCTYPE html>',
     'should serialize uppercase doctypes in `upperDoctype` mode'
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       u('doctype', {
         name: 'html',
         public: '-//W3C//DTD XHTML 1.0 Transitional//EN'
@@ -41,7 +39,7 @@ test('`text`', function (t) {
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       u('doctype', {
         name: 'html',
         public: '-//W3C//DTD XHTML 1.0 Transitional//EN'
@@ -53,13 +51,13 @@ test('`text`', function (t) {
   )
 
   t.deepEqual(
-    to(u('doctype', {name: 'html', system: 'about:legacy-compat'})),
+    toHtml(u('doctype', {name: 'html', system: 'about:legacy-compat'})),
     '<!doctype html system "about:legacy-compat">',
     'should serialize doctypes with a system identifier'
   )
 
   t.deepEqual(
-    to(u('doctype', {name: 'html', system: 'about:legacy-compat'}), {
+    toHtml(u('doctype', {name: 'html', system: 'about:legacy-compat'}), {
       tightDoctype: true
     }),
     '<!doctypehtml system"about:legacy-compat">',
@@ -67,7 +65,7 @@ test('`text`', function (t) {
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       u('doctype', {
         name: 'html',
         public: '-//W3C//DTD HTML 4.01//',
@@ -79,7 +77,7 @@ test('`text`', function (t) {
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       u('doctype', {
         name: 'html',
         public: '-//W3C//DTD HTML 4.01//',
@@ -92,7 +90,7 @@ test('`text`', function (t) {
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       u('doctype', {
         name: 'html',
         system: 'taco"'

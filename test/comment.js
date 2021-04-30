@@ -1,30 +1,28 @@
-'use strict'
-
-var test = require('tape')
-var u = require('unist-builder')
-var to = require('..')
+import test from 'tape'
+import {u} from 'unist-builder'
+import {toHtml} from '../index.js'
 
 test('`comment`', function (t) {
   t.deepEqual(
-    to(u('comment', 'alpha')),
+    toHtml(u('comment', 'alpha')),
     '<!--alpha-->',
     'should serialize `comment`s'
   )
 
   t.deepEqual(
-    to(u('comment', 'AT&T')),
+    toHtml(u('comment', 'AT&T')),
     '<!--AT&T-->',
     'should not encode `comment`s'
   )
 
   t.deepEqual(
-    to(u('comment', 'asd'), {bogusComments: true}),
+    toHtml(u('comment', 'asd'), {bogusComments: true}),
     '<?asd>',
     '`bogusComments`: should serialize bogus comments'
   )
 
   t.deepEqual(
-    to(u('comment', 'a<s>d'), {bogusComments: true}),
+    toHtml(u('comment', 'a<s>d'), {bogusComments: true}),
     '<?a<s&#x3E;d>',
     '`bogusComments`: should prevent breaking out of bogus comments'
   )
@@ -46,18 +44,19 @@ test('`comment`', function (t) {
     // Not at end:
     ['a<!-b']
   ]
+  var index = -1
 
-  matrix.forEach(function (d) {
-    var input = d[0]
-    var output = d[1] || d[0]
-    var ok = d[1] === undefined
-
+  while (++index < matrix.length) {
     t.deepEqual(
-      to(u('comment', input)),
-      '<!--' + output + '-->',
-      'security: should ' + (ok ? 'allow' : 'prevent') + ' `' + input + '`'
+      toHtml(u('comment', matrix[index][0])),
+      '<!--' + (matrix[index][1] || matrix[index][0]) + '-->',
+      'security: should ' +
+        (matrix[index][1] === undefined ? 'allow' : 'prevent') +
+        ' `' +
+        matrix[index][0] +
+        '`'
     )
-  })
+  }
 
   t.end()
 })

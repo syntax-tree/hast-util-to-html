@@ -1,38 +1,35 @@
-'use strict'
-
-var test = require('tape')
-var u = require('unist-builder')
-var s = require('hastscript/svg')
-var h = require('hastscript')
-var to = require('..')
+import test from 'tape'
+import {u} from 'unist-builder'
+import {h, s} from 'hastscript'
+import {toHtml} from '../index.js'
 
 test('svg', function (t) {
   t.deepEqual(
-    to(s('path'), {space: 'svg'}),
+    toHtml(s('path'), {space: 'svg'}),
     '<path></path>',
     'should serialize `element`s'
   )
 
   t.deepEqual(
-    to(s('foo'), {space: 'svg'}),
+    toHtml(s('foo'), {space: 'svg'}),
     '<foo></foo>',
     'should serialize unknown `element`s'
   )
 
   t.deepEqual(
-    to(s('g', s('circle')), {space: 'svg'}),
+    toHtml(s('g', s('circle')), {space: 'svg'}),
     '<g><circle></circle></g>',
     'should serialize `element`s with content'
   )
 
   t.deepEqual(
-    to(s('circle'), {space: 'svg', closeEmptyElements: true}),
+    toHtml(s('circle'), {space: 'svg', closeEmptyElements: true}),
     '<circle />',
     'should serialize with ` /` in `closeEmptyElements` mode'
   )
 
   t.deepEqual(
-    to(s('circle'), {
+    toHtml(s('circle'), {
       space: 'svg',
       closeEmptyElements: true,
       tightSelfClosing: true
@@ -43,7 +40,7 @@ test('svg', function (t) {
 
   // `<circle cx=2 cy=2 r=1/>` does not work in browsers.  Needs a space.
   t.deepEqual(
-    to(s('svg', {viewBox: '0 0 4 4'}, s('circle', {cx: 2, cy: 2, r: 1})), {
+    toHtml(s('svg', {viewBox: '0 0 4 4'}, s('circle', {cx: 2, cy: 2, r: 1})), {
       preferUnquoted: true,
       closeEmptyElements: true,
       tightSelfClosing: true
@@ -53,25 +50,28 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(s('text', {dataFoo: 'alpha'}, 'bravo')),
+    toHtml(s('text', {dataFoo: 'alpha'}, 'bravo')),
     '<text data-foo="alpha">bravo</text>',
     'should serialize properties'
   )
 
   t.deepEqual(
-    to(s('text', {className: ['alpha']}, 'bravo'), {space: 'svg'}),
+    toHtml(s('text', {className: ['alpha']}, 'bravo'), {space: 'svg'}),
     '<text class="alpha">bravo</text>',
     'should serialize special properties'
   )
 
   t.deepEqual(
-    to(s('circle', {title: ''}), {space: 'svg', collapseEmptyAttributes: true}),
+    toHtml(s('circle', {title: ''}), {
+      space: 'svg',
+      collapseEmptyAttributes: true
+    }),
     '<circle title></circle>',
     'should collapse empty string attributes in `collapseEmptyAttributes` mode'
   )
 
   t.deepEqual(
-    to(s('text', {className: ['a', 'b'], title: 'c d'}, 'bravo'), {
+    toHtml(s('text', {className: ['a', 'b'], title: 'c d'}, 'bravo'), {
       space: 'svg'
     }),
     '<text class="a b" title="c d">bravo</text>',
@@ -79,7 +79,7 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(s('text', {className: ['a', 'b'], title: 'c d'}, 'bravo'), {
+    toHtml(s('text', {className: ['a', 'b'], title: 'c d'}, 'bravo'), {
       space: 'svg',
       tightAttributes: true
     }),
@@ -88,19 +88,21 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(s('text', {className: ['alpha', 'charlie']}, 'bravo'), {space: 'svg'}),
+    toHtml(s('text', {className: ['alpha', 'charlie']}, 'bravo'), {
+      space: 'svg'
+    }),
     '<text class="alpha charlie">bravo</text>',
     'should serialize space-separated attributes'
   )
 
   t.deepEqual(
-    to(s('glyph', {glyphName: ['foo', 'bar']}), {space: 'svg'}),
+    toHtml(s('glyph', {glyphName: ['foo', 'bar']}), {space: 'svg'}),
     '<glyph glyph-name="foo, bar"></glyph>',
     'should serialize comma-separated attributes'
   )
 
   t.deepEqual(
-    to(s('glyph', {glyphName: ['foo', 'bar']}), {
+    toHtml(s('glyph', {glyphName: ['foo', 'bar']}), {
       tightCommaSeparatedLists: true,
       space: 'svg'
     }),
@@ -109,109 +111,109 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(s('circle', {unknown: ['alpha', 'bravo']}), {space: true}),
+    toHtml(s('circle', {unknown: ['alpha', 'bravo']}), {space: true}),
     '<circle unknown="alpha bravo"></circle>',
     'should serialize unknown lists as space-separated'
   )
 
   t.deepEqual(
-    to(s('a', {download: true}, 'bravo'), {space: 'svg'}),
+    toHtml(s('a', {download: true}, 'bravo'), {space: 'svg'}),
     '<a download>bravo</a>',
     'should serialize known boolean attributes set to `true`'
   )
 
   t.deepEqual(
-    to(s('a', {download: false}, 'bravo'), {space: 'svg'}),
+    toHtml(s('a', {download: false}, 'bravo'), {space: 'svg'}),
     '<a>bravo</a>',
     'should ignore known boolean attributes set to `false`'
   )
 
   t.deepEqual(
-    to(s('a', {download: 1}, 'bravo'), {space: 'svg'}),
+    toHtml(s('a', {download: 1}, 'bravo'), {space: 'svg'}),
     '<a download>bravo</a>',
     'should serialize truthy known boolean attributes'
   )
 
   t.deepEqual(
-    to(s('a', {download: 0}, 'bravo'), {space: 'svg'}),
+    toHtml(s('a', {download: 0}, 'bravo'), {space: 'svg'}),
     '<a>bravo</a>',
     'should ignore falsey known boolean attributes'
   )
 
   t.deepEqual(
-    to(s('a', {unknown: false}, 'bravo'), {space: 'svg'}),
+    toHtml(s('a', {unknown: false}, 'bravo'), {space: 'svg'}),
     '<a>bravo</a>',
     'should ignore unknown attributes set to `false`'
   )
 
   t.deepEqual(
-    to(s('a', {unknown: true}, 'bravo'), {space: 'svg'}),
+    toHtml(s('a', {unknown: true}, 'bravo'), {space: 'svg'}),
     '<a unknown>bravo</a>',
     'should serialize unknown attributes set to `true`'
   )
 
   t.deepEqual(
-    to(s('path', {strokeOpacity: 0.7}), {space: 'svg'}),
+    toHtml(s('path', {strokeOpacity: 0.7}), {space: 'svg'}),
     '<path stroke-opacity="0.7"></path>',
     'should serialize positive known numeric attributes'
   )
 
   t.deepEqual(
-    to(s('path', {strokeMiterLimit: -1}), {space: 'svg'}),
+    toHtml(s('path', {strokeMiterLimit: -1}), {space: 'svg'}),
     '<path stroke-miterlimit="-1"></path>',
     'should serialize negative known numeric attributes'
   )
 
   t.deepEqual(
-    to(s('path', {strokeOpacity: 0}), {space: 'svg'}),
+    toHtml(s('path', {strokeOpacity: 0}), {space: 'svg'}),
     '<path stroke-opacity="0"></path>',
     'should serialize known numeric attributes set to `0`'
   )
 
   t.deepEqual(
-    to(s('path', {strokeOpacity: NaN}), {space: 'svg'}),
+    toHtml(s('path', {strokeOpacity: Number.NaN}), {space: 'svg'}),
     '<path></path>',
     'should ignore known numeric attributes set to `NaN`'
   )
 
   t.deepEqual(
-    to(s('path', {strokeOpacity: {toString: toString}}), {space: 'svg'}),
+    toHtml(s('path', {strokeOpacity: {toString}}), {space: 'svg'}),
     '<path stroke-opacity="yup"></path>',
     'should serialize known numeric attributes set to non-numeric values'
   )
 
   t.deepEqual(
-    to(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg'}),
+    toHtml(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg'}),
     '<svg viewBox="0 0 10 10"></svg>',
     'should serialize other attributes'
   )
 
   t.deepEqual(
-    to(s('svg', {viewBox: ''}), {space: 'svg'}),
+    toHtml(s('svg', {viewBox: ''}), {space: 'svg'}),
     '<svg viewBox=""></svg>',
     'should serialize other falsey attributes'
   )
 
   t.deepEqual(
-    to(s('i', {id: true}, 'bravo'), {space: 'svg'}),
+    toHtml(s('i', {id: true}, 'bravo'), {space: 'svg'}),
     '<i id>bravo</i>',
     'should serialize other non-string attributes'
   )
 
   t.deepEqual(
-    to(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg', quote: "'"}),
+    toHtml(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg', quote: "'"}),
     "<svg viewBox='0 0 10 10'></svg>",
     'should quote attribute values with single quotes if `quote: "\'"`'
   )
 
   t.deepEqual(
-    to(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg', quote: '"'}),
+    toHtml(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg', quote: '"'}),
     '<svg viewBox="0 0 10 10"></svg>',
     "should quote attribute values with double quotes if `quote: '\"'`"
   )
 
   t.deepEqual(
-    to(s('circle', {title: '"some \' stuff"'}), {
+    toHtml(s('circle', {title: '"some \' stuff"'}), {
       space: 'svg',
       quote: '"',
       quoteSmart: true
@@ -221,7 +223,7 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(s('circle', {title: "'some \" stuff'"}), {
+    toHtml(s('circle', {title: "'some \" stuff'"}), {
       space: 'svg',
       quote: '"',
       quoteSmart: true
@@ -231,37 +233,43 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(s('circle', {cx: 2}), {space: 'svg', preferUnquoted: true}),
+    toHtml(s('circle', {cx: 2}), {space: 'svg', preferUnquoted: true}),
     '<circle cx=2></circle>',
     'should omit quotes in `preferUnquoted`'
   )
 
   t.deepEqual(
-    to(s('circle', {'3<5\0': 'alpha'}), {space: 'svg'}),
+    toHtml(s('circle', {'3<5\0': 'alpha'}), {space: 'svg'}),
     '<circle 3&#x3C;5&#x0;="alpha"></circle>',
     'should encode entities in attribute names'
   )
 
   t.deepEqual(
-    to(s('circle', {title: '3<5\0'}), {space: 'svg'}),
+    toHtml(s('circle', {title: '3<5\0'}), {space: 'svg'}),
     '<circle title="3<5&#x0;"></circle>',
     'should encode entities in attribute values'
   )
 
   t.deepEqual(
-    to(s('circle', {'3=5\0': 'alpha'}), {space: 'svg', allowParseErrors: true}),
+    toHtml(s('circle', {'3=5\0': 'alpha'}), {
+      space: 'svg',
+      allowParseErrors: true
+    }),
     '<circle 3&#x3D;5&#x0;="alpha"></circle>',
     '*should* encode characters in attribute names which cause parse errors, work, even though `allowParseErrors` mode is on'
   )
 
   t.deepEqual(
-    to(s('circle', {title: '3"5\0'}), {space: 'svg', allowParseErrors: true}),
+    toHtml(s('circle', {title: '3"5\0'}), {
+      space: 'svg',
+      allowParseErrors: true
+    }),
     '<circle title="3&#x22;5&#x0;"></circle>',
     '*should* encode characters in attribute values which cause parse errors, work, even though `allowParseErrors` mode is on'
   )
 
   t.deepEqual(
-    to(s('circle', {title: "3'5"}), {
+    toHtml(s('circle', {title: "3'5"}), {
       space: 'svg',
       allowDangerousCharacters: true
     }),
@@ -270,19 +278,19 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(u('element', {tagName: 'circle', properties: {id: null}}, [])),
+    toHtml(u('element', {tagName: 'circle', properties: {id: null}}, [])),
     '<circle></circle>',
     'should ignore attributes set to `null`'
   )
 
   t.deepEqual(
-    to(u('element', {tagName: 'circle', properties: {id: undefined}}, [])),
+    toHtml(u('element', {tagName: 'circle', properties: {id: undefined}}, [])),
     '<circle></circle>',
     'should ignore attributes set to `undefined`'
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       s(
         'svg',
         {
@@ -309,7 +317,7 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       h('div', [
         s(
           'svg',
@@ -328,7 +336,7 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       u('root', [
         u('doctype', {name: 'html'}),
         h('head', h('title', 'The SVG `<circle>` element')),

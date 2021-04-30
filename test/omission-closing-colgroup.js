@@ -1,31 +1,29 @@
-'use strict'
-
-var test = require('tape')
-var h = require('hastscript')
-var u = require('unist-builder')
-var to = require('..')
+import test from 'tape'
+import {h} from 'hastscript'
+import {u} from 'unist-builder'
+import {toHtml} from '../index.js'
 
 test('`colgroup` (closing)', function (t) {
   t.deepEqual(
-    to(h('colgroup'), {omitOptionalTags: true}),
+    toHtml(h('colgroup'), {omitOptionalTags: true}),
     '<colgroup>',
     'should not omit tag without children'
   )
 
   t.deepEqual(
-    to(h('colgroup', h('col', {span: 2})), {omitOptionalTags: true}),
+    toHtml(h('colgroup', h('col', {span: 2})), {omitOptionalTags: true}),
     '<col span="2">',
     'should omit tag if head is `col`'
   )
 
   t.deepEqual(
-    to(h('colgroup', [u('comment', 'alpha')]), {omitOptionalTags: true}),
+    toHtml(h('colgroup', [u('comment', 'alpha')]), {omitOptionalTags: true}),
     '<colgroup><!--alpha-->',
     'should not omit tag if head is not `col`'
   )
 
   t.deepEqual(
-    to(
+    toHtml(
       h('table', [
         h('colgroup', [h('col', {span: 2})]),
         h('colgroup', [h('col', {span: 3})])

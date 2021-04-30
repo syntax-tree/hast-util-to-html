@@ -1,6 +1,2 @@
-.nyc_output/
 coverage/
-hast-util-to-html.js
-hast-util-to-html.min.js
-*.json
 *.md

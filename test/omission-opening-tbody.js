@@ -1,24 +1,22 @@
-'use strict'
-
-var test = require('tape')
-var h = require('hastscript')
-var to = require('..')
+import test from 'tape'
+import {h} from 'hastscript'
+import {toHtml} from '../index.js'
 
 test('`tbody` (opening)', function (t) {
   t.deepEqual(
-    to(h('tbody'), {omitOptionalTags: true}),
+    toHtml(h('tbody'), {omitOptionalTags: true}),
     '<tbody>',
     'should not omit tag without children'
   )
 
   t.deepEqual(
-    to(h('tbody', h('tr')), {omitOptionalTags: true}),
+    toHtml(h('tbody', h('tr')), {omitOptionalTags: true}),
     '<tr>',
     'should omit tag if head is `tr`'
   )
 
   t.deepEqual(
-    to(h('table', [h('thead', h('tr')), h('tbody', h('tr'))]), {
+    toHtml(h('table', [h('thead', h('tr')), h('tbody', h('tr'))]), {
       omitOptionalTags: true
     }),
     '<table><thead><tr><tbody><tr></table>',
@@ -26,7 +24,7 @@ test('`tbody` (opening)', function (t) {
   )
 
   t.deepEqual(
-    to(h('table', [h('tbody', h('tr')), h('tbody', h('tr'))]), {
+    toHtml(h('table', [h('tbody', h('tr')), h('tbody', h('tr'))]), {
       omitOptionalTags: true
     }),
     '<table><tr><tbody><tr></table>',

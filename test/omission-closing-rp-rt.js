@@ -1,39 +1,38 @@
-'use strict'
+import test from 'tape'
+import {h} from 'hastscript'
+import {toHtml} from '../index.js'
 
-var test = require('tape')
-var h = require('hastscript')
-var to = require('..')
-
+// eslint-disable-next-line unicorn/no-array-for-each
 'rp,rt'.split(',').forEach(function (tagName, index, values) {
   test('`' + tagName + '` (closing)', function (t) {
     var other = values[index ? 0 : 1]
 
     t.deepEqual(
-      to(h(tagName), {omitOptionalTags: true}),
+      toHtml(h(tagName), {omitOptionalTags: true}),
       '<' + tagName + '>',
       'should omit tag without parent'
     )
 
     t.deepEqual(
-      to(h('ruby', h(tagName)), {omitOptionalTags: true}),
+      toHtml(h('ruby', h(tagName)), {omitOptionalTags: true}),
       '<ruby><' + tagName + '></ruby>',
       'should omit tag without following'
     )
 
     t.deepEqual(
-      to(h('ruby', [h(tagName), h(tagName)]), {omitOptionalTags: true}),
+      toHtml(h('ruby', [h(tagName), h(tagName)]), {omitOptionalTags: true}),
       '<ruby><' + tagName + '><' + tagName + '></ruby>',
       'should omit tag followed by `' + tagName + '`'
     )
 
     t.deepEqual(
-      to(h('ruby', [h(tagName), h(other)]), {omitOptionalTags: true}),
+      toHtml(h('ruby', [h(tagName), h(other)]), {omitOptionalTags: true}),
       '<ruby><' + tagName + '><' + other + '></ruby>',
       'should omit tag followed by `' + other + '`'
     )
 
     t.deepEqual(
-      to(h('ruby', [h(tagName), h('p')]), {omitOptionalTags: true}),
+      toHtml(h('ruby', [h(tagName), h('p')]), {omitOptionalTags: true}),
       '<ruby><' + tagName + '></' + tagName + '><p></ruby>',
       'should not omit tag followed by others'
     )

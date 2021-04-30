@@ -1,22 +1,20 @@
-'use strict'
-
 /* eslint-disable import/no-unassigned-import */
-require('./omission-closing-body')
-require('./omission-closing-caption')
-require('./omission-closing-colgroup')
-require('./omission-closing-dd')
-require('./omission-closing-dt')
-require('./omission-closing-head')
-require('./omission-closing-html')
-require('./omission-closing-li')
-require('./omission-closing-menuitem')
-require('./omission-closing-optgroup')
-require('./omission-closing-option')
-require('./omission-closing-p')
-require('./omission-closing-rp-rt')
-require('./omission-closing-tbody')
-require('./omission-closing-td-th')
-require('./omission-closing-tfoot')
-require('./omission-closing-thead')
-require('./omission-closing-tr')
+import './omission-closing-body.js'
+import './omission-closing-caption.js'
+import './omission-closing-colgroup.js'
+import './omission-closing-dd.js'
+import './omission-closing-dt.js'
+import './omission-closing-head.js'
+import './omission-closing-html.js'
+import './omission-closing-li.js'
+import './omission-closing-menuitem.js'
+import './omission-closing-optgroup.js'
+import './omission-closing-option.js'
+import './omission-closing-p.js'
+import './omission-closing-rp-rt.js'
+import './omission-closing-tbody.js'
+import './omission-closing-td-th.js'
+import './omission-closing-tfoot.js'
+import './omission-closing-thead.js'
+import './omission-closing-tr.js'
 /* eslint-enable import/no-unassigned-import */

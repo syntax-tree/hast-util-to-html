@@ -1,36 +1,34 @@
-'use strict'
-
-var test = require('tape')
-var h = require('hastscript')
-var to = require('..')
+import test from 'tape'
+import {h} from 'hastscript'
+import {toHtml} from '../index.js'
 
 test('`option` (closing)', function (t) {
   t.deepEqual(
-    to(h('option'), {omitOptionalTags: true}),
+    toHtml(h('option'), {omitOptionalTags: true}),
     '<option>',
     'should omit tag without parent'
   )
 
   t.deepEqual(
-    to(h('select', h('option')), {omitOptionalTags: true}),
+    toHtml(h('select', h('option')), {omitOptionalTags: true}),
     '<select><option></select>',
     'should omit tag without following'
   )
 
   t.deepEqual(
-    to(h('select', [h('option'), h('option')]), {omitOptionalTags: true}),
+    toHtml(h('select', [h('option'), h('option')]), {omitOptionalTags: true}),
     '<select><option><option></select>',
     'should omit tag followed by `option`'
   )
 
   t.deepEqual(
-    to(h('select', [h('option'), h('optgroup')]), {omitOptionalTags: true}),
+    toHtml(h('select', [h('option'), h('optgroup')]), {omitOptionalTags: true}),
     '<select><option><optgroup></select>',
     'should omit tag followed by `optgroup`'
   )
 
   t.deepEqual(
-    to(h('select', [h('option'), h('p')]), {omitOptionalTags: true}),
+    toHtml(h('select', [h('option'), h('p')]), {omitOptionalTags: true}),
     '<select><option></option><p></select>',
     'should not omit tag followed by others'
   )

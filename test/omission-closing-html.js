@@ -1,25 +1,27 @@
-'use strict'
-
-var test = require('tape')
-var h = require('hastscript')
-var u = require('unist-builder')
-var to = require('..')
+import test from 'tape'
+import {h} from 'hastscript'
+import {u} from 'unist-builder'
+import {toHtml} from '../index.js'
 
 test('`html` (closing)', function (t) {
   t.deepEqual(
-    to(h('html'), {omitOptionalTags: true}),
+    toHtml(h('html'), {omitOptionalTags: true}),
     '',
     'should omit tag without following'
   )
 
   t.deepEqual(
-    to(u('root', [h('html'), u('comment', 'alpha')]), {omitOptionalTags: true}),
+    toHtml(u('root', [h('html'), u('comment', 'alpha')]), {
+      omitOptionalTags: true
+    }),
     '</html><!--alpha-->',
     'should not omit tag if followed by `comment`'
   )
 
   t.deepEqual(
-    to(u('root', [h('html'), u('text', 'alpha')]), {omitOptionalTags: true}),
+    toHtml(u('root', [h('html'), u('text', 'alpha')]), {
+      omitOptionalTags: true
+    }),
     'alpha',
     'should omit tag if not followed by `comment`'
   )

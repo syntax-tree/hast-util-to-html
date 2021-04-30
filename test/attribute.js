@@ -1,73 +1,75 @@
-'use strict'
-
-var test = require('tape')
-var h = require('hastscript')
-var u = require('unist-builder')
-var to = require('..')
+import test from 'tape'
+import {h} from 'hastscript'
+import {u} from 'unist-builder'
+import {toHtml} from '../index.js'
 
 test('`element` attributes', function (t) {
   t.test('unknown', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: false}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {unknown: false}}, [])),
       '<i></i>',
       'should ignore unknowns set to `false`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: null}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {unknown: null}}, [])),
       '<i></i>',
       'should ignore unknowns set to `null`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: undefined}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {unknown: undefined}}, [])
+      ),
       '<i></i>',
       'should ignore unknowns set to `undefined`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: NaN}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {unknown: Number.NaN}}, [])
+      ),
       '<i></i>',
       'should ignore unknowns set to `NaN`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: true}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {unknown: true}}, [])),
       '<i unknown></i>',
       'should serialize unknowns set to `true` without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: 'unknown'}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {unknown: 'unknown'}}, [])
+      ),
       '<i unknown="unknown"></i>',
       'should serialize unknowns set to their name as their name'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: ['a', 'b']}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {unknown: ['a', 'b']}}, [])
+      ),
       '<i unknown="a b"></i>',
       'should serialize unknown lists as space-separated'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: 1}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {unknown: 1}}, [])),
       '<i unknown="1"></i>',
       'should serialize unknowns set to an integer as it’s string version'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {unknown: 0}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {unknown: 0}}, [])),
       '<i unknown="0"></i>',
       'should serialize unknowns set to `0`'
     )
 
     st.deepEqual(
-      to(
-        u(
-          'element',
-          {tagName: 'i', properties: {unknown: {toString: toString}}},
-          []
-        )
+      toHtml(
+        u('element', {tagName: 'i', properties: {unknown: {toString}}}, [])
       ),
       '<i unknown="yup"></i>',
       'should serialize unknowns set to objects'
@@ -78,37 +80,39 @@ test('`element` attributes', function (t) {
 
   t.test('known booleans', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {hidden: false}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {hidden: false}}, [])),
       '<i></i>',
       'should ignore known booleans set to `false`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {hidden: 0}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {hidden: 0}}, [])),
       '<i></i>',
       'should ignore falsey known booleans'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {hidden: NaN}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {hidden: Number.NaN}}, [])
+      ),
       '<i></i>',
       'should ignore NaN known booleans'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {hidden: true}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {hidden: true}}, [])),
       '<i hidden></i>',
       'should serialize known booleans set to `true` without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {hidden: 'hidden'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {hidden: 'hidden'}}, [])),
       '<i hidden></i>',
       'should serialize known booleans set to their name without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {hidden: 1}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {hidden: 1}}, [])),
       '<i hidden></i>',
       'should serialize truthy known booleans without value'
     )
@@ -118,49 +122,55 @@ test('`element` attributes', function (t) {
 
   t.test('known overloaded booleans', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {download: false}}, [])),
+      toHtml(u('element', {tagName: 'a', properties: {download: false}}, [])),
       '<a></a>',
       'should ignore known overloaded booleans set to `false`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {download: 0}}, [])),
+      toHtml(u('element', {tagName: 'a', properties: {download: 0}}, [])),
       '<a></a>',
       'should ignore falsey known overloaded booleans'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {download: NaN}}, [])),
+      toHtml(
+        u('element', {tagName: 'a', properties: {download: Number.NaN}}, [])
+      ),
       '<a></a>',
       'should ignore NaN known overloaded booleans'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {download: true}}, [])),
+      toHtml(u('element', {tagName: 'a', properties: {download: true}}, [])),
       '<a download></a>',
       'should serialize known overloaded booleans set to `true` without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {download: 'download'}}, [])),
+      toHtml(
+        u('element', {tagName: 'a', properties: {download: 'download'}}, [])
+      ),
       '<a download></a>',
       'should serialize known overloaded booleans set to their name without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {download: ''}}, [])),
+      toHtml(u('element', {tagName: 'a', properties: {download: ''}}, [])),
       '<a download></a>',
       'should serialize known overloaded booleans set to an empty string without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {download: 1}}, [])),
+      toHtml(u('element', {tagName: 'a', properties: {download: 1}}, [])),
       '<a download></a>',
       'should serialize truthy known overloaded booleans without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {download: 'another'}}, [])),
+      toHtml(
+        u('element', {tagName: 'a', properties: {download: 'another'}}, [])
+      ),
       '<a download="another"></a>',
       'should serialize known overloaded booleans set to another string'
     )
@@ -170,91 +180,87 @@ test('`element` attributes', function (t) {
 
   t.test('known numbers', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: false}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: false}}, [])),
       '<i></i>',
       'should ignore known numbers set to `false`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {cols: NaN}}, [])),
+      toHtml(u('element', {tagName: 'a', properties: {cols: Number.NaN}}, [])),
       '<a></a>',
       'should ignore NaN known numbers'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: 0}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: 0}}, [])),
       '<i cols="0"></i>',
       'should serialize known numbers set to `0`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: -1}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: -1}}, [])),
       '<i cols="-1"></i>',
       'should serialize known numbers set to `-1`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: 1}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: 1}}, [])),
       '<i cols="1"></i>',
       'should serialize known numbers set to `1`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: Math.PI}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: Math.PI}}, [])),
       '<i cols="3.141592653589793"></i>',
       'should serialize known numbers set to `Math.PI`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: true}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: true}}, [])),
       '<i cols></i>',
       'should serialize known numbers set to `true` as without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: ''}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: ''}}, [])),
       '<i cols=""></i>',
       'should serialize known numbers set to an empty string'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: 'cols'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: 'cols'}}, [])),
       '<i cols="cols"></i>',
       'should serialize known numbers set to their name'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: 'another'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: 'another'}}, [])),
       '<i cols="another"></i>',
       'should serialize known numbers set to a string'
     )
 
     st.deepEqual(
-      to(
-        u(
-          'element',
-          {tagName: 'i', properties: {cols: {toString: toString}}},
-          []
-        )
-      ),
+      toHtml(u('element', {tagName: 'i', properties: {cols: {toString}}}, [])),
       '<i cols="yup"></i>',
       'should serialize known numbers set to an object'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: ['a', 'b']}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: ['a', 'b']}}, [])),
       '<i cols="a b"></i>',
       'should serialize known numbers set to an array of strings'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: [0, 50]}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {cols: [0, 50]}}, [])),
       '<i cols="0 50"></i>',
       'should serialize known numbers set to an array of numbers'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {cols: [true, false]}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {cols: [true, false]}}, [])
+      ),
       '<i cols="true false"></i>',
       'should serialize known numbers set to an array of booleans'
     )
@@ -264,43 +270,47 @@ test('`element` attributes', function (t) {
 
   t.test('known space-separated lists', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {className: false}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {className: false}}, [])),
       '<i></i>',
       'should ignore known space-separated lists set to `false`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {className: NaN}}, [])),
+      toHtml(
+        u('element', {tagName: 'a', properties: {className: Number.NaN}}, [])
+      ),
       '<a></a>',
       'should ignore NaN known space-separated lists'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {className: 0}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {className: 0}}, [])),
       '<i class="0"></i>',
       'should serialize known space-separated lists set to `0`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {className: true}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {className: true}}, [])),
       '<i class></i>',
       'should serialize known space-separated lists set to `true` as without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {className: ''}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {className: ''}}, [])),
       '<i class=""></i>',
       'should serialize known space-separated lists set to an empty string'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {className: 'class'}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {className: 'class'}}, [])
+      ),
       '<i class="class"></i>',
       'should serialize known space-separated lists set to their attribute name'
     )
 
     st.deepEqual(
-      to(
+      toHtml(
         u('element', {tagName: 'i', properties: {className: 'className'}}, [])
       ),
       '<i class="className"></i>',
@@ -308,37 +318,39 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {className: 'another'}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {className: 'another'}}, [])
+      ),
       '<i class="another"></i>',
       'should serialize known space-separated lists set to a string'
     )
 
     st.deepEqual(
-      to(
-        u(
-          'element',
-          {tagName: 'i', properties: {className: {toString: toString}}},
-          []
-        )
+      toHtml(
+        u('element', {tagName: 'i', properties: {className: {toString}}}, [])
       ),
       '<i class="yup"></i>',
       'should serialize known space-separated lists set to an object'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {className: ['a', 'b']}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {className: ['a', 'b']}}, [])
+      ),
       '<i class="a b"></i>',
       'should serialize known space-separated lists set to an array of strings'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {className: [0, 50]}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {className: [0, 50]}}, [])
+      ),
       '<i class="0 50"></i>',
       'should serialize known space-separated lists set to an array of numbers'
     )
 
     st.deepEqual(
-      to(
+      toHtml(
         u('element', {tagName: 'i', properties: {className: [true, false]}}, [])
       ),
       '<i class="true false"></i>',
@@ -350,73 +362,75 @@ test('`element` attributes', function (t) {
 
   t.test('known comma-separated lists', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: false}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {accept: false}}, [])),
       '<i></i>',
       'should ignore known comma-separated lists set to `false`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'a', properties: {accept: NaN}}, [])),
+      toHtml(
+        u('element', {tagName: 'a', properties: {accept: Number.NaN}}, [])
+      ),
       '<a></a>',
       'should ignore NaN known comma-separated lists'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: 0}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {accept: 0}}, [])),
       '<i accept="0"></i>',
       'should serialize known comma-separated lists set to `0`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: true}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {accept: true}}, [])),
       '<i accept></i>',
       'should serialize known comma-separated lists set to `true` as without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: ''}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {accept: ''}}, [])),
       '<i accept=""></i>',
       'should serialize known comma-separated lists set to an empty string'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: 'accept'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {accept: 'accept'}}, [])),
       '<i accept="accept"></i>',
       'should serialize known comma-separated lists set to their name'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: 'another'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {accept: 'another'}}, [])),
       '<i accept="another"></i>',
       'should serialize known comma-separated lists set to a string'
     )
 
     st.deepEqual(
-      to(
-        u(
-          'element',
-          {tagName: 'i', properties: {accept: {toString: toString}}},
-          []
-        )
+      toHtml(
+        u('element', {tagName: 'i', properties: {accept: {toString}}}, [])
       ),
       '<i accept="yup"></i>',
       'should serialize known comma-separated lists set to an object'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])
+      ),
       '<i accept="a, b"></i>',
       'should serialize known comma-separated lists set to an array of strings'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: [0, 50]}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {accept: [0, 50]}}, [])),
       '<i accept="0, 50"></i>',
       'should serialize known comma-separated lists set to an array of numbers'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: [true, false]}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {accept: [true, false]}}, [])
+      ),
       '<i accept="true, false"></i>',
       'should serialize known comma-separated lists set to an array of booleans'
     )
@@ -426,69 +440,67 @@ test('`element` attributes', function (t) {
 
   t.test('known normals', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: false}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: false}}, [])),
       '<i></i>',
       'should ignore known normals set to `false`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: NaN}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: Number.NaN}}, [])),
       '<i></i>',
       'should ignore NaN known normals'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: 0}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: 0}}, [])),
       '<i id="0"></i>',
       'should serialize known normals set to `0`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: true}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: true}}, [])),
       '<i id></i>',
       'should serialize known normals set to `true` as without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: ''}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: ''}}, [])),
       '<i id=""></i>',
       'should serialize known normals set to an empty string'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: 'id'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: 'id'}}, [])),
       '<i id="id"></i>',
       'should serialize known normals set to their name'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: 'another'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: 'another'}}, [])),
       '<i id="another"></i>',
       'should serialize known normals set to a string'
     )
 
     st.deepEqual(
-      to(
-        u('element', {tagName: 'i', properties: {id: {toString: toString}}}, [])
-      ),
+      toHtml(u('element', {tagName: 'i', properties: {id: {toString}}}, [])),
       '<i id="yup"></i>',
       'should serialize known normals set to an object'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: ['a', 'b']}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: ['a', 'b']}}, [])),
       '<i id="a b"></i>',
       'should serialize known normals set to an array of strings as a space-separated list'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: [0, 50]}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: [0, 50]}}, [])),
       '<i id="0 50"></i>',
       'should serialize known normals set to an array of numbers as a space-separated list'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: [true, false]}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: [true, false]}}, [])),
       '<i id="true false"></i>',
       'should serialize known normals set to an array of booleans as a space-separated list'
     )
@@ -498,85 +510,87 @@ test('`element` attributes', function (t) {
 
   t.test('data properties', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: false}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {dataId: false}}, [])),
       '<i></i>',
       'should ignore data properties set to `false`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: NaN}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {dataId: Number.NaN}}, [])
+      ),
       '<i></i>',
       'should ignore NaN data properties'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: 0}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {dataId: 0}}, [])),
       '<i data-id="0"></i>',
       'should serialize data properties set to `0`'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: true}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {dataId: true}}, [])),
       '<i data-id></i>',
       'should serialize data properties set to `true` as without value'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: ''}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {dataId: ''}}, [])),
       '<i data-id=""></i>',
       'should serialize data properties set to an empty string'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: 'dataId'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {dataId: 'dataId'}}, [])),
       '<i data-id="dataId"></i>',
       'should serialize data properties set to their property name'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: 'data-id'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {dataId: 'data-id'}}, [])),
       '<i data-id="data-id"></i>',
       'should serialize data properties set to their attribute name'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: 'another'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {dataId: 'another'}}, [])),
       '<i data-id="another"></i>',
       'should serialize data properties set to a string'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {data123: 'a'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {data123: 'a'}}, [])),
       '<i data-123="a"></i>',
       'should serialize numeric-first data properties set to a string'
     )
 
     st.deepEqual(
-      to(
-        u(
-          'element',
-          {tagName: 'i', properties: {dataId: {toString: toString}}},
-          []
-        )
+      toHtml(
+        u('element', {tagName: 'i', properties: {dataId: {toString}}}, [])
       ),
       '<i data-id="yup"></i>',
       'should serialize data properties set to an object'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: ['a', 'b']}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {dataId: ['a', 'b']}}, [])
+      ),
       '<i data-id="a b"></i>',
       'should serialize data properties set to an array of strings as a space-separated list'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: [0, 50]}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {dataId: [0, 50]}}, [])),
       '<i data-id="0 50"></i>',
       'should serialize data properties set to an array of numbers as a space-separated list'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {dataId: [true, false]}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {dataId: [true, false]}}, [])
+      ),
       '<i data-id="true false"></i>',
       'should serialize data properties set to an array of booleans as a space-separated list'
     )
@@ -586,13 +600,13 @@ test('`element` attributes', function (t) {
 
   t.test('collapseEmptyAttributes', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: ''}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {id: ''}}, [])),
       '<i id=""></i>',
       'should show empty string attributes'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: ''}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {id: ''}}, []), {
         collapseEmptyAttributes: true
       }),
       '<i id></i>',
@@ -604,15 +618,20 @@ test('`element` attributes', function (t) {
 
   t.test('tightAttributes', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: 'a', id: 'b'}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {title: 'a', id: 'b'}}, [])
+      ),
       '<i title="a" id="b"></i>',
       'should serialize multiple properties'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: 'a', id: 'b'}}, []), {
-        tightAttributes: true
-      }),
+      toHtml(
+        u('element', {tagName: 'i', properties: {title: 'a', id: 'b'}}, []),
+        {
+          tightAttributes: true
+        }
+      ),
       '<i title="a"id="b"></i>',
       'should serialize multiple properties tightly in `tightAttributes` mode'
     )
@@ -622,15 +641,20 @@ test('`element` attributes', function (t) {
 
   t.test('tightCommaSeparatedLists', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])),
+      toHtml(
+        u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])
+      ),
       '<i accept="a, b"></i>',
       'should serialize comma-separated attributes'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, []), {
-        tightCommaSeparatedLists: true
-      }),
+      toHtml(
+        u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, []),
+        {
+          tightCommaSeparatedLists: true
+        }
+      ),
       '<i accept="a,b"></i>',
       'should serialize comma-separated attributes tighly in `tightCommaSeparatedLists` mode'
     )
@@ -640,13 +664,13 @@ test('`element` attributes', function (t) {
 
   t.test('quote', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: 'a'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, [])),
       '<i title="a"></i>',
       'should quote attribute values with double quotes by default'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
         quote: "'"
       }),
       "<i title='a'></i>",
@@ -654,7 +678,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
         quote: '"'
       }),
       '<i title="a"></i>',
@@ -662,7 +686,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: "'a'"}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: "'a'"}}, []), {
         quote: "'"
       }),
       "<i title='&#x27;a&#x27;'></i>",
@@ -670,7 +694,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: '"a"'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: '"a"'}}, []), {
         quote: '"'
       }),
       '<i title="&#x22;a&#x22;"></i>',
@@ -679,7 +703,7 @@ test('`element` attributes', function (t) {
 
     st.throws(
       function () {
-        to(h('img'), {quote: '`'})
+        toHtml(h('img'), {quote: '`'})
       },
       /Invalid quote ```, expected `'` or `"`/,
       'should throw on invalid quotes'
@@ -690,7 +714,7 @@ test('`element` attributes', function (t) {
 
   t.test('quoteSmart', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
         allowDangerousCharacters: true,
         quoteSmart: true
       }),
@@ -699,7 +723,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: "'a'"}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: "'a'"}}, []), {
         allowDangerousCharacters: true,
         quoteSmart: true
       }),
@@ -708,7 +732,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: "'\"a'"}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: "'\"a'"}}, []), {
         allowDangerousCharacters: true,
         quoteSmart: true
       }),
@@ -717,7 +741,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: '"a\''}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: '"a\''}}, []), {
         allowDangerousCharacters: true,
         quoteSmart: true
       }),
@@ -726,7 +750,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: '"\'a\'"'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: '"\'a\'"'}}, []), {
         allowDangerousCharacters: true,
         quoteSmart: true
       }),
@@ -735,7 +759,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: '"a"'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: '"a"'}}, []), {
         allowDangerousCharacters: true,
         quoteSmart: true
       }),
@@ -744,7 +768,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: '"\'a"'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: '"\'a"'}}, []), {
         allowDangerousCharacters: true,
         quoteSmart: true
       }),
@@ -757,7 +781,7 @@ test('`element` attributes', function (t) {
 
   t.test('preferUnquoted', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: 'a'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {id: 'a'}}, []), {
         preferUnquoted: true
       }),
       '<i id=a></i>',
@@ -765,7 +789,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: 'a b'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {id: 'a b'}}, []), {
         preferUnquoted: true
       }),
       '<i id="a b"></i>',
@@ -773,7 +797,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {id: ''}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {id: ''}}, []), {
         preferUnquoted: true
       }),
       '<i id></i>',
@@ -785,19 +809,19 @@ test('`element` attributes', function (t) {
 
   t.test('entities in attributes', function (st) {
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {'3<5\0': 'a'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {'3<5\0': 'a'}}, [])),
       '<i 3&#x3C;5&#x0;="a"></i>',
       'should encode entities in attribute names'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: '3<5\0'}}, [])),
+      toHtml(u('element', {tagName: 'i', properties: {title: '3<5\0'}}, [])),
       '<i title="3<5&#x0;"></i>',
       'should encode entities in attribute values'
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {'3=5\0': 'a'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {'3=5\0': 'a'}}, []), {
         allowParseErrors: true
       }),
       '<i 3&#x3D;5\0="a"></i>',
@@ -805,7 +829,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: '3=5\0'}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: '3=5\0'}}, []), {
         allowParseErrors: true
       }),
       '<i title="3=5\0"></i>',
@@ -813,7 +837,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
-      to(u('element', {tagName: 'i', properties: {title: "3'5"}}, []), {
+      toHtml(u('element', {tagName: 'i', properties: {title: "3'5"}}, []), {
         allowDangerousCharacters: true
       }),
       '<i title="3\'5"></i>',

@@ -1,17 +1,15 @@
-'use strict'
-
 /* eslint-disable import/no-unassigned-import */
-require('./core')
-require('./root')
-require('./comment')
-require('./doctype')
-require('./text')
-require('./raw')
-require('./element')
-require('./attribute')
-require('./omission')
-require('./omission-opening')
-require('./omission-closing')
-require('./svg')
-require('./security')
+import './core.js'
+import './root.js'
+import './comment.js'
+import './doctype.js'
+import './text.js'
+import './raw.js'
+import './element.js'
+import './attribute.js'
+import './omission.js'
+import './omission-opening.js'
+import './omission-closing.js'
+import './svg.js'
+import './security.js'
 /* eslint-enable import/no-unassigned-import */

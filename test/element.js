@@ -1,45 +1,43 @@
-'use strict'
-
-var test = require('tape')
-var h = require('hastscript')
-var to = require('..')
+import test from 'tape'
+import {h} from 'hastscript'
+import {toHtml} from '../index.js'
 
 test('`element`', function (t) {
   t.deepEqual(
-    to(h('i', 'bravo')),
+    toHtml(h('i', 'bravo')),
     '<i>bravo</i>',
     'should serialize `element`s'
   )
 
   t.deepEqual(
-    to(h('foo')),
+    toHtml(h('foo')),
     '<foo></foo>',
     'should serialize unknown `element`s'
   )
 
-  t.deepEqual(to(h('img')), '<img>', 'should serialize void `element`s')
+  t.deepEqual(toHtml(h('img')), '<img>', 'should serialize void `element`s')
 
   t.deepEqual(
-    to(h('foo'), {voids: ['foo']}),
+    toHtml(h('foo'), {voids: ['foo']}),
     '<foo>',
     'should serialize given void `element`s'
   )
 
   t.deepEqual(
-    to(h('img'), {closeSelfClosing: true}),
+    toHtml(h('img'), {closeSelfClosing: true}),
     '<img />',
     'should serialize with ` /` in `closeSelfClosing` mode'
   )
 
   t.deepEqual(
-    to(h('img'), {closeSelfClosing: true, tightSelfClosing: true}),
+    toHtml(h('img'), {closeSelfClosing: true, tightSelfClosing: true}),
     '<img/>',
     'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode'
   )
 
   // This works in a browser.  The `/` is not part of the `[src]`.
   t.deepEqual(
-    to(h('img', {src: 'index.jpg'}), {
+    toHtml(h('img', {src: 'index.jpg'}), {
       preferUnquoted: true,
       closeSelfClosing: true,
       tightSelfClosing: true
@@ -49,7 +47,7 @@ test('`element`', function (t) {
   )
 
   t.deepEqual(
-    to(h('img', {title: '/'}), {
+    toHtml(h('img', {title: '/'}), {
       preferUnquoted: true,
       closeSelfClosing: true,
       tightSelfClosing: true
@@ -59,7 +57,7 @@ test('`element`', function (t) {
   )
 
   t.deepEqual(
-    to({
+    toHtml({
       type: 'element',
       tagName: 'template',
       properties: {},

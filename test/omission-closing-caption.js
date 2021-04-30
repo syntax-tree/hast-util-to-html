@@ -1,25 +1,23 @@
-'use strict'
-
-var test = require('tape')
-var h = require('hastscript')
-var u = require('unist-builder')
-var to = require('..')
+import test from 'tape'
+import {h} from 'hastscript'
+import {u} from 'unist-builder'
+import {toHtml} from '../index.js'
 
 test('`caption` (closing)', function (t) {
   t.deepEqual(
-    to(h('caption'), {omitOptionalTags: true}),
+    toHtml(h('caption'), {omitOptionalTags: true}),
     '<caption>',
     'should not omit tag without children'
   )
 
   t.deepEqual(
-    to(h('table', h('caption')), {omitOptionalTags: true}),
+    toHtml(h('table', h('caption')), {omitOptionalTags: true}),
     '<table><caption></table>',
     'should omit tag without following'
   )
 
   t.deepEqual(
-    to(h('table', [h('caption'), u('comment', 'alpha')]), {
+    toHtml(h('table', [h('caption'), u('comment', 'alpha')]), {
       omitOptionalTags: true
     }),
     '<table><caption></caption><!--alpha--></table>',
@@ -27,13 +25,13 @@ test('`caption` (closing)', function (t) {
   )
 
   t.deepEqual(
-    to(h('table', [h('caption'), ' alpha']), {omitOptionalTags: true}),
+    toHtml(h('table', [h('caption'), ' alpha']), {omitOptionalTags: true}),
     '<table><caption></caption> alpha</table>',
-    'should not omit tag followed by white-space'
+    'should not omit tag followed by whitespace'
   )
 
   t.deepEqual(
-    to(h('table', [h('caption'), h('tr')]), {omitOptionalTags: true}),
+    toHtml(h('table', [h('caption'), h('tr')]), {omitOptionalTags: true}),
     '<table><caption><tr></table>',
     'should omit tag followed by others'
   )

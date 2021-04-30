@@ -12,6 +12,9 @@
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -21,8 +24,8 @@ npm install hast-util-to-html
 ## Use
 
 ```js
-var h = require('hastscript')
-var toHtml = require('hast-util-to-html')
+import {h} from 'hastscript'
+import {toHtml} from 'hast-util-to-html'
 
 var tree = h('.alpha', [
   'bravo ',
@@ -41,6 +44,9 @@ Yields:
 ```
 
 ## API
+
+This package exports the following identifiers: `toHtml`.
+There is no default export.
 
 ### `toHtml(tree[, options])`
 
@@ -139,7 +145,7 @@ padding them on the right as well (`,·`, where `·` represents a space)
 
 ###### `options.tightAttributes`
 
-Join attributes together, without white-space, if possible: get
+Join attributes together, without whitespace, if possible: get
 `class="a b"title="c d"` instead of `class="a b" title="c d"` to save bytes
 (`boolean`, default: `false`).
 **Note**: creates invalid (but working) markup.
