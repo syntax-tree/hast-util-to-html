@@ -69,6 +69,7 @@ test('`element` attributes', function (t) {
 
     st.deepEqual(
       toHtml(
+        // @ts-ignore runtime.
         u('element', {tagName: 'i', properties: {unknown: {toString}}}, [])
       ),
       '<i unknown="yup"></i>',
@@ -240,6 +241,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
+      // @ts-ignore runtime.
       toHtml(u('element', {tagName: 'i', properties: {cols: {toString}}}, [])),
       '<i cols="yup"></i>',
       'should serialize known numbers set to an object'
@@ -259,6 +261,7 @@ test('`element` attributes', function (t) {
 
     st.deepEqual(
       toHtml(
+        // @ts-ignore runtime.
         u('element', {tagName: 'i', properties: {cols: [true, false]}}, [])
       ),
       '<i cols="true false"></i>',
@@ -327,6 +330,7 @@ test('`element` attributes', function (t) {
 
     st.deepEqual(
       toHtml(
+        // @ts-ignore runtime.
         u('element', {tagName: 'i', properties: {className: {toString}}}, [])
       ),
       '<i class="yup"></i>',
@@ -351,6 +355,7 @@ test('`element` attributes', function (t) {
 
     st.deepEqual(
       toHtml(
+        // @ts-ignore runtime.
         u('element', {tagName: 'i', properties: {className: [true, false]}}, [])
       ),
       '<i class="true false"></i>',
@@ -407,6 +412,7 @@ test('`element` attributes', function (t) {
 
     st.deepEqual(
       toHtml(
+        // @ts-ignore runtime.
         u('element', {tagName: 'i', properties: {accept: {toString}}}, [])
       ),
       '<i accept="yup"></i>',
@@ -429,6 +435,7 @@ test('`element` attributes', function (t) {
 
     st.deepEqual(
       toHtml(
+        // @ts-ignore runtime.
         u('element', {tagName: 'i', properties: {accept: [true, false]}}, [])
       ),
       '<i accept="true, false"></i>',
@@ -482,6 +489,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
+      // @ts-ignore runtime.
       toHtml(u('element', {tagName: 'i', properties: {id: {toString}}}, [])),
       '<i id="yup"></i>',
       'should serialize known normals set to an object'
@@ -500,6 +508,7 @@ test('`element` attributes', function (t) {
     )
 
     st.deepEqual(
+      // @ts-ignore runtime.
       toHtml(u('element', {tagName: 'i', properties: {id: [true, false]}}, [])),
       '<i id="true false"></i>',
       'should serialize known normals set to an array of booleans as a space-separated list'
@@ -567,6 +576,7 @@ test('`element` attributes', function (t) {
 
     st.deepEqual(
       toHtml(
+        // @ts-ignore runtime.
         u('element', {tagName: 'i', properties: {dataId: {toString}}}, [])
       ),
       '<i data-id="yup"></i>',
@@ -589,6 +599,7 @@ test('`element` attributes', function (t) {
 
     st.deepEqual(
       toHtml(
+        // @ts-ignore runtime.
         u('element', {tagName: 'i', properties: {dataId: [true, false]}}, [])
       ),
       '<i data-id="true false"></i>',
@@ -703,6 +714,7 @@ test('`element` attributes', function (t) {
 
     st.throws(
       function () {
+        // @ts-ignore runtime.
         toHtml(h('img'), {quote: '`'})
       },
       /Invalid quote ```, expected `'` or `"`/,

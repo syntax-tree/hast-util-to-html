@@ -6,6 +6,7 @@ import {toHtml} from '../index.js'
 test('toHtml()', function (t) {
   t.throws(
     function () {
+      // @ts-ignore runtime.
       toHtml(true)
     },
     /Expected node, not `true`/,
@@ -14,6 +15,7 @@ test('toHtml()', function (t) {
 
   t.throws(
     function () {
+      // @ts-ignore runtime.
       toHtml(u('foo', []))
     },
     /Cannot compile unknown node `foo`/,

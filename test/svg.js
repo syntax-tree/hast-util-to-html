@@ -111,7 +111,7 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
-    toHtml(s('circle', {unknown: ['alpha', 'bravo']}), {space: true}),
+    toHtml(s('circle', {unknown: ['alpha', 'bravo']}), {space: 'svg'}),
     '<circle unknown="alpha bravo"></circle>',
     'should serialize unknown lists as space-separated'
   )
@@ -177,6 +177,7 @@ test('svg', function (t) {
   )
 
   t.deepEqual(
+    // @ts-ignore runtime.
     toHtml(s('path', {strokeOpacity: {toString}}), {space: 'svg'}),
     '<path stroke-opacity="yup"></path>',
     'should serialize known numeric attributes set to non-numeric values'
