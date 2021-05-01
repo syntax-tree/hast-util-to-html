@@ -19,22 +19,5 @@ test('`element`', function (t) {
     'should not encode `raw`s in `allowDangerousHtml` mode'
   )
 
-  t.deepEqual(
-    // @ts-ignore nonstandard.
-    toHtml(u('raw', '<script>alert("XSS!")</script>'), {
-      allowDangerousHTML: true
-    }),
-    '<script>alert("XSS!")</script>',
-    'should support the legacy `allowDangerousHTML` (#1)'
-  )
-  t.deepEqual(
-    // @ts-ignore nonstandard.
-    toHtml(u('raw', '<script>alert("XSS!")</script>'), {
-      allowDangerousHTML: true
-    }),
-    '<script>alert("XSS!")</script>',
-    'should support the legacy `allowDangerousHTML` (#2)'
-  )
-
   t.end()
 })
