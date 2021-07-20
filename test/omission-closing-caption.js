@@ -3,7 +3,7 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`caption` (closing)', function (t) {
+test('`caption` (closing)', (t) => {
   t.deepEqual(
     toHtml(h('caption'), {omitOptionalTags: true}),
     '<caption>',

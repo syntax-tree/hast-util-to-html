@@ -2,7 +2,7 @@ import test from 'tape'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`comment`', function (t) {
+test('`comment`', (t) => {
   t.deepEqual(
     toHtml(u('comment', 'alpha')),
     '<!--alpha-->',
@@ -31,7 +31,7 @@ test('`comment`', function (t) {
   // Optionally, text, with the additional restriction that the text must not
   // start with the string `>`, nor start with the string `->`, nor contain the
   // strings `<!--`, `-->`, or `--!>`, nor end with the string `<!-`.
-  var matrix = [
+  const matrix = [
     ['>a', '&#x3E;a'],
     ['->a', '-&#x3E;a'],
     ['a<!--b', 'a&#x3C;!--b'],
@@ -44,7 +44,7 @@ test('`comment`', function (t) {
     // Not at end:
     ['a<!-b']
   ]
-  var index = -1
+  let index = -1
 
   while (++index < matrix.length) {
     t.deepEqual(

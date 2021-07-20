@@ -2,7 +2,7 @@ import test from 'tape'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`head` (opening)', function (t) {
+test('`head` (opening)', (t) => {
   t.deepEqual(
     toHtml(h('head', h('meta', {charSet: 'utf8'})), {omitOptionalTags: true}),
     '<meta charset="utf8">',

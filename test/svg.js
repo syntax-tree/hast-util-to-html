@@ -3,7 +3,7 @@ import {u} from 'unist-builder'
 import {h, s} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('svg', function (t) {
+test('svg', (t) => {
   t.deepEqual(
     toHtml(s('path'), {space: 'svg'}),
     '<path></path>',

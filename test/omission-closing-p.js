@@ -3,7 +3,7 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`p` (closing)', function (t) {
+test('`p` (closing)', (t) => {
   t.deepEqual(
     toHtml(u('root', [h('p')]), {omitOptionalTags: true}),
     '<p>',

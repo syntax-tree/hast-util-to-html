@@ -2,7 +2,7 @@ import test from 'tape'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`element`', function (t) {
+test('`element`', (t) => {
   t.deepEqual(
     // @ts-ignore nonstandard.
     toHtml(u('raw', '<script>alert("XSS!")</script>')),

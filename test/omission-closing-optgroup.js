@@ -2,7 +2,7 @@ import test from 'tape'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`optgroup` (closing)', function (t) {
+test('`optgroup` (closing)', (t) => {
   t.deepEqual(
     toHtml(h('optgroup'), {omitOptionalTags: true}),
     '<optgroup>',

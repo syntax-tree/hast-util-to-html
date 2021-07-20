@@ -2,7 +2,7 @@ import test from 'tape'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`doctype`', function (t) {
+test('`doctype`', (t) => {
   t.deepEqual(
     // @ts-ignore hast types out of date.
     toHtml(u('doctype')),

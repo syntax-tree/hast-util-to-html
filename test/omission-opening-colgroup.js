@@ -3,7 +3,7 @@ import {u} from 'unist-builder'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`colgroup` (opening)', function (t) {
+test('`colgroup` (opening)', (t) => {
   t.deepEqual(
     toHtml(h('colgroup'), {omitOptionalTags: true}),
     '<colgroup>',

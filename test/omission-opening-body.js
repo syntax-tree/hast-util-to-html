@@ -3,7 +3,7 @@ import {u} from 'unist-builder'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`body` (opening)', function (t) {
+test('`body` (opening)', (t) => {
   t.deepEqual(
     toHtml(h('body'), {omitOptionalTags: true}),
     '',

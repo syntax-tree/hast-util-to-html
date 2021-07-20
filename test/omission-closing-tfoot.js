@@ -2,7 +2,7 @@ import test from 'tape'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`tfoot` (closing)', function (t) {
+test('`tfoot` (closing)', (t) => {
   t.deepEqual(
     toHtml(h('tfoot'), {omitOptionalTags: true}),
     '<tfoot>',

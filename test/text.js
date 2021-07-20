@@ -3,7 +3,7 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`text`', function (t) {
+test('`text`', (t) => {
   t.deepEqual(toHtml(u('text', 'alpha')), 'alpha', 'should serialize `text`s')
 
   t.deepEqual(

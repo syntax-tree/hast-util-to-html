@@ -3,9 +3,9 @@ import {u} from 'unist-builder'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('toHtml()', function (t) {
+test('toHtml()', (t) => {
   t.throws(
-    function () {
+    () => {
       // @ts-ignore runtime.
       toHtml(true)
     },
@@ -14,7 +14,7 @@ test('toHtml()', function (t) {
   )
 
   t.throws(
-    function () {
+    () => {
       // @ts-ignore runtime.
       toHtml(u('foo', []))
     },

@@ -3,7 +3,7 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('security', function (t) {
+test('security', (t) => {
   t.equal(
     toHtml(u('root', [u('comment', '--><script>alert(1)</script><!--')])),
     '<!----&#x3E;<script>alert(1)</script>&#x3C;!---->',

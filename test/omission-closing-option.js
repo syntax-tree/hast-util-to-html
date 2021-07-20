@@ -2,7 +2,7 @@ import test from 'tape'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`option` (closing)', function (t) {
+test('`option` (closing)', (t) => {
   t.deepEqual(
     toHtml(h('option'), {omitOptionalTags: true}),
     '<option>',

@@ -3,8 +3,8 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`element` attributes', function (t) {
-  t.test('unknown', function (st) {
+test('`element` attributes', (t) => {
+  t.test('unknown', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {unknown: false}}, [])),
       '<i></i>',
@@ -79,7 +79,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('known booleans', function (st) {
+  t.test('known booleans', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {hidden: false}}, [])),
       '<i></i>',
@@ -121,7 +121,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('known overloaded booleans', function (st) {
+  t.test('known overloaded booleans', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'a', properties: {download: false}}, [])),
       '<a></a>',
@@ -179,7 +179,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('known numbers', function (st) {
+  t.test('known numbers', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {cols: false}}, [])),
       '<i></i>',
@@ -271,7 +271,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('known space-separated lists', function (st) {
+  t.test('known space-separated lists', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {className: false}}, [])),
       '<i></i>',
@@ -365,7 +365,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('known comma-separated lists', function (st) {
+  t.test('known comma-separated lists', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {accept: false}}, [])),
       '<i></i>',
@@ -445,7 +445,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('known normals', function (st) {
+  t.test('known normals', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {id: false}}, [])),
       '<i></i>',
@@ -517,7 +517,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('data properties', function (st) {
+  t.test('data properties', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {dataId: false}}, [])),
       '<i></i>',
@@ -609,7 +609,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('collapseEmptyAttributes', function (st) {
+  t.test('collapseEmptyAttributes', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {id: ''}}, [])),
       '<i id=""></i>',
@@ -627,7 +627,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('tightAttributes', function (st) {
+  t.test('tightAttributes', (st) => {
     st.deepEqual(
       toHtml(
         u('element', {tagName: 'i', properties: {title: 'a', id: 'b'}}, [])
@@ -650,7 +650,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('tightCommaSeparatedLists', function (st) {
+  t.test('tightCommaSeparatedLists', (st) => {
     st.deepEqual(
       toHtml(
         u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])
@@ -673,7 +673,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('quote', function (st) {
+  t.test('quote', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, [])),
       '<i title="a"></i>',
@@ -713,7 +713,7 @@ test('`element` attributes', function (t) {
     )
 
     st.throws(
-      function () {
+      () => {
         // @ts-ignore runtime.
         toHtml(h('img'), {quote: '`'})
       },
@@ -724,7 +724,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('quoteSmart', function (st) {
+  t.test('quoteSmart', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
         allowDangerousCharacters: true,
@@ -791,7 +791,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('preferUnquoted', function (st) {
+  t.test('preferUnquoted', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {id: 'a'}}, []), {
         preferUnquoted: true
@@ -819,7 +819,7 @@ test('`element` attributes', function (t) {
     st.end()
   })
 
-  t.test('entities in attributes', function (st) {
+  t.test('entities in attributes', (st) => {
     st.deepEqual(
       toHtml(u('element', {tagName: 'i', properties: {'3<5\0': 'a'}}, [])),
       '<i 3&#x3C;5&#x0;="a"></i>',

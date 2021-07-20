@@ -2,7 +2,7 @@ import test from 'tape'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`omitOptionalTags` mode', function (t) {
+test('`omitOptionalTags` mode', (t) => {
   t.deepEqual(
     toHtml(h('html'), {omitOptionalTags: true}),
     '',

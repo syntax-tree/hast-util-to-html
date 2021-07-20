@@ -2,7 +2,7 @@ import test from 'tape'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`element`', function (t) {
+test('`element`', (t) => {
   t.deepEqual(
     toHtml(h('i', 'bravo')),
     '<i>bravo</i>',

@@ -3,7 +3,7 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`root`', function (t) {
+test('`root`', (t) => {
   t.deepEqual(
     toHtml(
       u('root', [u('text', 'alpha '), h('i', 'bravo'), u('text', ' charlie')])

@@ -2,7 +2,7 @@ import test from 'tape'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`menuitem` (closing)', function (t) {
+test('`menuitem` (closing)', (t) => {
   t.deepEqual(
     toHtml(h('menuitem', 'alpha'), {omitOptionalTags: true}),
     '<menuitem>alpha',

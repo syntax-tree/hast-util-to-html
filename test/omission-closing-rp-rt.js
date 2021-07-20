@@ -3,9 +3,9 @@ import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
 // eslint-disable-next-line unicorn/no-array-for-each
-'rp,rt'.split(',').forEach(function (tagName, index, values) {
-  test('`' + tagName + '` (closing)', function (t) {
-    var other = values[index ? 0 : 1]
+'rp,rt'.split(',').forEach((tagName, index, values) => {
+  test('`' + tagName + '` (closing)', (t) => {
+    const other = values[index ? 0 : 1]
 
     t.deepEqual(
       toHtml(h(tagName), {omitOptionalTags: true}),
