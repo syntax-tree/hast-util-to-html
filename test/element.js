@@ -35,15 +35,24 @@ test('`element`', (t) => {
     'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode'
   )
 
-  // This works in a browser.  The `/` is not part of the `[src]`.
+  t.deepEqual(
+    toHtml(h('input', {type: 'checkbox'}), {
+      preferUnquoted: true,
+      tightSelfClosing: true,
+      closeSelfClosing: true
+    }),
+    '<input type=checkbox />',
+    'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, w/ space after an unquoted attribute (1)'
+  )
+
   t.deepEqual(
     toHtml(h('img', {src: 'index.jpg'}), {
       preferUnquoted: true,
       closeSelfClosing: true,
       tightSelfClosing: true
     }),
-    '<img src=index.jpg/>',
-    'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, without space after an unquoted attribute'
+    '<img src=index.jpg />',
+    'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, w/ space after an unquoted attribute (2)'
   )
 
   t.deepEqual(
