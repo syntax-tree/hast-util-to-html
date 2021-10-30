@@ -42,7 +42,7 @@
     "html-void-elements": "^2.0.0",
     "property-information": "^6.0.0",
     "space-separated-tokens": "^2.0.0",
-    "stringify-entities": "^4.0.0",
+    "stringify-entities": "^4.0.2",
     "unist-util-is": "^5.0.0"
   },
   "devDependencies": {
