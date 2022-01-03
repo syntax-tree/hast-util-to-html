@@ -64,5 +64,11 @@ test('`p` (closing)', (t) => {
     'should not omit tag if parented by `section`'
   )
 
+  t.deepEqual(
+    toHtml(h('body', [h('p'), h('table')]), {omitOptionalTags: true}),
+    '<p></p><table></table>',
+    'should not omit tag if followed by `table`'
+  )
+
   t.end()
 })
