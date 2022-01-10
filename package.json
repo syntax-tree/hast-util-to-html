@@ -1,7 +1,7 @@
 {
-  "name": "hast-util-to-html-ns",
-  "version": "8.0.4",
-  "description": "A fork of the original hast utility that serializes an AST to HTML",
+  "name": "hast-util-to-html",
+  "version": "8.0.3",
+  "description": "hast utility to serialize to HTML",
   "license": "MIT",
   "keywords": [
     "unist",
@@ -14,7 +14,13 @@
     "stringify",
     "tostring"
   ],
-  "author": "Ashtar Paniagua <ashtarcodes@gmail.com>",
+  "repository": "syntax-tree/hast-util-to-html",
+  "bugs": "https://github.com/syntax-tree/hast-util-to-html/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],

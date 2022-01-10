@@ -1,8 +1,12 @@
-# hast-util-to-html-ns
+# hast-util-to-html
 
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
 [![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
 
 [**hast**][hast] utility to serialize to HTML.
 
@@ -14,7 +18,7 @@ Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
 [npm][]:
 
 ```sh
-npm install hast-util-to-html-ns
+npm install hast-util-to-html
 ```
 
 ## Use
