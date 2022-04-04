@@ -72,7 +72,7 @@ However, `useNamedReferences`, `useShortestReferences`, and
 ###### `options.voids`
 
 Tag names of [*elements*][element] to serialize without closing tag
-(`Array.<string>`, default: [`html-void-elements`][html-void-elements]).
+(`Array<string>`, default: [`html-void-elements`][html-void-elements]).
 
 Not used in the SVG space.
 
