@@ -8,20 +8,79 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**hast**][hast] utility to serialize to HTML.
+[hast][] utility to serialize hast as HTML.
+
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`toHtml(tree[, options])`](#tohtmltree-options)
+*   [Syntax](#syntax)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Security](#security)
+*   [Related](#related)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This package is a utility that turns a hast tree into a string of HTML.
+
+## When should I use this?
+
+You can use this utility when you’re want to get the serialized HTML that is
+represented by the syntax tree, either because you’re done with the syntax tree,
+or because you’re integrating with
+another tool that does not support
+syntax trees.
+
+This utility has many options to configure how the HTML is serialized.
+These options help when building tools that make output pretty (e.g.,
+formatters) or ugly (e.g., minifiers).
+
+The utility [`hast-util-from-parse5`][hast-util-from-parse5] combined with
+[`parse5`][parse5] does the inverse of this utility.
+It turns HTML into hast.
+
+The rehype plugin [`rehype-stringify`][rehype-stringify] wraps this utility to
+also serialize HTML at a higher-level (easier) abstraction.
 
 ## Install
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install hast-util-to-html
 ```
 
+In Deno with [`esm.sh`][esmsh]:
+
+```js
+import {toHtml} from "https://esm.sh/hast-util-to-html@8"
+```
+
+In browsers with [`esm.sh`][esmsh]:
+
+```html
+<script type="module">
+  import {toHtml} from "https://esm.sh/hast-util-to-html@8?bundle"
+</script>
+```
+
 ## Use
+
+<details><summary>Show install command for this example</summary>
+
+```sh
+npm install hastscript hast-util-to-html
+```
+
+</details>
 
 ```js
 import {h} from 'hastscript'
@@ -45,36 +104,24 @@ Yields:
 
 ## API
 
-This package exports the following identifiers: `toHtml`.
+This package exports the identifier `toHtml`.
 There is no default export.
 
 ### `toHtml(tree[, options])`
 
-Serialize the given [**hast**][hast] [*tree*][tree] (or list of nodes).
+Serialize hast ([`Node`][node], `Array<Node>`) as HTML.
 
-###### `options.space`
+##### `options`
 
-Whether the [*root*][root] of the [*tree*][tree] is in the `'html'` or `'svg'`
-space (enum, `'svg'` or `'html'`, default: `'html'`).
-
-If an `svg` element is found in the HTML space, `toHtml` automatically switches
-to the SVG space when entering the element, and switches back when exiting.
+Configuration (optional).
 
 ###### `options.entities`
 
-Configuration for [`stringify-entities`][stringify-entities] (`Object`, default:
-`{}`).
-Do not use `escapeOnly`, `attribute`, or `subset` (`toHtml` already passes
-those, so they won’t work).
-However, `useNamedReferences`, `useShortestReferences`, and
-`omitOptionalSemicolons` are all fine.
-
-###### `options.voids`
-
-Tag names of [*elements*][element] to serialize without closing tag
-(`Array<string>`, default: [`html-void-elements`][html-void-elements]).
-
-Not used in the SVG space.
+Define how to create character references (`Object`, default: `{}`).
+Configuration is passed to [`stringify-entities`][stringify-entities].
+You can use the fields `useNamedReferences`, `useShortestReferences`, and
+`omitOptionalSemicolons`.
+You cannot use the fields `escapeOnly`, `attribute`, or `subset`).
 
 ###### `options.upperDoctype`
 
@@ -99,8 +146,8 @@ Not used in the SVG space.
 ###### `options.omitOptionalTags`
 
 Omit optional opening and closing tags (`boolean`, default: `false`).
-For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>`
-closing tags can be omitted.
+For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>` closing tags
+can be omitted.
 The first because it’s followed by another `li`, the last because it’s followed
 by nothing.
 
@@ -110,9 +157,10 @@ Not used in the SVG space.
 
 Collapse empty attributes: get `class` instead of `class=""` (`boolean`,
 default: `false`).
-**Note**: boolean attributes, such as `hidden`, are always collapsed.
 
 Not used in the SVG space.
+
+> 👉 **Note**: boolean attributes (such as `hidden`) are always collapsed.
 
 ###### `options.closeSelfClosing`
 
@@ -135,12 +183,14 @@ Not used in the HTML space.
 
 Do not use an extra space when closing self-closing elements: `<img/>` instead
 of `<img />` (`boolean`, default: `false`).
-**Note**: Only used if `closeSelfClosing: true` or `closeEmptyElements: true`.
+
+> 👉 **Note**: only used if `closeSelfClosing: true` or
+> `closeEmptyElements: true`.
 
 ###### `options.tightCommaSeparatedLists`
 
 Join known comma-separated attribute values with just a comma (`,`), instead of
-padding them on the right as well (`,·`, where `·` represents a space)
+padding them on the right as well (`,␠`, where `␠` represents a space)
 (`boolean`, default: `false`).
 
 ###### `options.tightAttributes`
@@ -148,59 +198,111 @@ padding them on the right as well (`,·`, where `·` represents a space)
 Join attributes together, without whitespace, if possible: get
 `class="a b"title="c d"` instead of `class="a b" title="c d"` to save bytes
 (`boolean`, default: `false`).
-**Note**: creates invalid (but working) markup.
 
 Not used in the SVG space.
+
+> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
+> are handled is well defined, so this works but isn’t pretty).
 
 ###### `options.tightDoctype`
 
 Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>`
 to save bytes (`boolean`, default: `false`).
-**Note**: creates invalid (but working) markup.
+
+> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
+> are handled is well defined, so this works but isn’t pretty).
 
 ###### `options.bogusComments`
 
 Use “bogus comments” instead of comments to save byes: `<?charlie>` instead of
 `<!--charlie-->` (`boolean`, default: `false`).
-**Note**: creates invalid (but working) markup.
+
+> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
+> are handled is well defined, so this works but isn’t pretty).
 
 ###### `options.allowParseErrors`
 
 Do not encode characters which cause parse errors (even though they work), to
 save bytes (`boolean`, default: `false`).
-**Note**: creates invalid (but working) markup.
 
 Not used in the SVG space.
+
+> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
+> are handled is well defined, so this works but isn’t pretty).
 
 ###### `options.allowDangerousCharacters`
 
 Do not encode some characters which cause XSS vulnerabilities in older browsers
 (`boolean`, default: `false`).
-**Note**: Only set this if you completely trust the content.
+
+> ⚠️ **Danger**: only set this if you completely trust the content.
 
 ###### `options.allowDangerousHtml`
 
 Allow `raw` nodes and insert them as raw HTML.
 When falsey, encodes `raw` nodes (`boolean`, default: `false`).
-**Note**: Only set this if you completely trust the content.
+
+> ⚠️ **Danger**: only set this if you completely trust the content.
+
+###### `options.space`
+
+Which space the document is in (`'svg'` or `'html'`, default: `'html'`).
+
+When an `<svg>` element is found in the HTML space, `rehype-stringify` already
+automatically switches to and from the SVG space when entering and exiting it.
+
+> 👉 **Note**: hast is not XML.
+> It supports SVG as embedded in HTML.
+> It does not support the features available in XML.
+> Passing SVG might break but fragments of modern SVG should be fine.
+> Use [`xast`][xast] if you need to support SVG as XML.
+
+###### `options.voids`
+
+Tag names of elements to serialize without closing tag (`Array<string>`,
+default: [`html-void-elements`][html-void-elements]).
+
+Not used in the SVG space.
+
+> 👉 **Note**: It’s highly unlikely that you want to pass this, because hast is
+> not for XML, and HTML will not add more void elements.
+
+##### Returns
+
+Serialized HTML (`string`).
+
+## Syntax
+
+HTML is serialized according to WHATWG HTML (the living standard), which is also
+followed by browsers such as Chrome and Firefox.
+
+## Types
+
+This package is fully typed with [TypeScript][].
+It exports the additional type `Options`.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Security
 
 Use of `hast-util-to-html` can open you up to a
 [cross-site scripting (XSS)][xss] attack if the hast tree is unsafe.
-Use [`hast-util-santize`][sanitize] to make the hast tree safe.
+Use [`hast-util-santize`][hast-util-sanitize] to make the hast tree safe.
 
 ## Related
 
-*   [`hast-util-sanitize`][sanitize]
-    — Sanitize hast nodes
-*   [`rehype-stringify`](https://github.com/rehypejs/rehype/tree/HEAD/packages/rehype-stringify)
-    — Wrapper around this project for [**rehype**](https://github.com/wooorm/rehype)
+*   [`hast-util-sanitize`](https://github.com/syntax-tree/hast-util-sanitize)
+    — sanitize hast
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
-started.
+See [`contributing.md`][contributing] in [`syntax-tree/.github`][health] for
+ways to get started.
 See [`support.md`][support] for ways to get help.
 
 This project has a [code of conduct][coc].
@@ -241,28 +343,40 @@ abide by its terms.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[esmsh]: https://esm.sh
+
+[typescript]: https://www.typescriptlang.org
+
 [license]: license
 
 [author]: https://wooorm.com
 
-[contributing]: https://github.com/syntax-tree/.github/blob/HEAD/contributing.md
+[health]: https://github.com/syntax-tree/.github
 
-[support]: https://github.com/syntax-tree/.github/blob/HEAD/support.md
+[contributing]: https://github.com/syntax-tree/.github/blob/main/contributing.md
 
-[coc]: https://github.com/syntax-tree/.github/blob/HEAD/code-of-conduct.md
+[support]: https://github.com/syntax-tree/.github/blob/main/support.md
+
+[coc]: https://github.com/syntax-tree/.github/blob/main/code-of-conduct.md
+
+[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
+
+[hast]: https://github.com/syntax-tree/hast
+
+[node]: https://github.com/syntax-tree/hast#nodes
 
 [html-void-elements]: https://github.com/wooorm/html-void-elements
 
 [stringify-entities]: https://github.com/wooorm/stringify-entities
 
-[tree]: https://github.com/syntax-tree/unist#tree
+[hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
 
-[root]: https://github.com/syntax-tree/unist#root
+[hast-util-from-parse5]: https://github.com/syntax-tree/hast-util-from-parse5
 
-[hast]: https://github.com/syntax-tree/hast
+[parse5]: https://github.com/inikulin/parse5
 
-[element]: https://github.com/syntax-tree/hast#element
+[rehype-stringify]: https://github.com/rehypejs/rehype/tree/main/packages/rehype-stringify#readme
 
-[xss]: https://en.wikipedia.org/wiki/Cross-site_scripting
-
-[sanitize]: https://github.com/syntax-tree/hast-util-sanitize
+[xast]: https://github.com/syntax-tree/xast
