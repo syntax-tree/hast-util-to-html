@@ -32,7 +32,7 @@ This package is a utility that turns a hast tree into a string of HTML.
 
 ## When should I use this?
 
-You can use this utility when you’re want to get the serialized HTML that is
+You can use this utility when you want to get the serialized HTML that is
 represented by the syntax tree, either because you’re done with the syntax tree,
 or because you’re integrating with
 another tool that does not support
