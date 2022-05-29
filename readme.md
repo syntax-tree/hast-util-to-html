@@ -42,8 +42,8 @@ This utility has many options to configure how the HTML is serialized.
 These options help when building tools that make output pretty (e.g.,
 formatters) or ugly (e.g., minifiers).
 
-The utility [`hast-util-from-parse5`][hast-util-from-parse5] combined with
-[`parse5`][parse5] does the inverse of this utility.
+The utility [`hast-util-from-html`][hast-util-from-html] does the inverse of
+this utility.
 It turns HTML into hast.
 
 The rehype plugin [`rehype-stringify`][rehype-stringify] wraps this utility to
@@ -52,7 +52,7 @@ also serialize HTML at a higher-level (easier) abstraction.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
 
 ```sh
 npm install hast-util-to-html
@@ -373,9 +373,7 @@ abide by its terms.
 
 [hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
 
-[hast-util-from-parse5]: https://github.com/syntax-tree/hast-util-from-parse5
-
-[parse5]: https://github.com/inikulin/parse5
+[hast-util-from-html]: https://github.com/syntax-tree/hast-util-from-html
 
 [rehype-stringify]: https://github.com/rehypejs/rehype/tree/main/packages/rehype-stringify#readme
 
