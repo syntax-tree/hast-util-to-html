@@ -19,6 +19,9 @@
 *   [API](#api)
     *   [`toHtml(tree[, options])`](#tohtmltree-options)
     *   [`CharacterReferences`](#characterreferences)
+    *   [`Options`](#options)
+    *   [`Quote`](#quote-1)
+    *   [`Space`](#space-1)
 *   [Syntax](#syntax)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
@@ -34,14 +37,13 @@ This package is a utility that turns a hast tree into a string of HTML.
 ## When should I use this?
 
 You can use this utility when you want to get the serialized HTML that is
-represented by the syntax tree, either because you’re done with the syntax tree,
-or because you’re integrating with
-another tool that does not support
+represented by the syntax tree, either because you’re done with the syntax
+tree, or because you’re integrating with another tool that does not support
 syntax trees.
 
 This utility has many options to configure how the HTML is serialized.
-These options help when building tools that make output pretty (e.g.,
-formatters) or ugly (e.g., minifiers).
+These options help when building tools that make output pretty (such as
+formatters) or ugly (such as minifiers).
 
 The utility [`hast-util-from-html`][hast-util-from-html] does the inverse of
 this utility.
@@ -53,7 +55,7 @@ also serialize HTML at a higher-level (easier) abstraction.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install hast-util-to-html
@@ -105,172 +107,21 @@ Yields:
 
 ## API
 
-This package exports the identifier `toHtml`.
+This package exports the identifier [`toHtml`][tohtml].
 There is no default export.
 
 ### `toHtml(tree[, options])`
 
-Serialize hast ([`Node`][node], `Array<Node>`) as HTML.
+Serialize hast as HTML.
 
-##### `options`
+###### Parameters
 
-Configuration (optional).
+*   `tree` ([`Node`][node] or `Array<Node>`)
+    — tree to serialize
+*   `options` ([`Options`][options], optional)
+    — configuration
 
-###### `options.space`
-
-Which space the document is in (`'svg'` or `'html'`, default: `'html'`).
-
-When an `<svg>` element is found in the HTML space, this package already
-automatically switches to and from the SVG space when entering and exiting it.
-
-> 👉 **Note**: hast is not XML.
-> It supports SVG as embedded in HTML.
-> It does not support the features available in XML.
-> Passing SVG might break but fragments of modern SVG should be fine.
-> Use [`xast`][xast] if you need to support SVG as XML.
-
-###### `options.characterReferences`
-
-Configure how to serialize character references
-([`CharacterReferences`][characterreferences], optional).
-
-###### `options.upperDoctype`
-
-Use a `<!DOCTYPE…` instead of `<!doctype…` (`boolean`, default: `false`).
-
-Useless except for XHTML.
-
-###### `options.quote`
-
-Preferred quote to use (`'"'` or `'\''`, default: `'"'`).
-
-###### `options.quoteSmart`
-
-Use the other quote if that results in less bytes (`boolean`, default: `false`).
-
-###### `options.preferUnquoted`
-
-Leave attributes unquoted if that results in less bytes (`boolean`, default:
-`false`).
-
-Not used in the SVG space.
-
-###### `options.omitOptionalTags`
-
-Omit optional opening and closing tags (`boolean`, default: `false`).
-
-For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>` closing tags
-can be omitted.
-The first because it’s followed by another `li`, the last because it’s followed
-by nothing.
-
-Not used in the SVG space.
-
-###### `options.collapseEmptyAttributes`
-
-Collapse empty attributes: get `class` instead of `class=""` (`boolean`,
-default: `false`).
-
-Not used in the SVG space.
-
-> 👉 **Note**: boolean attributes (such as `hidden`) are always collapsed.
-
-###### `options.closeSelfClosing`
-
-Close self-closing nodes with an extra slash (`/`): `<img />` instead of
-`<img>` (`boolean`, default: `false`).
-
-See `tightSelfClosing` to control whether a space is used before the slash.
-
-Not used in the SVG space.
-
-###### `options.closeEmptyElements`
-
-Close SVG elements without any content with slash (`/`) on the opening tag
-instead of an end tag: `<circle />` instead of `<circle></circle>` (`boolean`,
-default: `false`).
-
-See `tightSelfClosing` to control whether a space is used before the slash.
-
-Not used in the HTML space.
-
-###### `options.tightSelfClosing`
-
-Do not use an extra space when closing self-closing elements: `<img/>` instead
-of `<img />` (`boolean`, default: `false`).
-
-> 👉 **Note**: only used if `closeSelfClosing: true` or
-> `closeEmptyElements: true`.
-
-###### `options.tightCommaSeparatedLists`
-
-Join known comma-separated attribute values with just a comma (`,`), instead of
-padding them on the right as well (`,␠`, where `␠` represents a space)
-(`boolean`, default: `false`).
-
-###### `options.tightAttributes`
-
-Join attributes together, without whitespace, if possible: get
-`class="a b"title="c d"` instead of `class="a b" title="c d"` to save bytes
-(`boolean`, default: `false`).
-
-Not used in the SVG space.
-
-> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
-> are handled is well defined, so this works but isn’t pretty).
-
-###### `options.tightDoctype`
-
-Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>`
-to save bytes (`boolean`, default: `false`).
-
-> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
-> are handled is well defined, so this works but isn’t pretty).
-
-###### `options.bogusComments`
-
-Use “bogus comments” instead of comments to save byes: `<?charlie>` instead of
-`<!--charlie-->` (`boolean`, default: `false`).
-
-> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
-> are handled is well defined, so this works but isn’t pretty).
-
-###### `options.allowParseErrors`
-
-Do not encode characters which cause parse errors (even though they work), to
-save bytes (`boolean`, default: `false`).
-
-Not used in the SVG space.
-
-> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
-> are handled is well defined, so this works but isn’t pretty).
-
-###### `options.allowDangerousCharacters`
-
-Do not encode some characters which cause XSS vulnerabilities in older browsers
-(`boolean`, default: `false`).
-
-> ⚠️ **Danger**: only set this if you completely trust the content.
-
-###### `options.allowDangerousHtml`
-
-Allow `raw` nodes and insert them as raw HTML (`boolean`, default: `false`).
-
-When `false`, `Raw` nodes are encoded.
-
-> ⚠️ **Danger**: only set this if you completely trust the content.
-
-###### `options.voids`
-
-Tag names of elements to serialize without closing tag (`Array<string>`,
-default: [`html-void-elements`][html-void-elements]).
-
-Not used in the SVG space.
-
-> 👉 **Note**: It’s highly unlikely that you want to pass this, because hast is
-> not for XML, and HTML will not add more void elements.
-
-##### Returns
+###### Returns
 
 Serialized HTML (`string`).
 
@@ -302,6 +153,186 @@ Whether to omit semicolons when possible (`boolean`, default: `false`).
 > Omitting semicolons is possible for certain named and numeric references in
 > some cases.
 
+### `Options`
+
+Configuration (TypeScript type).
+
+##### Fields
+
+###### `allowDangerousCharacters`
+
+Do not encode some characters which cause XSS vulnerabilities in older browsers
+(`boolean`, default: `false`).
+
+> ⚠️ **Danger**: only set this if you completely trust the content.
+
+###### `allowDangerousHtml`
+
+Allow `raw` nodes and insert them as raw HTML (`boolean`, default: `false`).
+
+When `false`, `Raw` nodes are encoded.
+
+> ⚠️ **Danger**: only set this if you completely trust the content.
+
+###### `allowParseErrors`
+
+Do not encode characters which cause parse errors (even though they work), to
+save bytes (`boolean`, default: `false`).
+
+Not used in the SVG space.
+
+> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
+> are handled is well defined, so this works but isn’t pretty).
+
+###### `bogusComments`
+
+Use “bogus comments” instead of comments to save byes: `<?charlie>` instead of
+`<!--charlie-->` (`boolean`, default: `false`).
+
+> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
+> are handled is well defined, so this works but isn’t pretty).
+
+###### `characterReferences`
+
+Configure how to serialize character references
+([`CharacterReferences`][characterreferences], optional).
+
+###### `closeEmptyElements`
+
+Close SVG elements without any content with slash (`/`) on the opening tag
+instead of an end tag: `<circle />` instead of `<circle></circle>` (`boolean`,
+default: `false`).
+
+See `tightSelfClosing` to control whether a space is used before the slash.
+
+Not used in the HTML space.
+
+###### `closeSelfClosing`
+
+Close self-closing nodes with an extra slash (`/`): `<img />` instead of
+`<img>` (`boolean`, default: `false`).
+
+See `tightSelfClosing` to control whether a space is used before the slash.
+
+Not used in the SVG space.
+
+###### `collapseEmptyAttributes`
+
+Collapse empty attributes: get `class` instead of `class=""` (`boolean`,
+default: `false`).
+
+Not used in the SVG space.
+
+> 👉 **Note**: boolean attributes (such as `hidden`) are always collapsed.
+
+###### `omitOptionalTags`
+
+Omit optional opening and closing tags (`boolean`, default: `false`).
+
+For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>` closing tags
+can be omitted.
+The first because it’s followed by another `li`, the last because it’s followed
+by nothing.
+
+Not used in the SVG space.
+
+###### `preferUnquoted`
+
+Leave attributes unquoted if that results in less bytes (`boolean`, default:
+`false`).
+
+Not used in the SVG space.
+
+###### `quote`
+
+Preferred quote to use ([`Quote`][quote], default: `'"'`).
+
+###### `quoteSmart`
+
+Use the other quote if that results in less bytes (`boolean`, default: `false`).
+
+###### `space`
+
+Which space the document is in ([`Space`][space], default: `'html'`).
+
+When an `<svg>` element is found in the HTML space, this package already
+automatically switches to and from the SVG space when entering and exiting it.
+
+> 👉 **Note**: hast is not XML.
+> It supports SVG as embedded in HTML.
+> It does not support the features available in XML.
+> Passing SVG might break but fragments of modern SVG should be fine.
+> Use [`xast`][xast] if you need to support SVG as XML.
+
+###### `tightAttributes`
+
+Join attributes together, without whitespace, if possible: get
+`class="a b"title="c d"` instead of `class="a b" title="c d"` to save bytes
+(`boolean`, default: `false`).
+
+Not used in the SVG space.
+
+> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
+> are handled is well defined, so this works but isn’t pretty).
+
+###### `tightCommaSeparatedLists`
+
+Join known comma-separated attribute values with just a comma (`,`), instead of
+padding them on the right as well (`,␠`, where `␠` represents a space)
+(`boolean`, default: `false`).
+
+###### `tightDoctype`
+
+Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>`
+to save bytes (`boolean`, default: `false`).
+
+> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
+> are handled is well defined, so this works but isn’t pretty).
+
+###### `tightSelfClosing`
+
+Do not use an extra space when closing self-closing elements: `<img/>` instead
+of `<img />` (`boolean`, default: `false`).
+
+> 👉 **Note**: only used if `closeSelfClosing: true` or
+> `closeEmptyElements: true`.
+
+###### `upperDoctype`
+
+Use a `<!DOCTYPE…` instead of `<!doctype…` (`boolean`, default: `false`).
+
+Useless except for XHTML.
+
+###### `voids`
+
+Tag names of elements to serialize without closing tag (`Array<string>`,
+default: [`html-void-elements`][html-void-elements]).
+
+Not used in the SVG space.
+
+> 👉 **Note**: It’s highly unlikely that you want to pass this, because hast is
+> not for XML, and HTML will not add more void elements.
+
+### `Quote`
+
+HTML quotes for attribute values (TypeScript type).
+
+###### Type
+
+```ts
+type Quote = '"' | "'"
+```
+
+### `Space`
+
+Namespace (TypeScript type).
+
+###### Type
+
+```ts
+type Space = 'html' | 'svg'
+```
+
 ## Syntax
 
 HTML is serialized according to WHATWG HTML (the living standard), which is also
@@ -310,13 +341,14 @@ followed by browsers such as Chrome and Firefox.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type `Options`.
+It exports the additional types [`CharacterReferences`][characterreferences],
+[`Options`][options], [`Quote`][quote], and [`Space`][space].
 
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Security
@@ -408,4 +440,12 @@ abide by its terms.
 
 [xast]: https://github.com/syntax-tree/xast
 
+[tohtml]: #tohtmltree-options
+
 [characterreferences]: #characterreferences
+
+[options]: #options
+
+[space]: #space
+
+[quote]: #quote
