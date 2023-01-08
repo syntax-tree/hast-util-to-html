@@ -3,8 +3,15 @@ import test from 'node:test'
 import {u} from 'unist-builder'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
+import * as mod from '../index.js'
 
 test('toHtml()', () => {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['toHtml'],
+    'should expose the public api'
+  )
+
   assert.throws(
     () => {
       // @ts-expect-error runtime.
