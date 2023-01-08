@@ -1,27 +1,28 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`comment`', (t) => {
-  t.deepEqual(
+test('`comment`', () => {
+  assert.deepEqual(
     toHtml(u('comment', 'alpha')),
     '<!--alpha-->',
     'should serialize `comment`s'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(u('comment', 'AT&T')),
     '<!--AT&T-->',
     'should not encode `comment`s'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(u('comment', 'asd'), {bogusComments: true}),
     '<?asd>',
     '`bogusComments`: should serialize bogus comments'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(u('comment', 'a<s>d'), {bogusComments: true}),
     '<?a<s&#x3E;d>',
     '`bogusComments`: should prevent breaking out of bogus comments'
@@ -47,7 +48,7 @@ test('`comment`', (t) => {
   let index = -1
 
   while (++index < matrix.length) {
-    t.deepEqual(
+    assert.deepEqual(
       toHtml(u('comment', matrix[index][0])),
       '<!--' + (matrix[index][1] || matrix[index][0]) + '-->',
       'security: should ' +
@@ -57,6 +58,4 @@ test('`comment`', (t) => {
         '`'
     )
   }
-
-  t.end()
 })

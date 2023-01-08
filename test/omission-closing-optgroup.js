@@ -1,21 +1,22 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`optgroup` (closing)', (t) => {
-  t.deepEqual(
+test('`optgroup` (closing)', () => {
+  assert.deepEqual(
     toHtml(h('optgroup'), {omitOptionalTags: true}),
     '<optgroup>',
     'should omit tag without parent'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('select', h('optgroup')), {omitOptionalTags: true}),
     '<select><optgroup></select>',
     'should omit tag without following'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('select', [h('optgroup'), h('optgroup')]), {
       omitOptionalTags: true
     }),
@@ -23,11 +24,9 @@ test('`optgroup` (closing)', (t) => {
     'should omit tag followed by `optgroup`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('select', [h('optgroup'), h('p')]), {omitOptionalTags: true}),
     '<select><optgroup></optgroup><p></select>',
     'should not omit tag followed by others'
   )
-
-  t.end()
 })

@@ -1,10 +1,11 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {u} from 'unist-builder'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('toHtml()', (t) => {
-  t.throws(
+test('toHtml()', () => {
+  assert.throws(
     () => {
       // @ts-expect-error runtime.
       toHtml(true)
@@ -13,7 +14,7 @@ test('toHtml()', (t) => {
     'should throw on non-nodes'
   )
 
-  t.throws(
+  assert.throws(
     () => {
       // @ts-expect-error runtime.
       toHtml(u('foo', []))
@@ -22,8 +23,10 @@ test('toHtml()', (t) => {
     'should throw on unknown nodes'
   )
 
-  t.equal(toHtml(h('')), '<div></div>', 'should support a node')
-  t.equal(toHtml([h('b'), h('i')]), '<b></b><i></i>', 'should support an array')
-
-  t.end()
+  assert.equal(toHtml(h('')), '<div></div>', 'should support a node')
+  assert.equal(
+    toHtml([h('b'), h('i')]),
+    '<b></b><i></i>',
+    'should support an array'
+  )
 })

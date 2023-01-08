@@ -1,10 +1,11 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`root`', (t) => {
-  t.deepEqual(
+test('`root`', () => {
+  assert.deepEqual(
     toHtml(
       u('root', [u('text', 'alpha '), h('i', 'bravo'), u('text', ' charlie')])
     ),
@@ -12,8 +13,10 @@ test('`root`', (t) => {
     'should serialize `root`s'
   )
 
-  // @ts-expect-error runtime.
-  t.deepEqual(toHtml(u('root')), '', 'should serialize `root`s w/o children')
-
-  t.end()
+  assert.deepEqual(
+    // @ts-expect-error runtime.
+    toHtml(u('root')),
+    '',
+    'should serialize `root`s w/o children'
+  )
 })

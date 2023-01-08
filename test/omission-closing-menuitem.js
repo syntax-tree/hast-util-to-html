@@ -1,27 +1,28 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`menuitem` (closing)', (t) => {
-  t.deepEqual(
+test('`menuitem` (closing)', () => {
+  assert.deepEqual(
     toHtml(h('menuitem', 'alpha'), {omitOptionalTags: true}),
     '<menuitem>alpha',
     'should omit tag without parent'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('menu', [h('menuitem', 'alpha')]), {omitOptionalTags: true}),
     '<menu><menuitem>alpha</menu>',
     'should omit tag without following'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('menu', [h('menuitem'), h('menuitem')]), {omitOptionalTags: true}),
     '<menu><menuitem><menuitem></menu>',
     'should omit tag followed by `menuitem`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('menu', [h('menuitem', 'alpha'), h('hr')]), {
       omitOptionalTags: true
     }),
@@ -29,7 +30,7 @@ test('`menuitem` (closing)', (t) => {
     'should omit tag followed by `hr`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('menu', [h('menuitem', 'alpha'), h('menu')]), {
       omitOptionalTags: true
     }),
@@ -37,7 +38,7 @@ test('`menuitem` (closing)', (t) => {
     'should omit tag followed by `menu`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('menu', [h('menuitem', 'alpha'), h('p')]), {
       omitOptionalTags: true
     }),
@@ -47,11 +48,9 @@ test('`menuitem` (closing)', (t) => {
 
   // This actually tests an edge case where `menuitems`, which can have children
   // in WHATWG HTML, but not in W3C HTML, here do not have children.
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('menu', [h('menuitem'), h('p')]), {omitOptionalTags: true}),
     '<menu><menuitem><p></menu>',
     'should omit tag when without children'
   )
-
-  t.end()
 })

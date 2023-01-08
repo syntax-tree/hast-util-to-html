@@ -1,42 +1,45 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-// eslint-disable-next-line unicorn/no-array-for-each
-'td,th'.split(',').forEach((tagName, index, values) => {
-  test('`' + tagName + '` (closing)', (t) => {
-    const other = values[index ? 0 : 1]
-
-    t.deepEqual(
+/**
+ * @param {'td' | 'th'} tagName
+ */
+function createTest(tagName) {
+  const other = tagName === 'td' ? 'th' : 'td'
+  test('`' + tagName + '` (closing)', () => {
+    assert.deepEqual(
       toHtml(h(tagName), {omitOptionalTags: true}),
       '<' + tagName + '>',
       'should omit tag without parent'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       toHtml(h('tr', h(tagName)), {omitOptionalTags: true}),
       '<tr><' + tagName + '>',
       'should omit tag without following'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       toHtml(h('tr', [h(tagName), h(tagName)]), {omitOptionalTags: true}),
       '<tr><' + tagName + '><' + tagName + '>',
       'should omit tag followed by `' + tagName + '`'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       toHtml(h('tr', [h(tagName), h(other)]), {omitOptionalTags: true}),
       '<tr><' + tagName + '><' + other + '>',
       'should omit tag followed by `' + other + '`'
     )
 
-    t.deepEqual(
+    assert.deepEqual(
       toHtml(h('tr', [h(tagName), h('p')]), {omitOptionalTags: true}),
       '<tr><' + tagName + '></' + tagName + '><p>',
       'should not omit tag followed by others'
     )
-
-    t.end()
   })
-})
+}
+
+createTest('td')
+createTest('th')

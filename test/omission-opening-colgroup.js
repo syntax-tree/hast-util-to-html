@@ -1,28 +1,29 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {u} from 'unist-builder'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`colgroup` (opening)', (t) => {
-  t.deepEqual(
+test('`colgroup` (opening)', () => {
+  assert.deepEqual(
     toHtml(h('colgroup'), {omitOptionalTags: true}),
     '<colgroup>',
     'should not omit tag without children'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('colgroup'), {omitOptionalTags: true}),
     '<colgroup>',
     'should omit tag with `col` child'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('table', h('colgroup')), {omitOptionalTags: true}),
     '<table><colgroup></table>',
     'should omit tag without following'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('table', [h('colgroup'), u('comment', 'alpha')]), {
       omitOptionalTags: true
     }),
@@ -30,17 +31,15 @@ test('`colgroup` (opening)', (t) => {
     'should not omit tag followed by `comment`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('table', [h('colgroup'), ' alpha']), {omitOptionalTags: true}),
     '<table><colgroup></colgroup> alpha</table>',
     'should not omit tag followed by whitespace'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('table', [h('colgroup'), h('tr')]), {omitOptionalTags: true}),
     '<table><colgroup><tr></table>',
     'should omit tag followed by others'
   )
-
-  t.end()
 })

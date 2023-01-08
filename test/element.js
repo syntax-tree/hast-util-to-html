@@ -1,41 +1,46 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`element`', (t) => {
-  t.deepEqual(
+test('`element`', () => {
+  assert.deepEqual(
     toHtml(h('i', 'bravo')),
     '<i>bravo</i>',
     'should serialize `element`s'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('foo')),
     '<foo></foo>',
     'should serialize unknown `element`s'
   )
 
-  t.deepEqual(toHtml(h('img')), '<img>', 'should serialize void `element`s')
+  assert.deepEqual(
+    toHtml(h('img')),
+    '<img>',
+    'should serialize void `element`s'
+  )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('foo'), {voids: ['foo']}),
     '<foo>',
     'should serialize given void `element`s'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('img'), {closeSelfClosing: true}),
     '<img />',
     'should serialize with ` /` in `closeSelfClosing` mode'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('img'), {closeSelfClosing: true, tightSelfClosing: true}),
     '<img/>',
     'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('input', {type: 'checkbox'}), {
       preferUnquoted: true,
       tightSelfClosing: true,
@@ -45,7 +50,7 @@ test('`element`', (t) => {
     'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, w/ space after an unquoted attribute (1)'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('img', {src: 'index.jpg'}), {
       preferUnquoted: true,
       closeSelfClosing: true,
@@ -55,7 +60,7 @@ test('`element`', (t) => {
     'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, w/ space after an unquoted attribute (2)'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('img', {title: '/'}), {
       preferUnquoted: true,
       closeSelfClosing: true,
@@ -65,7 +70,7 @@ test('`element`', (t) => {
     'should serialize voids with a ` /` in if an unquoted attribute ends with `/`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml({
       type: 'element',
       tagName: 'template',
@@ -79,6 +84,4 @@ test('`element`', (t) => {
     '<template><p><b>Bold</b> and <i>italic</i>.</p></template>',
     'should support `<template>`s content'
   )
-
-  t.end()
 })

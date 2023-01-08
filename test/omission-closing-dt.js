@@ -1,37 +1,36 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`dt` (closing)', (t) => {
-  t.deepEqual(
+test('`dt` (closing)', () => {
+  assert.deepEqual(
     toHtml(h('dt'), {omitOptionalTags: true}),
     '<dt></dt>',
     'should not omit tag without parent'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('dl', h('dt')), {omitOptionalTags: true}),
     '<dl><dt></dt></dl>',
     'should not omit tag without following'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('dl', [h('dt'), h('dt')]), {omitOptionalTags: true}),
     '<dl><dt><dt></dt></dl>',
     'should omit tag followed by `dt`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('dl', [h('dt'), h('dd')]), {omitOptionalTags: true}),
     '<dl><dt><dd></dl>',
     'should omit tag followed by `dd`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('dl', [h('dt'), h('p')]), {omitOptionalTags: true}),
     '<dl><dt></dt><p></dl>',
     'should not omit tag followed by others'
   )
-
-  t.end()
 })

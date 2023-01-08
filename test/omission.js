@@ -1,21 +1,22 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`omitOptionalTags` mode', (t) => {
-  t.deepEqual(
+test('`omitOptionalTags` mode', () => {
+  assert.deepEqual(
     toHtml(h('html'), {omitOptionalTags: true}),
     '',
     'should omit opening and closing tags'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('html', {lang: 'en'}), {omitOptionalTags: true}),
     '<html lang="en">',
     'should not omit opening tags with attributes'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('ol', [h('li', 'alpha'), h('li', 'bravo')]), {
       omitOptionalTags: true
     }),
@@ -23,13 +24,11 @@ test('`omitOptionalTags` mode', (t) => {
     'should ignore whitespace when determining whether tags can be omitted (#1)'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toHtml(h('ol', [h('li', 'alpha'), ' ', h('li', 'bravo'), '\t']), {
       omitOptionalTags: true
     }),
     '<ol><li>alpha <li>bravo\t</ol>',
     'should ignore whitespace when determining whether tags can be omitted (#2)'
   )
-
-  t.end()
 })
