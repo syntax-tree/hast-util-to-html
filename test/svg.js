@@ -177,7 +177,7 @@ test('svg', (t) => {
   )
 
   t.deepEqual(
-    // @ts-ignore runtime.
+    // @ts-expect-error runtime.
     toHtml(s('path', {strokeOpacity: {toString}}), {space: 'svg'}),
     '<path stroke-opacity="yup"></path>',
     'should serialize known numeric attributes set to non-numeric values'

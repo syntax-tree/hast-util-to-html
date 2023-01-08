@@ -35,15 +35,16 @@
   ],
   "dependencies": {
     "@types/hast": "^2.0.0",
+    "@types/unist": "^2.0.0",
     "ccount": "^2.0.0",
     "comma-separated-tokens": "^2.0.0",
-    "hast-util-is-element": "^2.0.0",
+    "hast-util-raw": "^7.0.0",
     "hast-util-whitespace": "^2.0.0",
     "html-void-elements": "^2.0.0",
     "property-information": "^6.0.0",
     "space-separated-tokens": "^2.0.0",
-    "stringify-entities": "^4.0.2",
-    "unist-util-is": "^5.0.0"
+    "stringify-entities": "^4.0.0",
+    "zwitch": "^2.0.4"
   },
   "devDependencies": {
     "@types/tape": "^4.0.0",

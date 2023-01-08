@@ -18,6 +18,7 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`toHtml(tree[, options])`](#tohtmltree-options)
+    *   [`CharacterReferences`](#characterreferences)
 *   [Syntax](#syntax)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
@@ -115,18 +116,29 @@ Serialize hast ([`Node`][node], `Array<Node>`) as HTML.
 
 Configuration (optional).
 
-###### `options.entities`
+###### `options.space`
 
-Define how to create character references (`Object`, default: `{}`).
-Configuration is passed to [`stringify-entities`][stringify-entities].
-You can use the fields `useNamedReferences`, `useShortestReferences`, and
-`omitOptionalSemicolons`.
-You cannot use the fields `escapeOnly`, `attribute`, or `subset`).
+Which space the document is in (`'svg'` or `'html'`, default: `'html'`).
+
+When an `<svg>` element is found in the HTML space, this package already
+automatically switches to and from the SVG space when entering and exiting it.
+
+> 👉 **Note**: hast is not XML.
+> It supports SVG as embedded in HTML.
+> It does not support the features available in XML.
+> Passing SVG might break but fragments of modern SVG should be fine.
+> Use [`xast`][xast] if you need to support SVG as XML.
+
+###### `options.characterReferences`
+
+Configure how to serialize character references
+([`CharacterReferences`][characterreferences], optional).
 
 ###### `options.upperDoctype`
 
-Use a `<!DOCTYPE…` instead of `<!doctype…`.
-Useless except for XHTML (`boolean`, default: `false`).
+Use a `<!DOCTYPE…` instead of `<!doctype…` (`boolean`, default: `false`).
+
+Useless except for XHTML.
 
 ###### `options.quote`
 
@@ -146,6 +158,7 @@ Not used in the SVG space.
 ###### `options.omitOptionalTags`
 
 Omit optional opening and closing tags (`boolean`, default: `false`).
+
 For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>` closing tags
 can be omitted.
 The first because it’s followed by another `li`, the last because it’s followed
@@ -166,6 +179,7 @@ Not used in the SVG space.
 
 Close self-closing nodes with an extra slash (`/`): `<img />` instead of
 `<img>` (`boolean`, default: `false`).
+
 See `tightSelfClosing` to control whether a space is used before the slash.
 
 Not used in the SVG space.
@@ -175,6 +189,7 @@ Not used in the SVG space.
 Close SVG elements without any content with slash (`/`) on the opening tag
 instead of an end tag: `<circle />` instead of `<circle></circle>` (`boolean`,
 default: `false`).
+
 See `tightSelfClosing` to control whether a space is used before the slash.
 
 Not used in the HTML space.
@@ -239,23 +254,11 @@ Do not encode some characters which cause XSS vulnerabilities in older browsers
 
 ###### `options.allowDangerousHtml`
 
-Allow `raw` nodes and insert them as raw HTML.
-When falsey, encodes `raw` nodes (`boolean`, default: `false`).
+Allow `raw` nodes and insert them as raw HTML (`boolean`, default: `false`).
+
+When `false`, `Raw` nodes are encoded.
 
 > ⚠️ **Danger**: only set this if you completely trust the content.
-
-###### `options.space`
-
-Which space the document is in (`'svg'` or `'html'`, default: `'html'`).
-
-When an `<svg>` element is found in the HTML space, `rehype-stringify` already
-automatically switches to and from the SVG space when entering and exiting it.
-
-> 👉 **Note**: hast is not XML.
-> It supports SVG as embedded in HTML.
-> It does not support the features available in XML.
-> Passing SVG might break but fragments of modern SVG should be fine.
-> Use [`xast`][xast] if you need to support SVG as XML.
 
 ###### `options.voids`
 
@@ -270,6 +273,34 @@ Not used in the SVG space.
 ##### Returns
 
 Serialized HTML (`string`).
+
+### `CharacterReferences`
+
+How to serialize character references (TypeScript type).
+
+##### Fields
+
+###### `useNamedReferences`
+
+Prefer named character references (`&amp;`) where possible (`boolean`, default:
+`false`).
+
+###### `useShortestReferences`
+
+Prefer the shortest possible reference, if that results in less bytes
+(`boolean`, default: `false`).
+
+> ⚠️ **Note**: `useNamedReferences` can be omitted when using
+> `useShortestReferences`.
+
+###### `omitOptionalSemicolons`
+
+Whether to omit semicolons when possible (`boolean`, default: `false`).
+
+> ⚠️ **Note**: this creates what HTML calls “parse errors” but is otherwise
+> still valid HTML — don’t use this except when building a minifier.
+> Omitting semicolons is possible for certain named and numeric references in
+> some cases.
 
 ## Syntax
 
@@ -369,8 +400,6 @@ abide by its terms.
 
 [html-void-elements]: https://github.com/wooorm/html-void-elements
 
-[stringify-entities]: https://github.com/wooorm/stringify-entities
-
 [hast-util-sanitize]: https://github.com/syntax-tree/hast-util-sanitize
 
 [hast-util-from-html]: https://github.com/syntax-tree/hast-util-from-html
@@ -378,3 +407,5 @@ abide by its terms.
 [rehype-stringify]: https://github.com/rehypejs/rehype/tree/main/packages/rehype-stringify#readme
 
 [xast]: https://github.com/syntax-tree/xast
+
+[characterreferences]: #characterreferences

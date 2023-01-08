@@ -1,17 +1,19 @@
+/**
+ * @typedef {import('hast-util-raw')}
+ */
+
 import test from 'tape'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
 test('`element`', (t) => {
   t.deepEqual(
-    // @ts-ignore nonstandard.
     toHtml(u('raw', '<script>alert("XSS!")</script>')),
     '&#x3C;script>alert("XSS!")&#x3C;/script>',
     'should encode `raw`s'
   )
 
   t.deepEqual(
-    // @ts-ignore nonstandard.
     toHtml(u('raw', '<script>alert("XSS!")</script>'), {
       allowDangerousHtml: true
     }),

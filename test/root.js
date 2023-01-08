@@ -12,7 +12,7 @@ test('`root`', (t) => {
     'should serialize `root`s'
   )
 
-  // @ts-ignore runtime.
+  // @ts-expect-error runtime.
   t.deepEqual(toHtml(u('root')), '', 'should serialize `root`s w/o children')
 
   t.end()
