@@ -446,6 +446,6 @@ abide by its terms.
 
 [options]: #options
 
-[space]: #space
+[space]: #space-1
 
-[quote]: #quote
+[quote]: #quote-1
