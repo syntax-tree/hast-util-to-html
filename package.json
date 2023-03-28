@@ -38,7 +38,7 @@
     "@types/unist": "^2.0.0",
     "ccount": "^2.0.0",
     "comma-separated-tokens": "^2.0.0",
-    "hast-util-raw": "^7.0.0",
+    "hast-util-raw": "^8.0.0",
     "hast-util-whitespace": "^2.0.0",
     "html-void-elements": "^2.0.0",
     "property-information": "^6.0.0",
