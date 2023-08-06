@@ -55,7 +55,7 @@ also serialize HTML at a higher-level (easier) abstraction.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+ and 16.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install hast-util-to-html
@@ -107,7 +107,7 @@ Yields:
 
 ## API
 
-This package exports the identifier [`toHtml`][tohtml].
+This package exports the identifier [`toHtml`][api-to-html].
 There is no default export.
 
 ### `toHtml(tree[, options])`
@@ -118,7 +118,7 @@ Serialize hast as HTML.
 
 *   `tree` ([`Node`][node] or `Array<Node>`)
     — tree to serialize
-*   `options` ([`Options`][options], optional)
+*   `options` ([`Options`][api-options], optional)
     — configuration
 
 ###### Returns
@@ -136,14 +136,6 @@ How to serialize character references (TypeScript type).
 Prefer named character references (`&amp;`) where possible (`boolean`, default:
 `false`).
 
-###### `useShortestReferences`
-
-Prefer the shortest possible reference, if that results in less bytes
-(`boolean`, default: `false`).
-
-> ⚠️ **Note**: `useNamedReferences` can be omitted when using
-> `useShortestReferences`.
-
 ###### `omitOptionalSemicolons`
 
 Whether to omit semicolons when possible (`boolean`, default: `false`).
@@ -152,6 +144,14 @@ Whether to omit semicolons when possible (`boolean`, default: `false`).
 > still valid HTML — don’t use this except when building a minifier.
 > Omitting semicolons is possible for certain named and numeric references in
 > some cases.
+
+###### `useShortestReferences`
+
+Prefer the shortest possible reference, if that results in less bytes
+(`boolean`, default: `false`).
+
+> ⚠️ **Note**: `useNamedReferences` can be omitted when using
+> `useShortestReferences`.
 
 ### `Options`
 
@@ -195,7 +195,7 @@ Use “bogus comments” instead of comments to save byes: `<?charlie>` instead 
 ###### `characterReferences`
 
 Configure how to serialize character references
-([`CharacterReferences`][characterreferences], optional).
+([`CharacterReferences`][api-character-references], optional).
 
 ###### `closeEmptyElements`
 
@@ -245,7 +245,7 @@ Not used in the SVG space.
 
 ###### `quote`
 
-Preferred quote to use ([`Quote`][quote], default: `'"'`).
+Preferred quote to use ([`Quote`][api-quote], default: `'"'`).
 
 ###### `quoteSmart`
 
@@ -253,7 +253,7 @@ Use the other quote if that results in less bytes (`boolean`, default: `false`).
 
 ###### `space`
 
-Which space the document is in ([`Space`][space], default: `'html'`).
+Which space the document is in ([`Space`][api-space], default: `'html'`).
 
 When an `<svg>` element is found in the HTML space, this package already
 automatically switches to and from the SVG space when entering and exiting it.
@@ -341,15 +341,21 @@ followed by browsers such as Chrome and Firefox.
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types [`CharacterReferences`][characterreferences],
-[`Options`][options], [`Quote`][quote], and [`Space`][space].
+It exports the additional types
+[`CharacterReferences`][api-character-references],
+[`Options`][api-options],
+[`Quote`][api-quote], and
+[`Space`][api-space].
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 14.14+ and 16.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `hast-util-to-html@^8`,
+compatible with Node.js 12.
 
 ## Security
 
@@ -390,9 +396,9 @@ abide by its terms.
 
 [downloads]: https://www.npmjs.com/package/hast-util-to-html
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/hast-util-to-html.svg
+[size-badge]: https://img.shields.io/badge/dynamic/json?label=minzipped%20size&query=$.size.compressedSize&url=https://deno.bundlejs.com/?q=hast-util-to-html
 
-[size]: https://bundlephobia.com/result?p=hast-util-to-html
+[size]: https://bundlejs.com/?q=hast-util-to-html
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -440,12 +446,12 @@ abide by its terms.
 
 [xast]: https://github.com/syntax-tree/xast
 
-[tohtml]: #tohtmltree-options
+[api-to-html]: #tohtmltree-options
 
-[characterreferences]: #characterreferences
+[api-character-references]: #characterreferences
 
-[options]: #options
+[api-options]: #options
 
-[space]: #space-1
+[api-space]: #space-1
 
-[quote]: #quote-1
+[api-quote]: #quote-1
