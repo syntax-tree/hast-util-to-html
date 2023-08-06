@@ -3,22 +3,22 @@ import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`tfoot` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('tfoot'), {omitOptionalTags: true}),
-    '<tfoot>',
-    'should omit tag without siblings'
-  )
+test('`tfoot` (closing)', async function (t) {
+  await t.test('should omit tag without siblings', async function () {
+    assert.deepEqual(toHtml(h('tfoot'), {omitOptionalTags: true}), '<tfoot>')
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', h('tfoot')), {omitOptionalTags: true}),
-    '<table><tfoot></table>',
-    'should omit tag without following'
-  )
+  await t.test('should omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(h('table', h('tfoot')), {omitOptionalTags: true}),
+      '<table><tfoot></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('tfoot'), h('tr')]), {omitOptionalTags: true}),
-    '<table><tfoot></tfoot><tr></table>',
-    'should not omit tag followed by others'
-  )
+  await t.test('should not omit tag followed by others', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('tfoot'), h('tr')]), {omitOptionalTags: true}),
+      '<table><tfoot></tfoot><tr></table>'
+    )
+  })
 })

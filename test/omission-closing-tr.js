@@ -3,22 +3,22 @@ import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`tr` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('tr'), {omitOptionalTags: true}),
-    '<tr>',
-    'should omit tag without siblings'
-  )
+test('`tr` (closing)', async function (t) {
+  await t.test('should omit tag without siblings', async function () {
+    assert.deepEqual(toHtml(h('tr'), {omitOptionalTags: true}), '<tr>')
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', h('tr')), {omitOptionalTags: true}),
-    '<table><tr></table>',
-    'should omit tag without following'
-  )
+  await t.test('should omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(h('table', h('tr')), {omitOptionalTags: true}),
+      '<table><tr></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('tr'), h('tbody')]), {omitOptionalTags: true}),
-    '<table><tr></tr><tbody></table>',
-    'should not omit tag followed by others'
-  )
+  await t.test('should not omit tag followed by others', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('tr'), h('tbody')]), {omitOptionalTags: true}),
+      '<table><tr></tr><tbody></table>'
+    )
+  })
 })

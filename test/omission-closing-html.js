@@ -4,26 +4,32 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`html` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('html'), {omitOptionalTags: true}),
-    '',
-    'should omit tag without following'
+test('`html` (closing)', async function (t) {
+  await t.test('should omit tag without following', async function () {
+    assert.deepEqual(toHtml(h('html'), {omitOptionalTags: true}), '')
+  })
+
+  await t.test(
+    'should not omit tag if followed by `comment`',
+    async function () {
+      assert.deepEqual(
+        toHtml(u('root', [h('html'), u('comment', 'alpha')]), {
+          omitOptionalTags: true
+        }),
+        '</html><!--alpha-->'
+      )
+    }
   )
 
-  assert.deepEqual(
-    toHtml(u('root', [h('html'), u('comment', 'alpha')]), {
-      omitOptionalTags: true
-    }),
-    '</html><!--alpha-->',
-    'should not omit tag if followed by `comment`'
-  )
-
-  assert.deepEqual(
-    toHtml(u('root', [h('html'), u('text', 'alpha')]), {
-      omitOptionalTags: true
-    }),
-    'alpha',
-    'should omit tag if not followed by `comment`'
+  await t.test(
+    'should omit tag if not followed by `comment`',
+    async function () {
+      assert.deepEqual(
+        toHtml(u('root', [h('html'), u('text', 'alpha')]), {
+          omitOptionalTags: true
+        }),
+        'alpha'
+      )
+    }
   )
 })

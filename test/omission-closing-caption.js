@@ -4,36 +4,41 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`caption` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('caption'), {omitOptionalTags: true}),
-    '<caption>',
-    'should not omit tag without children'
-  )
+test('`caption` (closing)', async function (t) {
+  await t.test('should not omit tag without children', async function () {
+    assert.deepEqual(
+      toHtml(h('caption'), {omitOptionalTags: true}),
+      '<caption>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', h('caption')), {omitOptionalTags: true}),
-    '<table><caption></table>',
-    'should omit tag without following'
-  )
+  await t.test('should omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(h('table', h('caption')), {omitOptionalTags: true}),
+      '<table><caption></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('caption'), u('comment', 'alpha')]), {
-      omitOptionalTags: true
-    }),
-    '<table><caption></caption><!--alpha--></table>',
-    'should not omit tag followed by `comment`'
-  )
+  await t.test('should not omit tag followed by `comment`', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('caption'), u('comment', 'alpha')]), {
+        omitOptionalTags: true
+      }),
+      '<table><caption></caption><!--alpha--></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('caption'), ' alpha']), {omitOptionalTags: true}),
-    '<table><caption></caption> alpha</table>',
-    'should not omit tag followed by whitespace'
-  )
+  await t.test('should not omit tag followed by whitespace', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('caption'), ' alpha']), {omitOptionalTags: true}),
+      '<table><caption></caption> alpha</table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('caption'), h('tr')]), {omitOptionalTags: true}),
-    '<table><caption><tr></table>',
-    'should omit tag followed by others'
-  )
+  await t.test('should omit tag followed by others', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('caption'), h('tr')]), {omitOptionalTags: true}),
+      '<table><caption><tr></table>'
+    )
+  })
 })

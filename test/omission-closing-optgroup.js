@@ -3,30 +3,34 @@ import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`optgroup` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('optgroup'), {omitOptionalTags: true}),
-    '<optgroup>',
-    'should omit tag without parent'
-  )
+test('`optgroup` (closing)', async function (t) {
+  await t.test('should omit tag without parent', async function () {
+    assert.deepEqual(
+      toHtml(h('optgroup'), {omitOptionalTags: true}),
+      '<optgroup>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('select', h('optgroup')), {omitOptionalTags: true}),
-    '<select><optgroup></select>',
-    'should omit tag without following'
-  )
+  await t.test('should omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(h('select', h('optgroup')), {omitOptionalTags: true}),
+      '<select><optgroup></select>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('select', [h('optgroup'), h('optgroup')]), {
-      omitOptionalTags: true
-    }),
-    '<select><optgroup><optgroup></select>',
-    'should omit tag followed by `optgroup`'
-  )
+  await t.test('should omit tag followed by `optgroup`', async function () {
+    assert.deepEqual(
+      toHtml(h('select', [h('optgroup'), h('optgroup')]), {
+        omitOptionalTags: true
+      }),
+      '<select><optgroup><optgroup></select>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('select', [h('optgroup'), h('p')]), {omitOptionalTags: true}),
-    '<select><optgroup></optgroup><p></select>',
-    'should not omit tag followed by others'
-  )
+  await t.test('should not omit tag followed by others', async function () {
+    assert.deepEqual(
+      toHtml(h('select', [h('optgroup'), h('p')]), {omitOptionalTags: true}),
+      '<select><optgroup></optgroup><p></select>'
+    )
+  })
 })

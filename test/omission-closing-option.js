@@ -3,34 +3,38 @@ import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`option` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('option'), {omitOptionalTags: true}),
-    '<option>',
-    'should omit tag without parent'
-  )
+test('`option` (closing)', async function (t) {
+  await t.test('should omit tag without parent', async function () {
+    assert.deepEqual(toHtml(h('option'), {omitOptionalTags: true}), '<option>')
+  })
 
-  assert.deepEqual(
-    toHtml(h('select', h('option')), {omitOptionalTags: true}),
-    '<select><option></select>',
-    'should omit tag without following'
-  )
+  await t.test('should omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(h('select', h('option')), {omitOptionalTags: true}),
+      '<select><option></select>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('select', [h('option'), h('option')]), {omitOptionalTags: true}),
-    '<select><option><option></select>',
-    'should omit tag followed by `option`'
-  )
+  await t.test('should omit tag followed by `option`', async function () {
+    assert.deepEqual(
+      toHtml(h('select', [h('option'), h('option')]), {omitOptionalTags: true}),
+      '<select><option><option></select>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('select', [h('option'), h('optgroup')]), {omitOptionalTags: true}),
-    '<select><option><optgroup></select>',
-    'should omit tag followed by `optgroup`'
-  )
+  await t.test('should omit tag followed by `optgroup`', async function () {
+    assert.deepEqual(
+      toHtml(h('select', [h('option'), h('optgroup')]), {
+        omitOptionalTags: true
+      }),
+      '<select><option><optgroup></select>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('select', [h('option'), h('p')]), {omitOptionalTags: true}),
-    '<select><option></option><p></select>',
-    'should not omit tag followed by others'
-  )
+  await t.test('should not omit tag followed by others', async function () {
+    assert.deepEqual(
+      toHtml(h('select', [h('option'), h('p')]), {omitOptionalTags: true}),
+      '<select><option></option><p></select>'
+    )
+  })
 })

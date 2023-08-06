@@ -4,34 +4,41 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`colgroup` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('colgroup'), {omitOptionalTags: true}),
-    '<colgroup>',
-    'should not omit tag without children'
-  )
+test('`colgroup` (closing)', async function (t) {
+  await t.test('should not omit tag without children', async function () {
+    assert.deepEqual(
+      toHtml(h('colgroup'), {omitOptionalTags: true}),
+      '<colgroup>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('colgroup', h('col', {span: 2})), {omitOptionalTags: true}),
-    '<col span="2">',
-    'should omit tag if head is `col`'
-  )
+  await t.test('should omit tag if head is `col`', async function () {
+    assert.deepEqual(
+      toHtml(h('colgroup', h('col', {span: 2})), {omitOptionalTags: true}),
+      '<col span="2">'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('colgroup', [u('comment', 'alpha')]), {omitOptionalTags: true}),
-    '<colgroup><!--alpha-->',
-    'should not omit tag if head is not `col`'
-  )
+  await t.test('should not omit tag if head is not `col`', async function () {
+    assert.deepEqual(
+      toHtml(h('colgroup', [u('comment', 'alpha')]), {omitOptionalTags: true}),
+      '<colgroup><!--alpha-->'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(
-      h('table', [
-        h('colgroup', [h('col', {span: 2})]),
-        h('colgroup', [h('col', {span: 3})])
-      ]),
-      {omitOptionalTags: true}
-    ),
-    '<table><col span="2"><colgroup><col span="3"></table>',
-    'should not omit tag if previous is `colgroup` whose closing tag is omitted'
+  await t.test(
+    'should not omit tag if previous is `colgroup` whose closing tag is omitted',
+    async function () {
+      assert.deepEqual(
+        toHtml(
+          h('table', [
+            h('colgroup', [h('col', {span: 2})]),
+            h('colgroup', [h('col', {span: 3})])
+          ]),
+          {omitOptionalTags: true}
+        ),
+        '<table><col span="2"><colgroup><col span="3"></table>'
+      )
+    }
   )
 })

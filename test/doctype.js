@@ -3,22 +3,28 @@ import test from 'node:test'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`doctype`', () => {
-  assert.deepEqual(
-    toHtml(u('doctype')),
-    '<!doctype html>',
-    'should serialize doctypes'
+test('`doctype`', async function (t) {
+  await t.test('should serialize doctypes', async function () {
+    assert.deepEqual(toHtml(u('doctype')), '<!doctype html>')
+  })
+
+  await t.test(
+    'should serialize doctypes tightly in `tightDoctype` mode',
+    async function () {
+      assert.deepEqual(
+        toHtml(u('doctype'), {tightDoctype: true}),
+        '<!doctypehtml>'
+      )
+    }
   )
 
-  assert.deepEqual(
-    toHtml(u('doctype'), {tightDoctype: true}),
-    '<!doctypehtml>',
-    'should serialize doctypes tightly in `tightDoctype` mode'
-  )
-
-  assert.deepEqual(
-    toHtml(u('doctype'), {upperDoctype: true}),
-    '<!DOCTYPE html>',
-    'should serialize uppercase doctypes in `upperDoctype` mode'
+  await t.test(
+    'should serialize uppercase doctypes in `upperDoctype` mode',
+    async function () {
+      assert.deepEqual(
+        toHtml(u('doctype'), {upperDoctype: true}),
+        '<!DOCTYPE html>'
+      )
+    }
   )
 })

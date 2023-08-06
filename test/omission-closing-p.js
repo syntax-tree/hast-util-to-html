@@ -4,64 +4,74 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`p` (closing)', () => {
-  assert.deepEqual(
-    toHtml(u('root', [h('p')]), {omitOptionalTags: true}),
-    '<p>',
-    'should omit tag without following'
-  )
+test('`p` (closing)', async function (t) {
+  await t.test('should omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(u('root', [h('p')]), {omitOptionalTags: true}),
+      '<p>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(u('root', [h('p'), h('address')]), {omitOptionalTags: true}),
-    '<p><address></address>',
-    'should omit tag if followed by `address`'
-  )
+  await t.test('should omit tag if followed by `address`', async function () {
+    assert.deepEqual(
+      toHtml(u('root', [h('p'), h('address')]), {omitOptionalTags: true}),
+      '<p><address></address>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(u('root', [h('p'), h('ul')]), {omitOptionalTags: true}),
-    '<p><ul></ul>',
-    'should omit tag if followed by `ul`'
-  )
+  await t.test('should omit tag if followed by `ul`', async function () {
+    assert.deepEqual(
+      toHtml(u('root', [h('p'), h('ul')]), {omitOptionalTags: true}),
+      '<p><ul></ul>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(u('root', [h('p'), h('a')]), {omitOptionalTags: true}),
-    '<p></p><a></a>',
-    'should not omit tag if followed by `a`'
-  )
+  await t.test('should not omit tag if followed by `a`', async function () {
+    assert.deepEqual(
+      toHtml(u('root', [h('p'), h('a')]), {omitOptionalTags: true}),
+      '<p></p><a></a>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(u('root', [h('p'), h('xmp')]), {omitOptionalTags: true}),
-    '<p></p><xmp></xmp>',
-    'should not omit tag if followed by `xmp`'
-  )
+  await t.test('should not omit tag if followed by `xmp`', async function () {
+    assert.deepEqual(
+      toHtml(u('root', [h('p'), h('xmp')]), {omitOptionalTags: true}),
+      '<p></p><xmp></xmp>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('p'), {omitOptionalTags: true}),
-    '<p>',
-    'should omit tag without parent'
-  )
+  await t.test('should omit tag without parent', async function () {
+    assert.deepEqual(toHtml(h('p'), {omitOptionalTags: true}), '<p>')
+  })
 
-  assert.deepEqual(
-    toHtml(h('a', [h('p')]), {omitOptionalTags: true}),
-    '<a><p></p></a>',
-    'should not omit tag if parent is `a`'
-  )
+  await t.test('should not omit tag if parent is `a`', async function () {
+    assert.deepEqual(
+      toHtml(h('a', [h('p')]), {omitOptionalTags: true}),
+      '<a><p></p></a>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('video', [h('p')]), {omitOptionalTags: true}),
-    '<video><p></p></video>',
-    'should not omit tag if parented by `video`'
-  )
+  await t.test('should not omit tag if parented by `video`', async function () {
+    assert.deepEqual(
+      toHtml(h('video', [h('p')]), {omitOptionalTags: true}),
+      '<video><p></p></video>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('article', [h('p')]), {omitOptionalTags: true}),
-    '<article><p></article>',
-    'should not omit tag if parent is `article`'
-  )
+  await t.test('should not omit tag if parent is `article`', async function () {
+    assert.deepEqual(
+      toHtml(h('article', [h('p')]), {omitOptionalTags: true}),
+      '<article><p></article>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('section', [h('p')]), {omitOptionalTags: true}),
-    '<section><p></section>',
-    'should not omit tag if parented by `section`'
+  await t.test(
+    'should not omit tag if parented by `section`',
+    async function () {
+      assert.deepEqual(
+        toHtml(h('section', [h('p')]), {omitOptionalTags: true}),
+        '<section><p></section>'
+      )
+    }
   )
 })

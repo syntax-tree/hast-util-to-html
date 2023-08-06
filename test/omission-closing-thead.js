@@ -3,34 +3,39 @@ import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`thead` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('thead'), {omitOptionalTags: true}),
-    '<thead></thead>',
-    'should not omit tag without siblings'
-  )
+test('`thead` (closing)', async function (t) {
+  await t.test('should not omit tag without siblings', async function () {
+    assert.deepEqual(
+      toHtml(h('thead'), {omitOptionalTags: true}),
+      '<thead></thead>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', h('thead')), {omitOptionalTags: true}),
-    '<table><thead></thead></table>',
-    'should not omit tag without following'
-  )
+  await t.test('should not omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(h('table', h('thead')), {omitOptionalTags: true}),
+      '<table><thead></thead></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('thead'), h('tbody')]), {omitOptionalTags: true}),
-    '<table><thead><tbody></table>',
-    'should omit tag followed by `tbody`'
-  )
+  await t.test('should omit tag followed by `tbody`', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('thead'), h('tbody')]), {omitOptionalTags: true}),
+      '<table><thead><tbody></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('thead'), h('tfoot')]), {omitOptionalTags: true}),
-    '<table><thead><tfoot></table>',
-    'should omit tag followed by `tfoot`'
-  )
+  await t.test('should omit tag followed by `tfoot`', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('thead'), h('tfoot')]), {omitOptionalTags: true}),
+      '<table><thead><tfoot></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('thead'), h('tr')]), {omitOptionalTags: true}),
-    '<table><thead></thead><tr></table>',
-    'should not omit tag followed by others'
-  )
+  await t.test('should not omit tag followed by others', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('thead'), h('tr')]), {omitOptionalTags: true}),
+      '<table><thead></thead><tr></table>'
+    )
+  })
 })

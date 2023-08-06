@@ -3,34 +3,36 @@ import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`dt` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('dt'), {omitOptionalTags: true}),
-    '<dt></dt>',
-    'should not omit tag without parent'
-  )
+test('`dt` (closing)', async function (t) {
+  await t.test('should not omit tag without parent', async function () {
+    assert.deepEqual(toHtml(h('dt'), {omitOptionalTags: true}), '<dt></dt>')
+  })
 
-  assert.deepEqual(
-    toHtml(h('dl', h('dt')), {omitOptionalTags: true}),
-    '<dl><dt></dt></dl>',
-    'should not omit tag without following'
-  )
+  await t.test('should not omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(h('dl', h('dt')), {omitOptionalTags: true}),
+      '<dl><dt></dt></dl>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('dl', [h('dt'), h('dt')]), {omitOptionalTags: true}),
-    '<dl><dt><dt></dt></dl>',
-    'should omit tag followed by `dt`'
-  )
+  await t.test('should omit tag followed by `dt`', async function () {
+    assert.deepEqual(
+      toHtml(h('dl', [h('dt'), h('dt')]), {omitOptionalTags: true}),
+      '<dl><dt><dt></dt></dl>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('dl', [h('dt'), h('dd')]), {omitOptionalTags: true}),
-    '<dl><dt><dd></dl>',
-    'should omit tag followed by `dd`'
-  )
+  await t.test('should omit tag followed by `dd`', async function () {
+    assert.deepEqual(
+      toHtml(h('dl', [h('dt'), h('dd')]), {omitOptionalTags: true}),
+      '<dl><dt><dd></dl>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('dl', [h('dt'), h('p')]), {omitOptionalTags: true}),
-    '<dl><dt></dt><p></dl>',
-    'should not omit tag followed by others'
-  )
+  await t.test('should not omit tag followed by others', async function () {
+    assert.deepEqual(
+      toHtml(h('dl', [h('dt'), h('p')]), {omitOptionalTags: true}),
+      '<dl><dt></dt><p></dl>'
+    )
+  })
 })

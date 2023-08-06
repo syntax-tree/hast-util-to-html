@@ -91,8 +91,19 @@
     "strict": true
   },
   "xo": {
+    "overrides": [
+      {
+        "files": [
+          "test/**/*.js"
+        ],
+        "rules": {
+          "no-await-in-loop": "off"
+        }
+      }
+    ],
     "prettier": true,
     "rules": {
+      "complexity": "off",
       "unicorn/prefer-at": "off",
       "unicorn/prefer-string-replace-all": "off"
     }

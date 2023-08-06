@@ -8,36 +8,48 @@ import {toHtml} from '../index.js'
  */
 function createTest(tagName) {
   const other = tagName === 'td' ? 'th' : 'td'
-  test('`' + tagName + '` (closing)', () => {
-    assert.deepEqual(
-      toHtml(h(tagName), {omitOptionalTags: true}),
-      '<' + tagName + '>',
-      'should omit tag without parent'
+
+  test('`' + tagName + '` (closing)', async function (t) {
+    await t.test('should omit tag without parent', async function () {
+      assert.deepEqual(
+        toHtml(h(tagName), {omitOptionalTags: true}),
+        '<' + tagName + '>'
+      )
+    })
+
+    await t.test('should omit tag without following', async function () {
+      assert.deepEqual(
+        toHtml(h('tr', h(tagName)), {omitOptionalTags: true}),
+        '<tr><' + tagName + '>'
+      )
+    })
+
+    await t.test(
+      'should omit tag followed by `' + tagName + '`',
+      async function () {
+        assert.deepEqual(
+          toHtml(h('tr', [h(tagName), h(tagName)]), {omitOptionalTags: true}),
+          '<tr><' + tagName + '><' + tagName + '>'
+        )
+      }
     )
 
-    assert.deepEqual(
-      toHtml(h('tr', h(tagName)), {omitOptionalTags: true}),
-      '<tr><' + tagName + '>',
-      'should omit tag without following'
+    await t.test(
+      'should omit tag followed by `' + other + '`',
+      async function () {
+        assert.deepEqual(
+          toHtml(h('tr', [h(tagName), h(other)]), {omitOptionalTags: true}),
+          '<tr><' + tagName + '><' + other + '>'
+        )
+      }
     )
 
-    assert.deepEqual(
-      toHtml(h('tr', [h(tagName), h(tagName)]), {omitOptionalTags: true}),
-      '<tr><' + tagName + '><' + tagName + '>',
-      'should omit tag followed by `' + tagName + '`'
-    )
-
-    assert.deepEqual(
-      toHtml(h('tr', [h(tagName), h(other)]), {omitOptionalTags: true}),
-      '<tr><' + tagName + '><' + other + '>',
-      'should omit tag followed by `' + other + '`'
-    )
-
-    assert.deepEqual(
-      toHtml(h('tr', [h(tagName), h('p')]), {omitOptionalTags: true}),
-      '<tr><' + tagName + '></' + tagName + '><p>',
-      'should not omit tag followed by others'
-    )
+    await t.test('should not omit tag followed by others', async function () {
+      assert.deepEqual(
+        toHtml(h('tr', [h(tagName), h('p')]), {omitOptionalTags: true}),
+        '<tr><' + tagName + '></' + tagName + '><p>'
+      )
+    })
   })
 }
 

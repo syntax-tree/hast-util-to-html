@@ -3,29 +3,33 @@ import test from 'node:test'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`comment`', () => {
-  assert.deepEqual(
-    toHtml(u('comment', 'alpha')),
-    '<!--alpha-->',
-    'should serialize `comment`s'
+test('`comment`', async function (t) {
+  await t.test('should serialize `comment`s', async function () {
+    assert.deepEqual(toHtml(u('comment', 'alpha')), '<!--alpha-->')
+  })
+
+  await t.test('should not encode `comment`s', async function () {
+    assert.deepEqual(toHtml(u('comment', 'AT&T')), '<!--AT&T-->')
+  })
+
+  await t.test(
+    'should serialize bogus comments (`bogusComments`)',
+    async function () {
+      assert.deepEqual(
+        toHtml(u('comment', 'asd'), {bogusComments: true}),
+        '<?asd>'
+      )
+    }
   )
 
-  assert.deepEqual(
-    toHtml(u('comment', 'AT&T')),
-    '<!--AT&T-->',
-    'should not encode `comment`s'
-  )
-
-  assert.deepEqual(
-    toHtml(u('comment', 'asd'), {bogusComments: true}),
-    '<?asd>',
-    '`bogusComments`: should serialize bogus comments'
-  )
-
-  assert.deepEqual(
-    toHtml(u('comment', 'a<s>d'), {bogusComments: true}),
-    '<?a<s&#x3E;d>',
-    '`bogusComments`: should prevent breaking out of bogus comments'
+  await t.test(
+    'should prevent breaking out of bogus comments (`bogusComments`)',
+    async function () {
+      assert.deepEqual(
+        toHtml(u('comment', 'a<s>d'), {bogusComments: true}),
+        '<?a<s&#x3E;d>'
+      )
+    }
   )
 
   // https://html.spec.whatwg.org/multipage/syntax.html#comments
@@ -48,14 +52,18 @@ test('`comment`', () => {
   let index = -1
 
   while (++index < matrix.length) {
-    assert.deepEqual(
-      toHtml(u('comment', matrix[index][0])),
-      '<!--' + (matrix[index][1] || matrix[index][0]) + '-->',
-      'security: should ' +
+    await t.test(
+      'should ' +
         (matrix[index][1] === undefined ? 'allow' : 'prevent') +
         ' `' +
         matrix[index][0] +
-        '`'
+        '` (security)',
+      async function () {
+        assert.deepEqual(
+          toHtml(u('comment', matrix[index][0])),
+          '<!--' + (matrix[index][1] || matrix[index][0]) + '-->'
+        )
+      }
     )
   }
 })

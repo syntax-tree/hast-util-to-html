@@ -3,34 +3,36 @@ import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`tbody` (closing)', () => {
-  assert.deepEqual(
-    toHtml(h('tbody'), {omitOptionalTags: true}),
-    '<tbody>',
-    'should omit tag without siblings'
-  )
+test('`tbody` (closing)', async function (t) {
+  await t.test('should omit tag without siblings', async function () {
+    assert.deepEqual(toHtml(h('tbody'), {omitOptionalTags: true}), '<tbody>')
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', h('tbody')), {omitOptionalTags: true}),
-    '<table><tbody></table>',
-    'should omit tag without following'
-  )
+  await t.test('should omit tag without following', async function () {
+    assert.deepEqual(
+      toHtml(h('table', h('tbody')), {omitOptionalTags: true}),
+      '<table><tbody></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('tbody'), h('tbody')]), {omitOptionalTags: true}),
-    '<table><tbody><tbody></table>',
-    'should omit tag followed by `tbody`'
-  )
+  await t.test('should omit tag followed by `tbody`', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('tbody'), h('tbody')]), {omitOptionalTags: true}),
+      '<table><tbody><tbody></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('tbody'), h('tfoot')]), {omitOptionalTags: true}),
-    '<table><tbody><tfoot></table>',
-    'should omit tag followed by `tfoot`'
-  )
+  await t.test('should omit tag followed by `tfoot`', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('tbody'), h('tfoot')]), {omitOptionalTags: true}),
+      '<table><tbody><tfoot></table>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('table', [h('tbody'), h('tr')]), {omitOptionalTags: true}),
-    '<table><tbody></tbody><tr></table>',
-    'should not omit tag followed by others'
-  )
+  await t.test('should not omit tag followed by others', async function () {
+    assert.deepEqual(
+      toHtml(h('table', [h('tbody'), h('tr')]), {omitOptionalTags: true}),
+      '<table><tbody></tbody><tr></table>'
+    )
+  })
 })

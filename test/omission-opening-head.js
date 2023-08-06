@@ -3,40 +3,43 @@ import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from '../index.js'
 
-test('`head` (opening)', () => {
-  assert.deepEqual(
-    toHtml(h('head', h('meta', {charSet: 'utf8'})), {omitOptionalTags: true}),
-    '<meta charset="utf8">',
-    'should omit tag with children'
-  )
+test('`head` (opening)', async function (t) {
+  await t.test('should omit tag with children', async function () {
+    assert.deepEqual(
+      toHtml(h('head', h('meta', {charSet: 'utf8'})), {omitOptionalTags: true}),
+      '<meta charset="utf8">'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('head'), {omitOptionalTags: true}),
-    '<head>',
-    'should not omit tag without children'
-  )
+  await t.test('should not omit tag without children', async function () {
+    assert.deepEqual(toHtml(h('head'), {omitOptionalTags: true}), '<head>')
+  })
 
-  assert.deepEqual(
-    toHtml(h('head', h('title', 'alpha')), {omitOptionalTags: true}),
-    '<title>alpha</title>',
-    'should omit tag with `title`'
-  )
+  await t.test('should omit tag with `title`', async function () {
+    assert.deepEqual(
+      toHtml(h('head', h('title', 'alpha')), {omitOptionalTags: true}),
+      '<title>alpha</title>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('head', h('base')), {omitOptionalTags: true}),
-    '<base>',
-    'should omit tag with `base`'
-  )
+  await t.test('should omit tag with `base`', async function () {
+    assert.deepEqual(
+      toHtml(h('head', h('base')), {omitOptionalTags: true}),
+      '<base>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('head', [h('title'), h('title')]), {omitOptionalTags: true}),
-    '<head><title></title><title></title>',
-    'should not omit tag with multiple `title`s'
-  )
+  await t.test('should not omit tag with multiple `title`s', async function () {
+    assert.deepEqual(
+      toHtml(h('head', [h('title'), h('title')]), {omitOptionalTags: true}),
+      '<head><title></title><title></title>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('head', [h('base'), h('base')]), {omitOptionalTags: true}),
-    '<head><base><base>',
-    'should not omit tag with multiple `base`s'
-  )
+  await t.test('should not omit tag with multiple `base`s', async function () {
+    assert.deepEqual(
+      toHtml(h('head', [h('base'), h('base')]), {omitOptionalTags: true}),
+      '<head><base><base>'
+    )
+  })
 })

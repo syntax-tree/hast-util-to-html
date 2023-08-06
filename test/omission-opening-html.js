@@ -4,24 +4,24 @@ import {h} from 'hastscript'
 import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`html` (opening)', () => {
-  assert.deepEqual(
-    toHtml(h('html'), {omitOptionalTags: true}),
-    '',
-    'should omit tag without first child'
-  )
+test('`html` (opening)', async function (t) {
+  await t.test('should omit tag without first child', async function () {
+    assert.deepEqual(toHtml(h('html'), {omitOptionalTags: true}), '')
+  })
 
-  assert.deepEqual(
-    toHtml(h('html', [u('comment', 'alpha'), 'bravo']), {
-      omitOptionalTags: true
-    }),
-    '<html><!--alpha-->bravo',
-    'should not omit tag if head is `comment`'
-  )
+  await t.test('should not omit tag if head is `comment`', async function () {
+    assert.deepEqual(
+      toHtml(h('html', [u('comment', 'alpha'), 'bravo']), {
+        omitOptionalTags: true
+      }),
+      '<html><!--alpha-->bravo'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('html', 'bravo'), {omitOptionalTags: true}),
-    'bravo',
-    'should omit tag if head is not `comment`'
-  )
+  await t.test('should omit tag if head is not `comment`', async function () {
+    assert.deepEqual(
+      toHtml(h('html', 'bravo'), {omitOptionalTags: true}),
+      'bravo'
+    )
+  })
 })

@@ -1,61 +1,73 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import {u} from 'unist-builder'
 import {h} from 'hastscript'
+import {u} from 'unist-builder'
 import {toHtml} from '../index.js'
 
-test('`body` (opening)', () => {
-  assert.deepEqual(
-    toHtml(h('body'), {omitOptionalTags: true}),
-    '',
-    'should omit tag without children'
+test('`body` (opening)', async function (t) {
+  await t.test('should omit tag without children', async function () {
+    assert.deepEqual(toHtml(h('body'), {omitOptionalTags: true}), '')
+  })
+
+  await t.test(
+    'should not omit tag if the head is a `comment`',
+    async function () {
+      assert.deepEqual(
+        toHtml(h('body', u('comment', 'alpha')), {omitOptionalTags: true}),
+        '<body><!--alpha-->'
+      )
+    }
   )
 
-  assert.deepEqual(
-    toHtml(h('body', u('comment', 'alpha')), {omitOptionalTags: true}),
-    '<body><!--alpha-->',
-    'should not omit tag if the head is a `comment`'
+  await t.test(
+    'should not omit tag if the head starts with whitespace',
+    async function () {
+      assert.deepEqual(
+        toHtml(h('body', ' alpha'), {omitOptionalTags: true}),
+        '<body> alpha'
+      )
+    }
   )
 
-  assert.deepEqual(
-    toHtml(h('body', ' alpha'), {omitOptionalTags: true}),
-    '<body> alpha',
-    'should not omit tag if the head starts with whitespace'
-  )
+  await t.test('should not omit tag if head is `meta`', async function () {
+    assert.deepEqual(
+      toHtml(h('body', [h('meta')]), {omitOptionalTags: true}),
+      '<body><meta>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('body', [h('meta')]), {omitOptionalTags: true}),
-    '<body><meta>',
-    'should not omit tag if head is `meta`'
-  )
+  await t.test('should not omit tag if head is `link`', async function () {
+    assert.deepEqual(
+      toHtml(h('body', [h('link')]), {omitOptionalTags: true}),
+      '<body><link>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('body', [h('link')]), {omitOptionalTags: true}),
-    '<body><link>',
-    'should not omit tag if head is `link`'
-  )
+  await t.test('should not omit tag if head is `script`', async function () {
+    assert.deepEqual(
+      toHtml(h('body', [h('script')]), {omitOptionalTags: true}),
+      '<body><script></script>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('body', [h('script')]), {omitOptionalTags: true}),
-    '<body><script></script>',
-    'should not omit tag if head is `script`'
-  )
+  await t.test('should not omit tag if head is `style`', async function () {
+    assert.deepEqual(
+      toHtml(h('body', [h('style')]), {omitOptionalTags: true}),
+      '<body><style></style>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('body', [h('style')]), {omitOptionalTags: true}),
-    '<body><style></style>',
-    'should not omit tag if head is `style`'
-  )
+  await t.test('should not omit tag if head is `template`', async function () {
+    assert.deepEqual(
+      toHtml(h('body', [h('template')]), {omitOptionalTags: true}),
+      '<body><template></template>'
+    )
+  })
 
-  assert.deepEqual(
-    toHtml(h('body', [h('template')]), {omitOptionalTags: true}),
-    '<body><template></template>',
-    'should not omit tag if head is `template`'
-  )
-
-  assert.deepEqual(
-    toHtml(h('body', [h('div')]), {omitOptionalTags: true}),
-    '<div></div>',
-    'should omit tag if head is something else'
-  )
+  await t.test('should omit tag if head is something else', async function () {
+    assert.deepEqual(
+      toHtml(h('body', [h('div')]), {omitOptionalTags: true}),
+      '<div></div>'
+    )
+  })
 })
