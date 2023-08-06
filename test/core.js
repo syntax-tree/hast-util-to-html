@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
+import {toHtml} from 'hast-util-to-html'
 import {u} from 'unist-builder'
-import {toHtml} from '../index.js'
 
 test('toHtml()', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
+    assert.deepEqual(Object.keys(await import('hast-util-to-html')).sort(), [
       'toHtml'
     ])
   })

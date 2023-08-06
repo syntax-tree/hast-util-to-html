@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import {toHtml} from 'hast-util-to-html'
 import {u} from 'unist-builder'
-import {toHtml} from '../index.js'
 
 test('`doctype`', async function (t) {
   await t.test('should serialize doctypes', async function () {

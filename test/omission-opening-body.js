@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
+import {toHtml} from 'hast-util-to-html'
 import {u} from 'unist-builder'
-import {toHtml} from '../index.js'
 
 test('`body` (opening)', async function (t) {
   await t.test('should omit tag without children', async function () {

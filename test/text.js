@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
 import {u} from 'unist-builder'
-import {toHtml} from '../index.js'
+import {toHtml} from 'hast-util-to-html'
 
 test('`text`', async function (t) {
   await t.test('should serialize `text`s', async function () {

@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
+import {toHtml} from 'hast-util-to-html'
 import {u} from 'unist-builder'
-import {toHtml} from '../index.js'
 
 test('security', async function (t) {
   await t.test(

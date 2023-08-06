@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
-import {toHtml} from '../index.js'
+import {toHtml} from 'hast-util-to-html'
 
 test('`element`', async function (t) {
   await t.test('should serialize `element`s', async function () {
