@@ -13,7 +13,7 @@ test('`body` (opening)', async function (t) {
     'should not omit tag if the head is a `comment`',
     async function () {
       assert.deepEqual(
-        toHtml(h('body', u('comment', 'alpha')), {omitOptionalTags: true}),
+        toHtml(h('body', [u('comment', 'alpha')]), {omitOptionalTags: true}),
         '<body><!--alpha-->'
       )
     }
