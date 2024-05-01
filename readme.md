@@ -89,7 +89,7 @@ npm install hastscript hast-util-to-html
 import {h} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
 
-var tree = h('.alpha', [
+const tree = h('.alpha', [
   'bravo ',
   h('b', 'charlie'),
   ' delta ',
