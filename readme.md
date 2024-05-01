@@ -12,23 +12,23 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`toHtml(tree[, options])`](#tohtmltree-options)
-    *   [`CharacterReferences`](#characterreferences)
-    *   [`Options`](#options)
-    *   [`Quote`](#quote-1)
-    *   [`Space`](#space-1)
-*   [Syntax](#syntax)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Security](#security)
-*   [Related](#related)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`toHtml(tree[, options])`](#tohtmltree-options)
+  * [`CharacterReferences`](#characterreferences)
+  * [`Options`](#options)
+  * [`Quote`](#quote-1)
+  * [`Space`](#space-1)
+* [Syntax](#syntax)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Security](#security)
+* [Related](#related)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -116,10 +116,10 @@ Serialize hast as HTML.
 
 ###### Parameters
 
-*   `tree` ([`Node`][node] or `Array<Node>`)
-    — tree to serialize
-*   `options` ([`Options`][api-options], optional)
-    — configuration
+* `tree` ([`Node`][node] or `Array<Node>`)
+  — tree to serialize
+* `options` ([`Options`][api-options], optional)
+  — configuration
 
 ###### Returns
 
@@ -365,8 +365,8 @@ Use [`hast-util-santize`][hast-util-sanitize] to make the hast tree safe.
 
 ## Related
 
-*   [`hast-util-sanitize`](https://github.com/syntax-tree/hast-util-sanitize)
-    — sanitize hast
+* [`hast-util-sanitize`](https://github.com/syntax-tree/hast-util-sanitize)
+  — sanitize hast
 
 ## Contribute
 
