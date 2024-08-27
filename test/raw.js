@@ -1,5 +1,5 @@
 /**
- * @typedef {import('mdast-util-to-hast')} DoNotTouchThisRegistersRawInTheTree
+ * @import {} from 'mdast-util-to-hast'
  */
 
 import assert from 'node:assert/strict'
