@@ -11,9 +11,12 @@ test('`head` (opening)', async function (t) {
     )
   })
 
-  await t.test('should not omit tag without children', async function () {
-    assert.deepEqual(toHtml(h('head'), {omitOptionalTags: true}), '<head>')
-  })
+  await t.test(
+    'should omit tag without children (could be fine in `srcdoc`)',
+    async function () {
+      assert.deepEqual(toHtml(h('head'), {omitOptionalTags: true}), '')
+    }
+  )
 
   await t.test('should omit tag with `title`', async function () {
     assert.deepEqual(

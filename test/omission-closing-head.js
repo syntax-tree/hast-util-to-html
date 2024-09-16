@@ -6,7 +6,7 @@ import {u} from 'unist-builder'
 
 test('`head` (closing)', async function (t) {
   await t.test('should omit tag without following', async function () {
-    assert.deepEqual(toHtml(h('head'), {omitOptionalTags: true}), '<head>')
+    assert.deepEqual(toHtml(h('head'), {omitOptionalTags: true}), '')
   })
 
   await t.test(
@@ -16,7 +16,7 @@ test('`head` (closing)', async function (t) {
         toHtml(h('html', [h('head'), u('comment', 'alpha')]), {
           omitOptionalTags: true
         }),
-        '<head></head><!--alpha-->'
+        '</head><!--alpha-->'
       )
     }
   )
@@ -26,7 +26,7 @@ test('`head` (closing)', async function (t) {
     async function () {
       assert.deepEqual(
         toHtml(h('html', [h('head'), ' alpha']), {omitOptionalTags: true}),
-        '<head></head> alpha'
+        '</head> alpha'
       )
     }
   )
@@ -38,7 +38,7 @@ test('`head` (closing)', async function (t) {
         toHtml(h('html', [h('head'), u('text', 'alpha')]), {
           omitOptionalTags: true
         }),
-        '<head>alpha'
+        'alpha'
       )
     }
   )
