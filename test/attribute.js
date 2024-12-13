@@ -140,7 +140,6 @@ test('`element` attributes', async (t) => {
       }
     )
 
-    // TODO: why? "hidden" is  a valid value for the `hidden` attribute
     await t.test(
       'should serialize known booleans set to their name without value',
       async function () {
