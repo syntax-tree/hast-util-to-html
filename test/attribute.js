@@ -166,12 +166,8 @@ test('`element` attributes', async (t) => {
       'should serialize known booleans set to arbitrary strings with value',
       async function () {
         assert.deepEqual(
-          toHtml(
-            h('div', {
-              selected: 'some string value for a well known boolean attribute'
-            })
-          ),
-          '<div selected="some string value for a well known boolean attribute"></div>'
+          toHtml(h('div', {selected: 'something'})),
+          '<div selected="something"></div>'
         )
       }
     )
@@ -180,11 +176,7 @@ test('`element` attributes', async (t) => {
       'should serialize known booleans set to an empty string without value',
       async function () {
         assert.deepEqual(
-          toHtml(
-            h('div', {
-              selected: ''
-            })
-          ),
+          toHtml(h('div', {selected: ''})),
           '<div selected></div>'
         )
       }
@@ -194,13 +186,8 @@ test('`element` attributes', async (t) => {
       'should serialize known overloaded booleans set to arbitrary strings with value',
       async function () {
         assert.deepEqual(
-          toHtml(
-            h('div', {
-              download:
-                'some string value for a well known overloaded boolean attribute'
-            })
-          ),
-          '<div download="some string value for a well known overloaded boolean attribute"></div>'
+          toHtml(h('div', {download: 'something'})),
+          '<div download="something"></div>'
         )
       }
     )
