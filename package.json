@@ -55,7 +55,6 @@
     "remark-preset-wooorm": "^10.0.0",
     "type-coverage": "^2.0.0",
     "typescript": "^5.0.0",
-    "unist-builder": "^4.0.0",
     "xo": "^0.60.0"
   },
   "scripts": {

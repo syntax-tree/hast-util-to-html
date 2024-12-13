@@ -2,7 +2,6 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h, s} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('svg', async function (t) {
   await t.test('should serialize `element`s', async function () {
@@ -401,7 +400,12 @@ test('svg', async function (t) {
 
   await t.test('should ignore attributes set to `null`', async function () {
     assert.deepEqual(
-      toHtml(u('element', {tagName: 'circle', properties: {id: null}}, [])),
+      toHtml({
+        type: 'element',
+        tagName: 'circle',
+        properties: {id: null},
+        children: []
+      }),
       '<circle></circle>'
     )
   })
@@ -410,9 +414,12 @@ test('svg', async function (t) {
     'should ignore attributes set to `undefined`',
     async function () {
       assert.deepEqual(
-        toHtml(
-          u('element', {tagName: 'circle', properties: {id: undefined}}, [])
-        ),
+        toHtml({
+          type: 'element',
+          tagName: 'circle',
+          properties: {id: undefined},
+          children: []
+        }),
         '<circle></circle>'
       )
     }
@@ -473,9 +480,10 @@ test('svg', async function (t) {
     'should serialize an HTML tree with embedded HTML',
     async function () {
       assert.deepEqual(
-        toHtml(
-          u('root', [
-            u('doctype', {name: 'html'}),
+        toHtml({
+          type: 'root',
+          children: [
+            {type: 'doctype'},
             h('head', h('title', 'The SVG `<circle>` element')),
             h('body', [
               s(
@@ -487,8 +495,8 @@ test('svg', async function (t) {
                 s('circle', {cx: 120, cy: 120, r: 100})
               )
             ])
-          ])
-        ),
+          ]
+        }),
         [
           '<!doctype html>',
           '<head><title>The SVG `&#x3C;circle>` element</title></head>',

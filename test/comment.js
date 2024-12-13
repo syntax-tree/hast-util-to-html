@@ -1,22 +1,21 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('`comment`', async function (t) {
   await t.test('should serialize `comment`s', async function () {
-    assert.deepEqual(toHtml(u('comment', 'alpha')), '<!--alpha-->')
+    assert.deepEqual(toHtml({type: 'comment', value: 'alpha'}), '<!--alpha-->')
   })
 
   await t.test('should not encode `comment`s', async function () {
-    assert.deepEqual(toHtml(u('comment', 'AT&T')), '<!--AT&T-->')
+    assert.deepEqual(toHtml({type: 'comment', value: 'AT&T'}), '<!--AT&T-->')
   })
 
   await t.test(
     'should serialize bogus comments (`bogusComments`)',
     async function () {
       assert.deepEqual(
-        toHtml(u('comment', 'asd'), {bogusComments: true}),
+        toHtml({type: 'comment', value: 'asd'}, {bogusComments: true}),
         '<?asd>'
       )
     }
@@ -26,7 +25,7 @@ test('`comment`', async function (t) {
     'should prevent breaking out of bogus comments (`bogusComments`)',
     async function () {
       assert.deepEqual(
-        toHtml(u('comment', 'a<s>d'), {bogusComments: true}),
+        toHtml({type: 'comment', value: 'a<s>d'}, {bogusComments: true}),
         '<?a<s&#x3E;d>'
       )
     }
@@ -36,6 +35,7 @@ test('`comment`', async function (t) {
   // Optionally, text, with the additional restriction that the text must not
   // start with the string `>`, nor start with the string `->`, nor contain the
   // strings `<!--`, `-->`, or `--!>`, nor end with the string `<!-`.
+  /** @type {Array<[input: string, output?: string]>} */
   const matrix = [
     ['>a', '&#x3E;a'],
     ['->a', '-&#x3E;a'],
@@ -49,19 +49,18 @@ test('`comment`', async function (t) {
     // Not at end:
     ['a<!-b']
   ]
-  let index = -1
 
-  while (++index < matrix.length) {
+  for (const [open, close] of matrix) {
     await t.test(
       'should ' +
-        (matrix[index][1] === undefined ? 'allow' : 'prevent') +
+        (close === undefined ? 'allow' : 'prevent') +
         ' `' +
-        matrix[index][0] +
+        open +
         '` (security)',
       async function () {
         assert.deepEqual(
-          toHtml(u('comment', matrix[index][0])),
-          '<!--' + (matrix[index][1] || matrix[index][0]) + '-->'
+          toHtml({type: 'comment', value: open}),
+          '<!--' + (close || open) + '-->'
         )
       }
     )

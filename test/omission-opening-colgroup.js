@@ -2,7 +2,6 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('`colgroup` (opening)', async function (t) {
   await t.test('should not omit tag without children', async function () {
@@ -28,7 +27,7 @@ test('`colgroup` (opening)', async function (t) {
 
   await t.test('should not omit tag followed by `comment`', async function () {
     assert.deepEqual(
-      toHtml(h('table', [h('colgroup'), u('comment', 'alpha')]), {
+      toHtml(h('table', [h('colgroup'), {type: 'comment', value: 'alpha'}]), {
         omitOptionalTags: true
       }),
       '<table><colgroup></colgroup><!--alpha--></table>'

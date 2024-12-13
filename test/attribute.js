@@ -2,20 +2,29 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('`element` attributes', async (t) => {
   await t.test('should support unknown properties', async function (t) {
     await t.test('should ignore unknowns set to `false`', async function () {
       assert.deepEqual(
-        toHtml(u('element', {tagName: 'i', properties: {unknown: false}}, [])),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {unknown: false},
+          children: []
+        }),
         '<i></i>'
       )
     })
 
     await t.test('should ignore unknowns set to `null`', async function () {
       assert.deepEqual(
-        toHtml(u('element', {tagName: 'i', properties: {unknown: null}}, [])),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {unknown: null},
+          children: []
+        }),
         '<i></i>'
       )
     })
@@ -24,9 +33,12 @@ test('`element` attributes', async (t) => {
       'should ignore unknowns set to `undefined`',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {unknown: undefined}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {unknown: undefined},
+            children: []
+          }),
           '<i></i>'
         )
       }
@@ -34,9 +46,12 @@ test('`element` attributes', async (t) => {
 
     await t.test('should ignore unknowns set to `NaN`', async function () {
       assert.deepEqual(
-        toHtml(
-          u('element', {tagName: 'i', properties: {unknown: Number.NaN}}, [])
-        ),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {unknown: Number.NaN},
+          children: []
+        }),
         '<i></i>'
       )
     })
@@ -45,7 +60,12 @@ test('`element` attributes', async (t) => {
       'should serialize unknowns set to `true` without value',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {unknown: true}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {unknown: true},
+            children: []
+          }),
           '<i unknown></i>'
         )
       }
@@ -55,9 +75,12 @@ test('`element` attributes', async (t) => {
       'should serialize unknowns set to their name as their name',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {unknown: 'unknown'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {unknown: 'unknown'},
+            children: []
+          }),
           '<i unknown="unknown"></i>'
         )
       }
@@ -67,9 +90,12 @@ test('`element` attributes', async (t) => {
       'should serialize unknown lists as space-separated',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {unknown: ['a', 'b']}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {unknown: ['a', 'b']},
+            children: []
+          }),
           '<i unknown="a b"></i>'
         )
       }
@@ -79,7 +105,12 @@ test('`element` attributes', async (t) => {
       'should serialize unknowns set to an integer as it’s string version',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {unknown: 1}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {unknown: 1},
+            children: []
+          }),
           '<i unknown="1"></i>'
         )
       }
@@ -87,17 +118,25 @@ test('`element` attributes', async (t) => {
 
     await t.test('should serialize unknowns set to `0`', async function () {
       assert.deepEqual(
-        toHtml(u('element', {tagName: 'i', properties: {unknown: 0}}, [])),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {unknown: 0},
+          children: []
+        }),
         '<i unknown="0"></i>'
       )
     })
 
     await t.test('should serialize unknowns set to objects', async function () {
       assert.deepEqual(
-        toHtml(
+        toHtml({
+          type: 'element',
+          tagName: 'i',
           // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-          u('element', {tagName: 'i', properties: {unknown: {toString}}}, [])
-        ),
+          properties: {unknown: {toString}},
+          children: []
+        }),
         '<i unknown="yup"></i>'
       )
     })
@@ -108,7 +147,12 @@ test('`element` attributes', async (t) => {
       'should ignore known booleans set to `false`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {hidden: false}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {hidden: false},
+            children: []
+          }),
           '<i></i>'
         )
       }
@@ -116,16 +160,24 @@ test('`element` attributes', async (t) => {
 
     await t.test('should ignore falsey known booleans', async function () {
       assert.deepEqual(
-        toHtml(u('element', {tagName: 'i', properties: {hidden: 0}}, [])),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {hidden: 0},
+          children: []
+        }),
         '<i></i>'
       )
     })
 
     await t.test('should ignore NaN known booleans', async function () {
       assert.deepEqual(
-        toHtml(
-          u('element', {tagName: 'i', properties: {hidden: Number.NaN}}, [])
-        ),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {hidden: Number.NaN},
+          children: []
+        }),
         '<i></i>'
       )
     })
@@ -134,7 +186,12 @@ test('`element` attributes', async (t) => {
       'should serialize known booleans set to `true` without value',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {hidden: true}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {hidden: true},
+            children: []
+          }),
           '<i hidden></i>'
         )
       }
@@ -144,9 +201,12 @@ test('`element` attributes', async (t) => {
       'should serialize known booleans set to their name without value',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {hidden: 'hidden'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {hidden: 'hidden'},
+            children: []
+          }),
           '<i hidden></i>'
         )
       }
@@ -156,7 +216,12 @@ test('`element` attributes', async (t) => {
       'should serialize truthy known booleans without value',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {hidden: 1}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {hidden: 1},
+            children: []
+          }),
           '<i hidden></i>'
         )
       }
@@ -198,9 +263,12 @@ test('`element` attributes', async (t) => {
       'should ignore known overloaded booleans set to `false`',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'a', properties: {download: false}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'a',
+            properties: {download: false},
+            children: []
+          }),
           '<a></a>'
         )
       }
@@ -210,7 +278,12 @@ test('`element` attributes', async (t) => {
       'should ignore falsey known overloaded booleans',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'a', properties: {download: 0}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'a',
+            properties: {download: 0},
+            children: []
+          }),
           '<a></a>'
         )
       }
@@ -220,9 +293,12 @@ test('`element` attributes', async (t) => {
       'should ignore NaN known overloaded booleans',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'a', properties: {download: Number.NaN}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'a',
+            properties: {download: Number.NaN},
+            children: []
+          }),
           '<a></a>'
         )
       }
@@ -232,9 +308,12 @@ test('`element` attributes', async (t) => {
       'should serialize known overloaded booleans set to `true` without value',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'a', properties: {download: true}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'a',
+            properties: {download: true},
+            children: []
+          }),
           '<a download></a>'
         )
       }
@@ -244,9 +323,12 @@ test('`element` attributes', async (t) => {
       'should serialize known overloaded booleans set to their name without value',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'a', properties: {download: 'download'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'a',
+            properties: {download: 'download'},
+            children: []
+          }),
           '<a download></a>'
         )
       }
@@ -256,7 +338,12 @@ test('`element` attributes', async (t) => {
       'should serialize known overloaded booleans set to an empty string without value',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'a', properties: {download: ''}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'a',
+            properties: {download: ''},
+            children: []
+          }),
           '<a download></a>'
         )
       }
@@ -266,7 +353,12 @@ test('`element` attributes', async (t) => {
       'should serialize truthy known overloaded booleans without value',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'a', properties: {download: 1}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'a',
+            properties: {download: 1},
+            children: []
+          }),
           '<a download></a>'
         )
       }
@@ -276,9 +368,12 @@ test('`element` attributes', async (t) => {
       'should serialize known overloaded booleans set to another string',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'a', properties: {download: 'another'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'a',
+            properties: {download: 'another'},
+            children: []
+          }),
           '<a download="another"></a>'
         )
       }
@@ -289,7 +384,12 @@ test('`element` attributes', async (t) => {
       'should ignore known numbers set to `false`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: false}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: false},
+            children: []
+          }),
           '<i></i>'
         )
       }
@@ -297,9 +397,12 @@ test('`element` attributes', async (t) => {
 
     await t.test('should ignore NaN known numbers', async function () {
       assert.deepEqual(
-        toHtml(
-          u('element', {tagName: 'a', properties: {cols: Number.NaN}}, [])
-        ),
+        toHtml({
+          type: 'element',
+          tagName: 'a',
+          properties: {cols: Number.NaN},
+          children: []
+        }),
         '<a></a>'
       )
     })
@@ -308,7 +411,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to `0`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: 0}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: 0},
+            children: []
+          }),
           '<i cols="0"></i>'
         )
       }
@@ -318,7 +426,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to `-1`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: -1}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: -1},
+            children: []
+          }),
           '<i cols="-1"></i>'
         )
       }
@@ -328,7 +441,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to `1`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: 1}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: 1},
+            children: []
+          }),
           '<i cols="1"></i>'
         )
       }
@@ -338,7 +456,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to `Math.PI`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: Math.PI}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: Math.PI},
+            children: []
+          }),
           '<i cols="3.141592653589793"></i>'
         )
       }
@@ -348,7 +471,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to `true` as without value',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: true}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: true},
+            children: []
+          }),
           '<i cols></i>'
         )
       }
@@ -358,7 +486,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to an empty string',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: ''}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: ''},
+            children: []
+          }),
           '<i cols=""></i>'
         )
       }
@@ -368,7 +501,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to their name',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: 'cols'}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: 'cols'},
+            children: []
+          }),
           '<i cols="cols"></i>'
         )
       }
@@ -378,9 +516,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to a string',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {cols: 'another'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: 'another'},
+            children: []
+          }),
           '<i cols="another"></i>'
         )
       }
@@ -390,10 +531,13 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to an object',
       async function () {
         assert.deepEqual(
-          toHtml(
+          toHtml({
+            type: 'element',
+            tagName: 'i',
             // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-            u('element', {tagName: 'i', properties: {cols: {toString}}}, [])
-          ),
+            properties: {cols: {toString}},
+            children: []
+          }),
           '<i cols="yup"></i>'
         )
       }
@@ -403,9 +547,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to an array of strings',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {cols: ['a', 'b']}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: ['a', 'b']},
+            children: []
+          }),
           '<i cols="a b"></i>'
         )
       }
@@ -415,7 +562,12 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to an array of numbers',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {cols: [0, 50]}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {cols: [0, 50]},
+            children: []
+          }),
           '<i cols="0 50"></i>'
         )
       }
@@ -425,10 +577,13 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to an array of booleans',
       async function () {
         assert.deepEqual(
-          toHtml(
+          toHtml({
+            type: 'element',
+            tagName: 'i',
             // @ts-expect-error: check how the runtime handles booleans in an array.
-            u('element', {tagName: 'i', properties: {cols: [true, false]}}, [])
-          ),
+            properties: {cols: [true, false]},
+            children: []
+          }),
           '<i cols="true false"></i>'
         )
       }
@@ -442,9 +597,12 @@ test('`element` attributes', async (t) => {
         'should ignore known space-separated lists set to `false`',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {className: false}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: false},
+              children: []
+            }),
             '<i></i>'
           )
         }
@@ -454,13 +612,12 @@ test('`element` attributes', async (t) => {
         'should ignore NaN known space-separated lists',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u(
-                'element',
-                {tagName: 'a', properties: {className: Number.NaN}},
-                []
-              )
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'a',
+              properties: {className: Number.NaN},
+              children: []
+            }),
             '<a></a>'
           )
         }
@@ -470,9 +627,12 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to `0`',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {className: 0}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: 0},
+              children: []
+            }),
             '<i class="0"></i>'
           )
         }
@@ -482,9 +642,12 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to `true` as without value',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {className: true}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: true},
+              children: []
+            }),
             '<i class></i>'
           )
         }
@@ -494,9 +657,12 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to an empty string',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {className: ''}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: ''},
+              children: []
+            }),
             '<i class=""></i>'
           )
         }
@@ -506,9 +672,12 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to their attribute name',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {className: 'class'}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: 'class'},
+              children: []
+            }),
             '<i class="class"></i>'
           )
         }
@@ -518,13 +687,12 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to their property name',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u(
-                'element',
-                {tagName: 'i', properties: {className: 'className'}},
-                []
-              )
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: 'className'},
+              children: []
+            }),
             '<i class="className"></i>'
           )
         }
@@ -534,13 +702,12 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to a string',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u(
-                'element',
-                {tagName: 'i', properties: {className: 'another'}},
-                []
-              )
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: 'another'},
+              children: []
+            }),
             '<i class="another"></i>'
           )
         }
@@ -550,14 +717,13 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to an object',
         async function () {
           assert.deepEqual(
-            toHtml(
+            toHtml({
+              type: 'element',
+              tagName: 'i',
               // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-              u(
-                'element',
-                {tagName: 'i', properties: {className: {toString}}},
-                []
-              )
-            ),
+              properties: {className: {toString}},
+              children: []
+            }),
             '<i class="yup"></i>'
           )
         }
@@ -567,13 +733,12 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to an array of strings',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u(
-                'element',
-                {tagName: 'i', properties: {className: ['a', 'b']}},
-                []
-              )
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: ['a', 'b']},
+              children: []
+            }),
             '<i class="a b"></i>'
           )
         }
@@ -583,9 +748,12 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to an array of numbers',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {className: [0, 50]}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {className: [0, 50]},
+              children: []
+            }),
             '<i class="0 50"></i>'
           )
         }
@@ -595,14 +763,13 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to an array of booleans',
         async function () {
           assert.deepEqual(
-            toHtml(
+            toHtml({
+              type: 'element',
+              tagName: 'i',
               // @ts-expect-error: check how the runtime handles booleans in an array.
-              u(
-                'element',
-                {tagName: 'i', properties: {className: [true, false]}},
-                []
-              )
-            ),
+              properties: {className: [true, false]},
+              children: []
+            }),
             '<i class="true false"></i>'
           )
         }
@@ -617,9 +784,12 @@ test('`element` attributes', async (t) => {
         'should ignore known comma-separated lists set to `false`',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {accept: false}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: false},
+              children: []
+            }),
             '<i></i>'
           )
         }
@@ -629,9 +799,12 @@ test('`element` attributes', async (t) => {
         'should ignore NaN known comma-separated lists',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'a', properties: {accept: Number.NaN}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'a',
+              properties: {accept: Number.NaN},
+              children: []
+            }),
             '<a></a>'
           )
         }
@@ -641,7 +814,12 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to `0`',
         async function () {
           assert.deepEqual(
-            toHtml(u('element', {tagName: 'i', properties: {accept: 0}}, [])),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: 0},
+              children: []
+            }),
             '<i accept="0"></i>'
           )
         }
@@ -651,9 +829,12 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to `true` as without value',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {accept: true}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: true},
+              children: []
+            }),
             '<i accept></i>'
           )
         }
@@ -663,7 +844,12 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to an empty string',
         async function () {
           assert.deepEqual(
-            toHtml(u('element', {tagName: 'i', properties: {accept: ''}}, [])),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: ''},
+              children: []
+            }),
             '<i accept=""></i>'
           )
         }
@@ -673,9 +859,12 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to their name',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {accept: 'accept'}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: 'accept'},
+              children: []
+            }),
             '<i accept="accept"></i>'
           )
         }
@@ -685,9 +874,12 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to a string',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {accept: 'another'}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: 'another'},
+              children: []
+            }),
             '<i accept="another"></i>'
           )
         }
@@ -697,10 +889,13 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to an object',
         async function () {
           assert.deepEqual(
-            toHtml(
+            toHtml({
+              type: 'element',
+              tagName: 'i',
               // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-              u('element', {tagName: 'i', properties: {accept: {toString}}}, [])
-            ),
+              properties: {accept: {toString}},
+              children: []
+            }),
             '<i accept="yup"></i>'
           )
         }
@@ -710,9 +905,12 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to an array of strings',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: ['a', 'b']},
+              children: []
+            }),
             '<i accept="a, b"></i>'
           )
         }
@@ -722,9 +920,12 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to an array of numbers',
         async function () {
           assert.deepEqual(
-            toHtml(
-              u('element', {tagName: 'i', properties: {accept: [0, 50]}}, [])
-            ),
+            toHtml({
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: [0, 50]},
+              children: []
+            }),
             '<i accept="0, 50"></i>'
           )
         }
@@ -734,14 +935,13 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to an array of booleans',
         async function () {
           assert.deepEqual(
-            toHtml(
+            toHtml({
+              type: 'element',
+              tagName: 'i',
               // @ts-expect-error: check how the runtime handles booleans in an array.
-              u(
-                'element',
-                {tagName: 'i', properties: {accept: [true, false]}},
-                []
-              )
-            ),
+              properties: {accept: [true, false]},
+              children: []
+            }),
             '<i accept="true, false"></i>'
           )
         }
@@ -754,7 +954,12 @@ test('`element` attributes', async (t) => {
       'should ignore known normals set to `false`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: false}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {id: false},
+            children: []
+          }),
           '<i></i>'
         )
       }
@@ -762,7 +967,12 @@ test('`element` attributes', async (t) => {
 
     await t.test('should ignore NaN known normals', async function () {
       assert.deepEqual(
-        toHtml(u('element', {tagName: 'i', properties: {id: Number.NaN}}, [])),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {id: Number.NaN},
+          children: []
+        }),
         '<i></i>'
       )
     })
@@ -771,7 +981,12 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to `0`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: 0}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {id: 0},
+            children: []
+          }),
           '<i id="0"></i>'
         )
       }
@@ -781,7 +996,12 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to `true` as without value',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: true}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {id: true},
+            children: []
+          }),
           '<i id></i>'
         )
       }
@@ -791,7 +1011,12 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to an empty string',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: ''}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {id: ''},
+            children: []
+          }),
           '<i id=""></i>'
         )
       }
@@ -801,7 +1026,12 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to their name',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: 'id'}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {id: 'id'},
+            children: []
+          }),
           '<i id="id"></i>'
         )
       }
@@ -811,7 +1041,12 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to a string',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: 'another'}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {id: 'another'},
+            children: []
+          }),
           '<i id="another"></i>'
         )
       }
@@ -821,10 +1056,13 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to an object',
       async function () {
         assert.deepEqual(
-          toHtml(
+          toHtml({
+            type: 'element',
+            tagName: 'i',
             // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-            u('element', {tagName: 'i', properties: {id: {toString}}}, [])
-          ),
+            properties: {id: {toString}},
+            children: []
+          }),
           '<i id="yup"></i>'
         )
       }
@@ -834,9 +1072,12 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to an array of strings as a space-separated list',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {id: ['a', 'b']}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {id: ['a', 'b']},
+            children: []
+          }),
           '<i id="a b"></i>'
         )
       }
@@ -846,7 +1087,12 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to an array of numbers as a space-separated list',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: [0, 50]}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {id: [0, 50]},
+            children: []
+          }),
           '<i id="0 50"></i>'
         )
       }
@@ -856,10 +1102,13 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to an array of booleans as a space-separated list',
       async function () {
         assert.deepEqual(
-          toHtml(
+          toHtml({
+            type: 'element',
+            tagName: 'i',
             // @ts-expect-error: check how the runtime handles booleans in an array.
-            u('element', {tagName: 'i', properties: {id: [true, false]}}, [])
-          ),
+            properties: {id: [true, false]},
+            children: []
+          }),
           '<i id="true false"></i>'
         )
       }
@@ -871,7 +1120,12 @@ test('`element` attributes', async (t) => {
       'should ignore data properties set to `false`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {dataId: false}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: false},
+            children: []
+          }),
           '<i></i>'
         )
       }
@@ -879,9 +1133,12 @@ test('`element` attributes', async (t) => {
 
     await t.test('should ignore NaN data properties', async function () {
       assert.deepEqual(
-        toHtml(
-          u('element', {tagName: 'i', properties: {dataId: Number.NaN}}, [])
-        ),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {dataId: Number.NaN},
+          children: []
+        }),
         '<i></i>'
       )
     })
@@ -890,7 +1147,12 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to `0`',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {dataId: 0}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: 0},
+            children: []
+          }),
           '<i data-id="0"></i>'
         )
       }
@@ -900,7 +1162,12 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to `true` as without value',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {dataId: true}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: true},
+            children: []
+          }),
           '<i data-id></i>'
         )
       }
@@ -910,7 +1177,12 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to an empty string',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {dataId: ''}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: ''},
+            children: []
+          }),
           '<i data-id=""></i>'
         )
       }
@@ -920,9 +1192,12 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to their property name',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {dataId: 'dataId'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: 'dataId'},
+            children: []
+          }),
           '<i data-id="dataId"></i>'
         )
       }
@@ -932,9 +1207,12 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to their attribute name',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {dataId: 'data-id'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: 'data-id'},
+            children: []
+          }),
           '<i data-id="data-id"></i>'
         )
       }
@@ -944,9 +1222,12 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to a string',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {dataId: 'another'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: 'another'},
+            children: []
+          }),
           '<i data-id="another"></i>'
         )
       }
@@ -956,7 +1237,12 @@ test('`element` attributes', async (t) => {
       'should serialize numeric-first data properties set to a string',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {data123: 'a'}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {data123: 'a'},
+            children: []
+          }),
           '<i data-123="a"></i>'
         )
       }
@@ -966,10 +1252,13 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to an object',
       async function () {
         assert.deepEqual(
-          toHtml(
+          toHtml({
+            type: 'element',
+            tagName: 'i',
             // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-            u('element', {tagName: 'i', properties: {dataId: {toString}}}, [])
-          ),
+            properties: {dataId: {toString}},
+            children: []
+          }),
           '<i data-id="yup"></i>'
         )
       }
@@ -979,9 +1268,12 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to an array of strings as a space-separated list',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {dataId: ['a', 'b']}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: ['a', 'b']},
+            children: []
+          }),
           '<i data-id="a b"></i>'
         )
       }
@@ -991,9 +1283,12 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to an array of numbers as a space-separated list',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {dataId: [0, 50]}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {dataId: [0, 50]},
+            children: []
+          }),
           '<i data-id="0 50"></i>'
         )
       }
@@ -1003,14 +1298,13 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to an array of booleans as a space-separated list',
       async function () {
         assert.deepEqual(
-          toHtml(
+          toHtml({
+            type: 'element',
+            tagName: 'i',
             // @ts-expect-error: check how the runtime handles booleans in an array.
-            u(
-              'element',
-              {tagName: 'i', properties: {dataId: [true, false]}},
-              []
-            )
-          ),
+            properties: {dataId: [true, false]},
+            children: []
+          }),
           '<i data-id="true false"></i>'
         )
       }
@@ -1020,7 +1314,12 @@ test('`element` attributes', async (t) => {
   await t.test('should support `collapseEmptyAttributes`', async function (t) {
     await t.test('should show empty string attributes', async function () {
       assert.deepEqual(
-        toHtml(u('element', {tagName: 'i', properties: {id: ''}}, [])),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {id: ''},
+          children: []
+        }),
         '<i id=""></i>'
       )
     })
@@ -1029,9 +1328,12 @@ test('`element` attributes', async (t) => {
       'should collapse empty string attributes in `collapseEmptyAttributes` mode',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: ''}}, []), {
-            collapseEmptyAttributes: true
-          }),
+          toHtml(
+            {type: 'element', tagName: 'i', properties: {id: ''}, children: []},
+            {
+              collapseEmptyAttributes: true
+            }
+          ),
           '<i id></i>'
         )
       }
@@ -1041,9 +1343,12 @@ test('`element` attributes', async (t) => {
   await t.test('should support `tightAttributes`', async function (t) {
     await t.test('should serialize multiple properties', async function () {
       assert.deepEqual(
-        toHtml(
-          u('element', {tagName: 'i', properties: {title: 'a', id: 'b'}}, [])
-        ),
+        toHtml({
+          type: 'element',
+          tagName: 'i',
+          properties: {title: 'a', id: 'b'},
+          children: []
+        }),
         '<i title="a" id="b"></i>'
       )
     })
@@ -1053,7 +1358,12 @@ test('`element` attributes', async (t) => {
       async function () {
         assert.deepEqual(
           toHtml(
-            u('element', {tagName: 'i', properties: {title: 'a', id: 'b'}}, []),
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: 'a', id: 'b'},
+              children: []
+            },
             {
               tightAttributes: true
             }
@@ -1069,9 +1379,12 @@ test('`element` attributes', async (t) => {
       'should serialize comma-separated attributes',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {accept: ['a', 'b']},
+            children: []
+          }),
           '<i accept="a, b"></i>'
         )
       }
@@ -1082,7 +1395,12 @@ test('`element` attributes', async (t) => {
       async function () {
         assert.deepEqual(
           toHtml(
-            u('element', {tagName: 'i', properties: {accept: ['a', 'b']}}, []),
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {accept: ['a', 'b']},
+              children: []
+            },
             {
               tightCommaSeparatedLists: true
             }
@@ -1098,7 +1416,12 @@ test('`element` attributes', async (t) => {
       'should quote attribute values with double quotes by default',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {title: 'a'},
+            children: []
+          }),
           '<i title="a"></i>'
         )
       }
@@ -1108,9 +1431,17 @@ test('`element` attributes', async (t) => {
       "should quote attribute values with single quotes if `quote: '\\''`",
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
-            quote: "'"
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: 'a'},
+              children: []
+            },
+            {
+              quote: "'"
+            }
+          ),
           "<i title='a'></i>"
         )
       }
@@ -1120,9 +1451,17 @@ test('`element` attributes', async (t) => {
       "should quote attribute values with double quotes if `quote: '\\\"'`",
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
-            quote: '"'
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: 'a'},
+              children: []
+            },
+            {
+              quote: '"'
+            }
+          ),
           '<i title="a"></i>'
         )
       }
@@ -1132,9 +1471,17 @@ test('`element` attributes', async (t) => {
       "should quote attribute values with single quotes if `quote: '\\''` even if they occur in value",
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: "'a'"}}, []), {
-            quote: "'"
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: "'a'"},
+              children: []
+            },
+            {
+              quote: "'"
+            }
+          ),
           "<i title='&#x27;a&#x27;'></i>"
         )
       }
@@ -1144,9 +1491,17 @@ test('`element` attributes', async (t) => {
       "should quote attribute values with double quotes if `quote: '\\\"'` even if they occur in value",
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: '"a"'}}, []), {
-            quote: '"'
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: '"a"'},
+              children: []
+            },
+            {
+              quote: '"'
+            }
+          ),
           '<i title="&#x22;a&#x22;"></i>'
         )
       }
@@ -1168,10 +1523,18 @@ test('`element` attributes', async (t) => {
       'should quote attribute values with primary quotes by default',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: 'a'}}, []), {
-            allowDangerousCharacters: true,
-            quoteSmart: true
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: 'a'},
+              children: []
+            },
+            {
+              allowDangerousCharacters: true,
+              quoteSmart: true
+            }
+          ),
           '<i title="a"></i>'
         )
       }
@@ -1181,10 +1544,18 @@ test('`element` attributes', async (t) => {
       'should quote attribute values with primary quotes if the alternative occurs',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: "'a'"}}, []), {
-            allowDangerousCharacters: true,
-            quoteSmart: true
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: "'a'"},
+              children: []
+            },
+            {
+              allowDangerousCharacters: true,
+              quoteSmart: true
+            }
+          ),
           '<i title="\'a\'"></i>'
         )
       }
@@ -1195,7 +1566,12 @@ test('`element` attributes', async (t) => {
       async function () {
         assert.deepEqual(
           toHtml(
-            u('element', {tagName: 'i', properties: {title: "'\"a'"}}, []),
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: "'\"a'"},
+              children: []
+            },
             {
               allowDangerousCharacters: true,
               quoteSmart: true
@@ -1211,7 +1587,12 @@ test('`element` attributes', async (t) => {
       async function () {
         assert.deepEqual(
           toHtml(
-            u('element', {tagName: 'i', properties: {title: '"a\''}}, []),
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: '"a\''},
+              children: []
+            },
             {
               allowDangerousCharacters: true,
               quoteSmart: true
@@ -1227,7 +1608,12 @@ test('`element` attributes', async (t) => {
       async function () {
         assert.deepEqual(
           toHtml(
-            u('element', {tagName: 'i', properties: {title: '"\'a\'"'}}, []),
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: '"\'a\'"'},
+              children: []
+            },
             {
               allowDangerousCharacters: true,
               quoteSmart: true
@@ -1242,10 +1628,18 @@ test('`element` attributes', async (t) => {
       'should quote attribute values with alternative quotes if the primary occurs',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: '"a"'}}, []), {
-            allowDangerousCharacters: true,
-            quoteSmart: true
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: '"a"'},
+              children: []
+            },
+            {
+              allowDangerousCharacters: true,
+              quoteSmart: true
+            }
+          ),
           '<i title=\'"a"\'></i>'
         )
       }
@@ -1256,7 +1650,12 @@ test('`element` attributes', async (t) => {
       async function () {
         assert.deepEqual(
           toHtml(
-            u('element', {tagName: 'i', properties: {title: '"\'a"'}}, []),
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: '"\'a"'},
+              children: []
+            },
             {
               allowDangerousCharacters: true,
               quoteSmart: true
@@ -1271,9 +1670,12 @@ test('`element` attributes', async (t) => {
   await t.test('should support `preferUnquoted`', async function (t) {
     await t.test('should omit quotes in `preferUnquoted`', async function () {
       assert.deepEqual(
-        toHtml(u('element', {tagName: 'i', properties: {id: 'a'}}, []), {
-          preferUnquoted: true
-        }),
+        toHtml(
+          {type: 'element', tagName: 'i', properties: {id: 'a'}, children: []},
+          {
+            preferUnquoted: true
+          }
+        ),
         '<i id=a></i>'
       )
     })
@@ -1282,9 +1684,17 @@ test('`element` attributes', async (t) => {
       'should keep quotes in `preferUnquoted` and impossible',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: 'a b'}}, []), {
-            preferUnquoted: true
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {id: 'a b'},
+              children: []
+            },
+            {
+              preferUnquoted: true
+            }
+          ),
           '<i id="a b"></i>'
         )
       }
@@ -1294,9 +1704,12 @@ test('`element` attributes', async (t) => {
       'should not add `=` when omitting quotes on empty values',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {id: ''}}, []), {
-            preferUnquoted: true
-          }),
+          toHtml(
+            {type: 'element', tagName: 'i', properties: {id: ''}, children: []},
+            {
+              preferUnquoted: true
+            }
+          ),
           '<i id></i>'
         )
       }
@@ -1308,7 +1721,12 @@ test('`element` attributes', async (t) => {
       'should encode entities in attribute names',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {'3<5\0': 'a'}}, [])),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {'3<5\0': 'a'},
+            children: []
+          }),
           '<i 3&#x3C;5&#x0;="a"></i>'
         )
       }
@@ -1318,9 +1736,12 @@ test('`element` attributes', async (t) => {
       'should encode entities in attribute values',
       async function () {
         assert.deepEqual(
-          toHtml(
-            u('element', {tagName: 'i', properties: {title: '3<5\0'}}, [])
-          ),
+          toHtml({
+            type: 'element',
+            tagName: 'i',
+            properties: {title: '3<5\0'},
+            children: []
+          }),
           '<i title="3<5&#x0;"></i>'
         )
       }
@@ -1330,9 +1751,17 @@ test('`element` attributes', async (t) => {
       'should not encode characters in attribute names which cause parse errors, but work, in `allowParseErrors` mode',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {'3=5\0': 'a'}}, []), {
-            allowParseErrors: true
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {'3=5\0': 'a'},
+              children: []
+            },
+            {
+              allowParseErrors: true
+            }
+          ),
           '<i 3&#x3D;5\0="a"></i>'
         )
       }
@@ -1343,7 +1772,12 @@ test('`element` attributes', async (t) => {
       async function () {
         assert.deepEqual(
           toHtml(
-            u('element', {tagName: 'i', properties: {title: '3=5\0'}}, []),
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: '3=5\0'},
+              children: []
+            },
             {
               allowParseErrors: true
             }
@@ -1357,9 +1791,17 @@ test('`element` attributes', async (t) => {
       'should not encode characters which cause XSS issues in older browsers, in `allowDangerousCharacters` mode',
       async function () {
         assert.deepEqual(
-          toHtml(u('element', {tagName: 'i', properties: {title: "3'5"}}, []), {
-            allowDangerousCharacters: true
-          }),
+          toHtml(
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {title: "3'5"},
+              children: []
+            },
+            {
+              allowDangerousCharacters: true
+            }
+          ),
           '<i title="3\'5"></i>'
         )
       }

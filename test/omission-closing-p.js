@@ -2,40 +2,51 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('`p` (closing)', async function (t) {
   await t.test('should omit tag without following', async function () {
     assert.deepEqual(
-      toHtml(u('root', [h('p')]), {omitOptionalTags: true}),
+      toHtml({type: 'root', children: [h('p')]}, {omitOptionalTags: true}),
       '<p>'
     )
   })
 
   await t.test('should omit tag if followed by `address`', async function () {
     assert.deepEqual(
-      toHtml(u('root', [h('p'), h('address')]), {omitOptionalTags: true}),
+      toHtml(
+        {type: 'root', children: [h('p'), h('address')]},
+        {omitOptionalTags: true}
+      ),
       '<p><address></address>'
     )
   })
 
   await t.test('should omit tag if followed by `ul`', async function () {
     assert.deepEqual(
-      toHtml(u('root', [h('p'), h('ul')]), {omitOptionalTags: true}),
+      toHtml(
+        {type: 'root', children: [h('p'), h('ul')]},
+        {omitOptionalTags: true}
+      ),
       '<p><ul></ul>'
     )
   })
 
   await t.test('should not omit tag if followed by `a`', async function () {
     assert.deepEqual(
-      toHtml(u('root', [h('p'), h('a')]), {omitOptionalTags: true}),
+      toHtml(
+        {type: 'root', children: [h('p'), h('a')]},
+        {omitOptionalTags: true}
+      ),
       '<p></p><a></a>'
     )
   })
 
   await t.test('should not omit tag if followed by `xmp`', async function () {
     assert.deepEqual(
-      toHtml(u('root', [h('p'), h('xmp')]), {omitOptionalTags: true}),
+      toHtml(
+        {type: 'root', children: [h('p'), h('xmp')]},
+        {omitOptionalTags: true}
+      ),
       '<p></p><xmp></xmp>'
     )
   })

@@ -5,12 +5,11 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('`raw`', async function (t) {
   await t.test('should encode `raw`s', async function () {
     assert.deepEqual(
-      toHtml(u('raw', '<script>alert("XSS!")</script>')),
+      toHtml({type: 'raw', value: '<script>alert("XSS!")</script>'}),
       '&#x3C;script>alert("XSS!")&#x3C;/script>'
     )
   })
@@ -19,9 +18,10 @@ test('`raw`', async function (t) {
     'should not encode `raw`s in `allowDangerousHtml` mode',
     async function () {
       assert.deepEqual(
-        toHtml(u('raw', '<script>alert("XSS!")</script>'), {
-          allowDangerousHtml: true
-        }),
+        toHtml(
+          {type: 'raw', value: '<script>alert("XSS!")</script>'},
+          {allowDangerousHtml: true}
+        ),
         '<script>alert("XSS!")</script>'
       )
     }

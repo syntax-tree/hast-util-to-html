@@ -2,7 +2,6 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('`html` (closing)', async function (t) {
   await t.test('should omit tag without following', async function () {
@@ -13,9 +12,13 @@ test('`html` (closing)', async function (t) {
     'should not omit tag if followed by `comment`',
     async function () {
       assert.deepEqual(
-        toHtml(u('root', [h('html'), u('comment', 'alpha')]), {
-          omitOptionalTags: true
-        }),
+        toHtml(
+          {
+            type: 'root',
+            children: [h('html'), {type: 'comment', value: 'alpha'}]
+          },
+          {omitOptionalTags: true}
+        ),
         '</html><!--alpha-->'
       )
     }
@@ -25,9 +28,10 @@ test('`html` (closing)', async function (t) {
     'should omit tag if not followed by `comment`',
     async function () {
       assert.deepEqual(
-        toHtml(u('root', [h('html'), u('text', 'alpha')]), {
-          omitOptionalTags: true
-        }),
+        toHtml(
+          {type: 'root', children: [h('html'), {type: 'text', value: 'alpha'}]},
+          {omitOptionalTags: true}
+        ),
         'alpha'
       )
     }

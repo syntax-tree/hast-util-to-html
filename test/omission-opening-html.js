@@ -2,7 +2,6 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('`html` (opening)', async function (t) {
   await t.test('should omit tag without first child', async function () {
@@ -11,7 +10,7 @@ test('`html` (opening)', async function (t) {
 
   await t.test('should not omit tag if head is `comment`', async function () {
     assert.deepEqual(
-      toHtml(h('html', [u('comment', 'alpha'), 'bravo']), {
+      toHtml(h('html', [{type: 'comment', value: 'alpha'}, 'bravo']), {
         omitOptionalTags: true
       }),
       '<html><!--alpha-->bravo'

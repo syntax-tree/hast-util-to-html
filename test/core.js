@@ -2,7 +2,6 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {h} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
-import {u} from 'unist-builder'
 
 test('toHtml()', async function (t) {
   await t.test('should expose the public api', async function () {
@@ -21,7 +20,7 @@ test('toHtml()', async function (t) {
   await t.test('should throw on unknown nodes', async function () {
     assert.throws(function () {
       // @ts-expect-error: check how the runtime handles an unknown node.
-      toHtml(u('foo', []))
+      toHtml({type: 'foo', children: []})
     }, /Cannot compile unknown node `foo`/)
   })
 
