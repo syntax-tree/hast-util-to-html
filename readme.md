@@ -34,9 +34,10 @@ This package is a utility that turns a hast tree into a string of HTML.
 ## When should I use this?
 
 You can use this utility when you want to get the serialized HTML that is
-represented by the syntax tree, either because you’re done with the syntax
-tree, or because you’re integrating with another tool that does not support
-syntax trees.
+represented by the syntax tree,
+either because you’re done with the syntax tree,
+or because you’re integrating with another tool that does not support syntax
+trees.
 
 This utility has many options to configure how the HTML is serialized.
 These options help when building tools that make output pretty (such as
@@ -106,9 +107,11 @@ Serialize hast as HTML.
 
 ###### Parameters
 
-* `tree` ([`Node`][github-hast-nodes] or `Array<Node>`)
+* `tree`
+  ([`Node`][github-hast-nodes] or `Array<Node>`)
   — tree to serialize
-* `options` ([`Options`][api-options], optional)
+* `options`
+  ([`Options`][api-options], optional)
   — configuration
 
 ###### Returns
@@ -123,25 +126,28 @@ How to serialize character references (TypeScript type).
 
 ###### `useNamedReferences`
 
-Prefer named character references (`&amp;`) where possible (`boolean`, default:
-`false`).
+Prefer named character references (`&amp;`) where possible
+(`boolean`, default: `false`).
 
 ###### `omitOptionalSemicolons`
 
-Whether to omit semicolons when possible (`boolean`, default: `false`).
+Whether to omit semicolons when possible
+(`boolean`, default: `false`).
 
-> ⚠️ **Note**: this creates what HTML calls “parse errors” but is otherwise
-> still valid HTML — don’t use this except when building a minifier.
-> Omitting semicolons is possible for certain named and numeric references in
+> ⚠️ **Note**:
+> this creates what HTML calls “parse errors” but is otherwise still valid HTML:
+> don’t use this except when building a minifier;
+> omitting semicolons is possible for certain named and numeric references in
 > some cases.
 
 ###### `useShortestReferences`
 
-Prefer the shortest possible reference, if that results in less bytes
+Prefer the shortest possible reference,
+if that results in less bytes
 (`boolean`, default: `false`).
 
-> ⚠️ **Note**: `useNamedReferences` can be omitted when using
-> `useShortestReferences`.
+> ⚠️ **Note**:
+> `useNamedReferences` can be omitted when using `useShortestReferences`.
 
 ### `Options`
 
@@ -154,33 +160,44 @@ Configuration (TypeScript type).
 Do not encode some characters which cause XSS vulnerabilities in older browsers
 (`boolean`, default: `false`).
 
-> ⚠️ **Danger**: only set this if you completely trust the content.
+> ⚠️ **Danger**:
+> only set this if you completely trust the content.
 
 ###### `allowDangerousHtml`
 
-Allow `raw` nodes and insert them as raw HTML (`boolean`, default: `false`).
+Allow `raw` nodes and insert them as raw HTML
+(`boolean`, default: `false`).
 
-When `false`, `Raw` nodes are encoded.
+When `false`,
+`Raw` nodes are encoded.
 
-> ⚠️ **Danger**: only set this if you completely trust the content.
+> ⚠️ **Danger**:
+> only set this if you completely trust the content.
 
 ###### `allowParseErrors`
 
-Do not encode characters which cause parse errors (even though they work), to
-save bytes (`boolean`, default: `false`).
+Do not encode characters which cause parse errors
+(even though they work),
+to save bytes
+(`boolean`, default: `false`).
 
 Not used in the SVG space.
 
-> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
-> are handled is well defined, so this works but isn’t pretty).
+> 👉 **Note**:
+> intentionally creates parse errors in markup
+> (how parse errors are handled is well defined,
+> so this works but isn’t pretty).
 
 ###### `bogusComments`
 
-Use “bogus comments” instead of comments to save byes: `<?charlie>` instead of
-`<!--charlie-->` (`boolean`, default: `false`).
+Use “bogus comments” instead of comments to save byes:
+`<?charlie>` instead of `<!--charlie-->`
+(`boolean`, default: `false`).
 
-> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
-> are handled is well defined, so this works but isn’t pretty).
+> 👉 **Note**:
+> intentionally creates parse errors in markup
+> (how parse errors are handled is well defined,
+> so this works but isn’t pretty).
 
 ###### `characterReferences`
 
@@ -190,8 +207,9 @@ Configure how to serialize character references
 ###### `closeEmptyElements`
 
 Close SVG elements without any content with slash (`/`) on the opening tag
-instead of an end tag: `<circle />` instead of `<circle></circle>` (`boolean`,
-default: `false`).
+instead of an end tag:
+`<circle />` instead of `<circle></circle>`
+(`boolean`, default: `false`).
 
 See `tightSelfClosing` to control whether a space is used before the slash.
 
@@ -199,8 +217,9 @@ Not used in the HTML space.
 
 ###### `closeSelfClosing`
 
-Close self-closing nodes with an extra slash (`/`): `<img />` instead of
-`<img>` (`boolean`, default: `false`).
+Close self-closing nodes with an extra slash (`/`):
+`<img />` instead of `<img>`
+(`boolean`, default: `false`).
 
 See `tightSelfClosing` to control whether a space is used before the slash.
 
@@ -208,47 +227,58 @@ Not used in the SVG space.
 
 ###### `collapseEmptyAttributes`
 
-Collapse empty attributes: get `class` instead of `class=""` (`boolean`,
-default: `false`).
+Collapse empty attributes:
+get `class` instead of `class=""`
+(`boolean`, default: `false`).
 
 Not used in the SVG space.
 
-> 👉 **Note**: boolean attributes (such as `hidden`) are always collapsed.
+> 👉 **Note**:
+> boolean attributes
+> (such as `hidden`)
+> are always collapsed.
 
 ###### `omitOptionalTags`
 
-Omit optional opening and closing tags (`boolean`, default: `false`).
+Omit optional opening and closing tags
+(`boolean`, default: `false`).
 
-For example, in `<ol><li>one</li><li>two</li></ol>`, both `</li>` closing tags
-can be omitted.
-The first because it’s followed by another `li`, the last because it’s followed
-by nothing.
+For example,
+in `<ol><li>one</li><li>two</li></ol>`,
+both `</li>` closing tags can be omitted.
+The first because it’s followed by another `li`,
+the last because it’s followed by nothing.
 
 Not used in the SVG space.
 
 ###### `preferUnquoted`
 
-Leave attributes unquoted if that results in less bytes (`boolean`, default:
-`false`).
+Leave attributes unquoted if that results in less bytes
+(`boolean`, default: `false`).
 
 Not used in the SVG space.
 
 ###### `quote`
 
-Preferred quote to use ([`Quote`][api-quote], default: `'"'`).
+Preferred quote to use
+([`Quote`][api-quote], default: `'"'`).
 
 ###### `quoteSmart`
 
-Use the other quote if that results in less bytes (`boolean`, default: `false`).
+Use the other quote if that results in less bytes
+(`boolean`, default: `false`).
 
 ###### `space`
 
-Which space the document is in ([`Space`][api-space], default: `'html'`).
+Which space the document is in
+([`Space`][api-space], default: `'html'`).
 
-When an `<svg>` element is found in the HTML space, this package already
-automatically switches to and from the SVG space when entering and exiting it.
+When an `<svg>` element is found in the HTML space,
+this package already automatically switches to and from the SVG space when
+entering and exiting it.
 
-> 👉 **Note**: hast is not XML.
+> 👉 **Note**:
+> hast is not XML.
 > It supports SVG as embedded in HTML.
 > It does not support the features available in XML.
 > Passing SVG might break but fragments of modern SVG should be fine.
@@ -256,52 +286,65 @@ automatically switches to and from the SVG space when entering and exiting it.
 
 ###### `tightAttributes`
 
-Join attributes together, without whitespace, if possible: get
-`class="a b"title="c d"` instead of `class="a b" title="c d"` to save bytes
+Join attributes together,
+without whitespace,
+if possible:
+get `class="a b"title="c d"` instead of `class="a b" title="c d"` to save bytes
 (`boolean`, default: `false`).
 
 Not used in the SVG space.
 
-> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
-> are handled is well defined, so this works but isn’t pretty).
+> 👉 **Note**:
+> intentionally creates parse errors in markup
+> (how parse errors are handled is well defined,
+> so this works but isn’t pretty).
 
 ###### `tightCommaSeparatedLists`
 
-Join known comma-separated attribute values with just a comma (`,`), instead of
-padding them on the right as well (`,␠`, where `␠` represents a space)
+Join known comma-separated attribute values with just a comma (`,`),
+instead of padding them on the right as well
+(`,␠`, where `␠` represents a space)
 (`boolean`, default: `false`).
 
 ###### `tightDoctype`
 
-Drop unneeded spaces in doctypes: `<!doctypehtml>` instead of `<!doctype html>`
-to save bytes (`boolean`, default: `false`).
+Drop unneeded spaces in doctypes:
+`<!doctypehtml>` instead of `<!doctype html>` to save bytes
+(`boolean`, default: `false`).
 
-> 👉 **Note**: intentionally creates parse errors in markup (how parse errors
-> are handled is well defined, so this works but isn’t pretty).
+> 👉 **Note**:
+> intentionally creates parse errors in markup
+> (how parse errors are handled is well defined,
+> so this works but isn’t pretty).
 
 ###### `tightSelfClosing`
 
-Do not use an extra space when closing self-closing elements: `<img/>` instead
-of `<img />` (`boolean`, default: `false`).
+Do not use an extra space when closing self-closing elements:
+`<img/>` instead of `<img />`
+(`boolean`, default: `false`).
 
-> 👉 **Note**: only used if `closeSelfClosing: true` or
-> `closeEmptyElements: true`.
+> 👉 **Note**:
+> only used if `closeSelfClosing: true` or `closeEmptyElements: true`.
 
 ###### `upperDoctype`
 
-Use a `<!DOCTYPE…` instead of `<!doctype…` (`boolean`, default: `false`).
+Use a `<!DOCTYPE…` instead of `<!doctype…`
+(`boolean`, default: `false`).
 
 Useless except for XHTML.
 
 ###### `voids`
 
-Tag names of elements to serialize without closing tag (`Array<string>`,
+Tag names of elements to serialize without closing tag
+(`Array<string>`,
 default: [`html-void-elements`][github-html-void-elements]).
 
 Not used in the SVG space.
 
-> 👉 **Note**: It’s highly unlikely that you want to pass this, because hast is
-> not for XML, and HTML will not add more void elements.
+> 👉 **Note**:
+> it’s highly unlikely that you want to pass this,
+> because hast is not for XML,
+> and HTML will not add more void elements.
 
 ### `Quote`
 
@@ -325,8 +368,8 @@ type Space = 'html' | 'svg'
 
 ## Syntax
 
-HTML is serialized according to WHATWG HTML (the living standard), which is also
-followed by browsers such as Chrome and Firefox.
+HTML is serialized according to WHATWG HTML (the living standard),
+which is also followed by browsers such as Chrome and Firefox.
 
 ## Types
 
@@ -334,7 +377,8 @@ This package is fully typed with [TypeScript][].
 It exports the additional types
 [`CharacterReferences`][api-character-references],
 [`Options`][api-options],
-[`Quote`][api-quote], and
+[`Quote`][api-quote],
+and
 [`Space`][api-space].
 
 ## Compatibility
@@ -342,9 +386,10 @@ It exports the additional types
 Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
 
-When we cut a new major release, we drop support for unmaintained versions of
-Node.
-This means we try to keep the current release line, `hast-util-to-html@^9`,
+When we cut a new major release,
+we drop support for unmaintained versions of Node.
+This means we try to keep the current release line,
+`hast-util-to-html@9`,
 compatible with Node.js 16.
 
 ## Security
@@ -368,8 +413,9 @@ for ways to get started.
 See [`support.md`][health-support] for ways to get help.
 
 This project has a [code of conduct][health-coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
+By interacting with this repository,
+organization,
+or community you agree to abide by its terms.
 
 ## License
 
