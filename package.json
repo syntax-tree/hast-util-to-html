@@ -84,7 +84,7 @@
     "strict": true
   },
   "type": "module",
-  "version": "9.0.4",
+  "version": "9.0.5",
   "xo": {
     "overrides": [
       {
