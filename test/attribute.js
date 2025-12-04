@@ -130,13 +130,15 @@ test('`element` attributes', async (t) => {
 
     await t.test('should serialize unknowns set to objects', async function () {
       assert.deepEqual(
-        toHtml({
-          type: 'element',
-          tagName: 'i',
-          // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-          properties: {unknown: {toString}},
-          children: []
-        }),
+        toHtml(
+          // @ts-ignore: check how the runtime handles a `toString` method on an object.
+          {
+            type: 'element',
+            tagName: 'i',
+            properties: {unknown: {toString}},
+            children: []
+          }
+        ),
         '<i unknown="yup"></i>'
       )
     })
@@ -531,13 +533,15 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to an object',
       async function () {
         assert.deepEqual(
-          toHtml({
-            type: 'element',
-            tagName: 'i',
-            // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-            properties: {cols: {toString}},
-            children: []
-          }),
+          toHtml(
+            // @ts-ignore: check how the runtime handles a `toString` method on an object.
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {cols: {toString}},
+              children: []
+            }
+          ),
           '<i cols="yup"></i>'
         )
       }
@@ -577,13 +581,15 @@ test('`element` attributes', async (t) => {
       'should serialize known numbers set to an array of booleans',
       async function () {
         assert.deepEqual(
-          toHtml({
-            type: 'element',
-            tagName: 'i',
-            // @ts-expect-error: check how the runtime handles booleans in an array.
-            properties: {cols: [true, false]},
-            children: []
-          }),
+          toHtml(
+            // @ts-ignore: check how the runtime handles booleans in an array.
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {cols: [true, false]},
+              children: []
+            }
+          ),
           '<i cols="true false"></i>'
         )
       }
@@ -717,13 +723,15 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to an object',
         async function () {
           assert.deepEqual(
-            toHtml({
-              type: 'element',
-              tagName: 'i',
-              // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-              properties: {className: {toString}},
-              children: []
-            }),
+            toHtml(
+              // @ts-ignore: check how the runtime handles a `toString` method on an object.
+              {
+                type: 'element',
+                tagName: 'i',
+                properties: {className: {toString}},
+                children: []
+              }
+            ),
             '<i class="yup"></i>'
           )
         }
@@ -763,13 +771,15 @@ test('`element` attributes', async (t) => {
         'should serialize known space-separated lists set to an array of booleans',
         async function () {
           assert.deepEqual(
-            toHtml({
-              type: 'element',
-              tagName: 'i',
-              // @ts-expect-error: check how the runtime handles booleans in an array.
-              properties: {className: [true, false]},
-              children: []
-            }),
+            toHtml(
+              // @ts-ignore: check how the runtime handles booleans in an array.
+              {
+                type: 'element',
+                tagName: 'i',
+                properties: {className: [true, false]},
+                children: []
+              }
+            ),
             '<i class="true false"></i>'
           )
         }
@@ -889,13 +899,15 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to an object',
         async function () {
           assert.deepEqual(
-            toHtml({
-              type: 'element',
-              tagName: 'i',
-              // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-              properties: {accept: {toString}},
-              children: []
-            }),
+            toHtml(
+              // @ts-ignore: check how the runtime handles a `toString` method on an object.
+              {
+                type: 'element',
+                tagName: 'i',
+                properties: {accept: {toString}},
+                children: []
+              }
+            ),
             '<i accept="yup"></i>'
           )
         }
@@ -935,13 +947,15 @@ test('`element` attributes', async (t) => {
         'should serialize known comma-separated lists set to an array of booleans',
         async function () {
           assert.deepEqual(
-            toHtml({
-              type: 'element',
-              tagName: 'i',
-              // @ts-expect-error: check how the runtime handles booleans in an array.
-              properties: {accept: [true, false]},
-              children: []
-            }),
+            toHtml(
+              // @ts-ignore: check how the runtime handles booleans in an array.
+              {
+                type: 'element',
+                tagName: 'i',
+                properties: {accept: [true, false]},
+                children: []
+              }
+            ),
             '<i accept="true, false"></i>'
           )
         }
@@ -1056,13 +1070,15 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to an object',
       async function () {
         assert.deepEqual(
-          toHtml({
-            type: 'element',
-            tagName: 'i',
-            // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-            properties: {id: {toString}},
-            children: []
-          }),
+          toHtml(
+            // @ts-ignore: check how the runtime handles a `toString` method on an object.
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {id: {toString}},
+              children: []
+            }
+          ),
           '<i id="yup"></i>'
         )
       }
@@ -1102,13 +1118,15 @@ test('`element` attributes', async (t) => {
       'should serialize known normals set to an array of booleans as a space-separated list',
       async function () {
         assert.deepEqual(
-          toHtml({
-            type: 'element',
-            tagName: 'i',
-            // @ts-expect-error: check how the runtime handles booleans in an array.
-            properties: {id: [true, false]},
-            children: []
-          }),
+          toHtml(
+            // @ts-ignore: check how the runtime handles booleans in an array.
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {id: [true, false]},
+              children: []
+            }
+          ),
           '<i id="true false"></i>'
         )
       }
@@ -1252,13 +1270,15 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to an object',
       async function () {
         assert.deepEqual(
-          toHtml({
-            type: 'element',
-            tagName: 'i',
-            // @ts-expect-error: check how the runtime handles a `toString` method on an object.
-            properties: {dataId: {toString}},
-            children: []
-          }),
+          toHtml(
+            // @ts-ignore: check how the runtime handles a `toString` method on an object.
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {dataId: {toString}},
+              children: []
+            }
+          ),
           '<i data-id="yup"></i>'
         )
       }
@@ -1298,13 +1318,15 @@ test('`element` attributes', async (t) => {
       'should serialize data properties set to an array of booleans as a space-separated list',
       async function () {
         assert.deepEqual(
-          toHtml({
-            type: 'element',
-            tagName: 'i',
-            // @ts-expect-error: check how the runtime handles booleans in an array.
-            properties: {dataId: [true, false]},
-            children: []
-          }),
+          toHtml(
+            // @ts-ignore: check how the runtime handles booleans in an array.
+            {
+              type: 'element',
+              tagName: 'i',
+              properties: {dataId: [true, false]},
+              children: []
+            }
+          ),
           '<i data-id="true false"></i>'
         )
       }

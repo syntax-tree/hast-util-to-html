@@ -11,7 +11,7 @@
     "comma-separated-tokens": "^2.0.0",
     "hast-util-whitespace": "^3.0.0",
     "html-void-elements": "^3.0.0",
-    "mdast-util-to-hast": "^13.0.0",
+    "mdast-util-to-hast": "^13.2.1",
     "property-information": "^7.0.0",
     "space-separated-tokens": "^2.0.0",
     "stringify-entities": "^4.0.0",
