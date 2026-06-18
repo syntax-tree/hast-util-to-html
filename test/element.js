@@ -16,6 +16,22 @@ test('`element`', async function (t) {
     assert.deepEqual(toHtml(h('img')), '<img>')
   })
 
+  await t.test(
+    'should add a leading newline inside `pre`/`textarea`/`listing` so a leading newline round-trips',
+    async function () {
+      assert.deepEqual(toHtml(h('pre', '\nalpha')), '<pre>\n\nalpha</pre>')
+      assert.deepEqual(
+        toHtml(h('textarea', '\nalpha')),
+        '<textarea>\n\nalpha</textarea>'
+      )
+      assert.deepEqual(
+        toHtml(h('listing', '\nalpha')),
+        '<listing>\n\nalpha</listing>'
+      )
+      assert.deepEqual(toHtml(h('pre', 'alpha')), '<pre>alpha</pre>')
+    }
+  )
+
   await t.test('should serialize given void `element`s', async function () {
     assert.deepEqual(toHtml(h('foo'), {voids: ['foo']}), '<foo>')
   })
