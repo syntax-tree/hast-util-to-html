@@ -509,6 +509,66 @@ test('svg', async function (t) {
       )
     }
   )
+
+  await t.test(
+    'should serialize a `br` in `foreignObject` as an HTML void',
+    async function () {
+      assert.deepEqual(
+        toHtml(s('svg', s('foreignObject', h('br')))),
+        '<svg><foreignObject><br></foreignObject></svg>'
+      )
+    }
+  )
+
+  await t.test(
+    'should serialize an `img` in `foreignObject` as an HTML void',
+    async function () {
+      assert.deepEqual(
+        toHtml(s('svg', s('foreignObject', h('img')))),
+        '<svg><foreignObject><img></foreignObject></svg>'
+      )
+    }
+  )
+
+  await t.test(
+    'should serialize an `hr` in `foreignObject` as an HTML void',
+    async function () {
+      assert.deepEqual(
+        toHtml(s('svg', s('foreignObject', h('hr')))),
+        '<svg><foreignObject><hr></foreignObject></svg>'
+      )
+    }
+  )
+
+  await t.test(
+    'should serialize an `input` in `foreignObject` as an HTML void',
+    async function () {
+      assert.deepEqual(
+        toHtml(s('svg', s('foreignObject', h('input')))),
+        '<svg><foreignObject><input></foreignObject></svg>'
+      )
+    }
+  )
+
+  await t.test(
+    'should serialize a `wbr` in `foreignObject` as an HTML void',
+    async function () {
+      assert.deepEqual(
+        toHtml(s('svg', s('foreignObject', h('wbr')))),
+        '<svg><foreignObject><wbr></foreignObject></svg>'
+      )
+    }
+  )
+
+  await t.test(
+    'should serialize nested HTML in `foreignObject` with HTML voids',
+    async function () {
+      assert.deepEqual(
+        toHtml(s('svg', s('foreignObject', h('div', h('br'))))),
+        '<svg><foreignObject><div><br></div></foreignObject></svg>'
+      )
+    }
+  )
 })
 
 function toString() {
