@@ -142,7 +142,7 @@ test('`element` attributes', async (t) => {
     })
   })
 
-  await t.test('shold support known booleans', async function (t) {
+  await t.test('should support known booleans', async function (t) {
     await t.test(
       'should ignore known booleans set to `false`',
       async function () {

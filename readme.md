@@ -190,7 +190,7 @@ Not used in the SVG space.
 
 ###### `bogusComments`
 
-Use “bogus comments” instead of comments to save byes:
+Use “bogus comments” instead of comments to save bytes:
 `<?charlie>` instead of `<!--charlie-->`
 (`boolean`, default: `false`).
 
