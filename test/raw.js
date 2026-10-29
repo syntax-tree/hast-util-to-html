@@ -8,7 +8,7 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`raw`', async function (t) {
   await t.test('should encode `raw`s', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml({type: 'raw', value: '<script>alert("XSS!")</script>'}),
       '&#x3C;script>alert("XSS!")&#x3C;/script>'
     )
@@ -17,7 +17,7 @@ test('`raw`', async function (t) {
   await t.test(
     'should not encode `raw`s in `allowDangerousHtml` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(
           {type: 'raw', value: '<script>alert("XSS!")</script>'},
           {allowDangerousHtml: true}

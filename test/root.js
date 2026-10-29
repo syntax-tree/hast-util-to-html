@@ -5,7 +5,7 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`root`', async function (t) {
   await t.test('should serialize `root`s', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml({
         type: 'root',
         children: [
@@ -19,7 +19,7 @@ test('`root`', async function (t) {
   })
 
   await t.test('should serialize `root`s w/o children', async function () {
-    assert.deepEqual(
+    assert.equal(
       // @ts-expect-error: check how the runtime handles missing `children`.
       toHtml({type: 'root'}),
       ''

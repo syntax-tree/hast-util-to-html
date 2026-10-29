@@ -4,17 +4,17 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`comment`', async function (t) {
   await t.test('should serialize `comment`s', async function () {
-    assert.deepEqual(toHtml({type: 'comment', value: 'alpha'}), '<!--alpha-->')
+    assert.equal(toHtml({type: 'comment', value: 'alpha'}), '<!--alpha-->')
   })
 
   await t.test('should not encode `comment`s', async function () {
-    assert.deepEqual(toHtml({type: 'comment', value: 'AT&T'}), '<!--AT&T-->')
+    assert.equal(toHtml({type: 'comment', value: 'AT&T'}), '<!--AT&T-->')
   })
 
   await t.test(
     'should serialize bogus comments (`bogusComments`)',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({type: 'comment', value: 'asd'}, {bogusComments: true}),
         '<?asd>'
       )
@@ -24,7 +24,7 @@ test('`comment`', async function (t) {
   await t.test(
     'should prevent breaking out of bogus comments (`bogusComments`)',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({type: 'comment', value: 'a<s>d'}, {bogusComments: true}),
         '<?a<s&#x3E;d>'
       )

@@ -5,21 +5,18 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`colgroup` (closing)', async function (t) {
   await t.test('should not omit tag without children', async function () {
-    assert.deepEqual(
-      toHtml(h('colgroup'), {omitOptionalTags: true}),
-      '<colgroup>'
-    )
+    assert.equal(toHtml(h('colgroup'), {omitOptionalTags: true}), '<colgroup>')
   })
 
   await t.test('should omit tag if head is `col`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(h('colgroup', h('col', {span: 2})), {omitOptionalTags: true}),
       '<col span="2">'
     )
   })
 
   await t.test('should not omit tag if head is not `col`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(h('colgroup', [{type: 'comment', value: 'alpha'}]), {
         omitOptionalTags: true
       }),
@@ -30,7 +27,7 @@ test('`colgroup` (closing)', async function (t) {
   await t.test(
     'should not omit tag if previous is `colgroup` whose closing tag is omitted',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(
           h('table', [
             h('colgroup', [h('col', {span: 2})]),

@@ -1,4 +1,4 @@
-/* eslint-disable import/no-unassigned-import */
+/* eslint-disable import-x/no-unassigned-import, node-test/no-import-test-files -- these files register tests. */
 import './omission-closing-body.js'
 import './omission-closing-caption.js'
 import './omission-closing-colgroup.js'
@@ -17,4 +17,3 @@ import './omission-closing-td-th.js'
 import './omission-closing-tfoot.js'
 import './omission-closing-thead.js'
 import './omission-closing-tr.js'
-/* eslint-enable import/no-unassigned-import */

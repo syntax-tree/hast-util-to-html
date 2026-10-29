@@ -5,32 +5,32 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`element`', async function (t) {
   await t.test('should serialize `element`s', async function () {
-    assert.deepEqual(toHtml(h('i', 'bravo')), '<i>bravo</i>')
+    assert.equal(toHtml(h('i', 'bravo')), '<i>bravo</i>')
   })
 
   await t.test('should serialize unknown `element`s', async function () {
-    assert.deepEqual(toHtml(h('foo')), '<foo></foo>')
+    assert.equal(toHtml(h('foo')), '<foo></foo>')
   })
 
   await t.test('should serialize void `element`s', async function () {
-    assert.deepEqual(toHtml(h('img')), '<img>')
+    assert.equal(toHtml(h('img')), '<img>')
   })
 
   await t.test('should serialize given void `element`s', async function () {
-    assert.deepEqual(toHtml(h('foo'), {voids: ['foo']}), '<foo>')
+    assert.equal(toHtml(h('foo'), {voids: ['foo']}), '<foo>')
   })
 
   await t.test(
     'should serialize with ` /` in `closeSelfClosing` mode',
     async function () {
-      assert.deepEqual(toHtml(h('img'), {closeSelfClosing: true}), '<img />')
+      assert.equal(toHtml(h('img'), {closeSelfClosing: true}), '<img />')
     }
   )
 
   await t.test(
     'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('img'), {closeSelfClosing: true, tightSelfClosing: true}),
         '<img/>'
       )
@@ -40,7 +40,7 @@ test('`element`', async function (t) {
   await t.test(
     'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, w/ space after an unquoted attribute (1)',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('input', {type: 'checkbox'}), {
           preferUnquoted: true,
           tightSelfClosing: true,
@@ -54,7 +54,7 @@ test('`element`', async function (t) {
   await t.test(
     'should serialize voids with `/` in `closeSelfClosing` and `tightSelfClosing` mode, w/ space after an unquoted attribute (2)',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('img', {src: 'index.jpg'}), {
           preferUnquoted: true,
           closeSelfClosing: true,
@@ -68,7 +68,7 @@ test('`element`', async function (t) {
   await t.test(
     'should serialize voids with a ` /` in if an unquoted attribute ends with `/`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('img', {title: '/'}), {
           preferUnquoted: true,
           closeSelfClosing: true,
@@ -80,7 +80,7 @@ test('`element`', async function (t) {
   )
 
   await t.test('should support `<template>`s content', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml({
         type: 'element',
         tagName: 'template',

@@ -1,4 +1,4 @@
-/* eslint-disable import/no-unassigned-import */
+/* eslint-disable import-x/no-unassigned-import, node-test/no-import-test-files -- these files register tests. */
 import './attribute.js'
 import './comment.js'
 import './core.js'
@@ -12,4 +12,3 @@ import './security.js'
 import './svg.js'
 import './root.js'
 import './text.js'
-/* eslint-enable import/no-unassigned-import */

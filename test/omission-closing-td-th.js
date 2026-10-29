@@ -4,7 +4,10 @@ import {h} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
 
 /**
+ * Create tests for an element.
+ *
  * @param {'td' | 'th'} tagName
+ *   Tag name.
  */
 function createTest(tagName) {
   const other = tagName === 'td' ? 'th' : 'td'

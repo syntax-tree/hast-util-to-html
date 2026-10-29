@@ -4,13 +4,13 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`doctype`', async function (t) {
   await t.test('should serialize doctypes', async function () {
-    assert.deepEqual(toHtml({type: 'doctype'}), '<!doctype html>')
+    assert.equal(toHtml({type: 'doctype'}), '<!doctype html>')
   })
 
   await t.test(
     'should serialize doctypes tightly in `tightDoctype` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({type: 'doctype'}, {tightDoctype: true}),
         '<!doctypehtml>'
       )
@@ -20,7 +20,7 @@ test('`doctype`', async function (t) {
   await t.test(
     'should serialize uppercase doctypes in `upperDoctype` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({type: 'doctype'}, {upperDoctype: true}),
         '<!DOCTYPE html>'
       )

@@ -5,15 +5,15 @@ import {toHtml} from 'hast-util-to-html'
 
 test('svg', async function (t) {
   await t.test('should serialize `element`s', async function () {
-    assert.deepEqual(toHtml(s('path'), {space: 'svg'}), '<path></path>')
+    assert.equal(toHtml(s('path'), {space: 'svg'}), '<path></path>')
   })
 
   await t.test('should serialize unknown `element`s', async function () {
-    assert.deepEqual(toHtml(s('foo'), {space: 'svg'}), '<foo></foo>')
+    assert.equal(toHtml(s('foo'), {space: 'svg'}), '<foo></foo>')
   })
 
   await t.test('should serialize `element`s with content', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('g', s('circle')), {space: 'svg'}),
       '<g><circle></circle></g>'
     )
@@ -22,7 +22,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize with ` /` in `closeEmptyElements` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle'), {space: 'svg', closeEmptyElements: true}),
         '<circle />'
       )
@@ -32,7 +32,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize empties with `/` in `closeEmptyElements` and `tightSelfClosing` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle'), {
           space: 'svg',
           closeEmptyElements: true,
@@ -47,7 +47,7 @@ test('svg', async function (t) {
     'should serialize empties with `/` in `closeEmptyElements` and `tightSelfClosing` mode, *with* a space after an unquoted attribute',
     async function () {
       // `<circle cx=2 cy=2 r=1/>` does not work in browsers.  Needs a space.
-      assert.deepEqual(
+      assert.equal(
         toHtml(
           s('svg', {viewBox: '0 0 4 4'}, s('circle', {cx: 2, cy: 2, r: 1})),
           {
@@ -62,14 +62,14 @@ test('svg', async function (t) {
   )
 
   await t.test('should serialize properties', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('text', {dataFoo: 'alpha'}, 'bravo')),
       '<text data-foo="alpha">bravo</text>'
     )
   })
 
   await t.test('should serialize special properties', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('text', {className: ['alpha']}, 'bravo'), {space: 'svg'}),
       '<text class="alpha">bravo</text>'
     )
@@ -78,7 +78,7 @@ test('svg', async function (t) {
   await t.test(
     'should collapse empty string attributes in `collapseEmptyAttributes` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle', {title: ''}), {
           space: 'svg',
           collapseEmptyAttributes: true
@@ -89,7 +89,7 @@ test('svg', async function (t) {
   )
 
   await t.test('should serialize multiple properties', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('text', {className: ['a', 'b'], title: 'c d'}, 'bravo'), {
         space: 'svg'
       }),
@@ -100,7 +100,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize multiple properties tightly in `tightAttributes` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('text', {className: ['a', 'b'], title: 'c d'}, 'bravo'), {
           space: 'svg',
           tightAttributes: true
@@ -113,7 +113,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize space-separated attributes',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('text', {className: ['alpha', 'charlie']}, 'bravo'), {
           space: 'svg'
         }),
@@ -125,7 +125,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize comma-separated attributes',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('glyph', {glyphName: ['foo', 'bar']}), {space: 'svg'}),
         '<glyph glyph-name="foo, bar"></glyph>'
       )
@@ -135,7 +135,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize comma-separated attributes tighly in `tightCommaSeparatedLists` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('glyph', {glyphName: ['foo', 'bar']}), {
           tightCommaSeparatedLists: true,
           space: 'svg'
@@ -148,7 +148,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize unknown lists as space-separated',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle', {unknown: ['alpha', 'bravo']}), {space: 'svg'}),
         '<circle unknown="alpha bravo"></circle>'
       )
@@ -158,7 +158,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize known boolean attributes set to `true`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('a', {download: true}, 'bravo'), {space: 'svg'}),
         '<a download>bravo</a>'
       )
@@ -168,7 +168,7 @@ test('svg', async function (t) {
   await t.test(
     'should ignore known boolean attributes set to `false`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('a', {download: false}, 'bravo'), {space: 'svg'}),
         '<a>bravo</a>'
       )
@@ -178,7 +178,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize truthy known boolean attributes',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('a', {download: 1}, 'bravo'), {space: 'svg'}),
         '<a download>bravo</a>'
       )
@@ -188,7 +188,7 @@ test('svg', async function (t) {
   await t.test(
     'should ignore falsey known boolean attributes',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('a', {download: 0}, 'bravo'), {space: 'svg'}),
         '<a>bravo</a>'
       )
@@ -198,7 +198,7 @@ test('svg', async function (t) {
   await t.test(
     'should ignore unknown attributes set to `false`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('a', {unknown: false}, 'bravo'), {space: 'svg'}),
         '<a>bravo</a>'
       )
@@ -208,7 +208,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize unknown attributes set to `true`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('a', {unknown: true}, 'bravo'), {space: 'svg'}),
         '<a unknown>bravo</a>'
       )
@@ -218,7 +218,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize positive known numeric attributes',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('path', {strokeOpacity: 0.7}), {space: 'svg'}),
         '<path stroke-opacity="0.7"></path>'
       )
@@ -228,7 +228,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize negative known numeric attributes',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('path', {strokeMiterLimit: -1}), {space: 'svg'}),
         '<path stroke-miterlimit="-1"></path>'
       )
@@ -238,7 +238,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize known numeric attributes set to `0`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('path', {strokeOpacity: 0}), {space: 'svg'}),
         '<path stroke-opacity="0"></path>'
       )
@@ -248,8 +248,8 @@ test('svg', async function (t) {
   await t.test(
     'should ignore known numeric attributes set to `NaN`',
     async function () {
-      assert.deepEqual(
-        toHtml(s('path', {strokeOpacity: Number.NaN}), {space: 'svg'}),
+      assert.equal(
+        toHtml(s('path', {strokeOpacity: NaN}), {space: 'svg'}),
         '<path></path>'
       )
     }
@@ -258,7 +258,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize known numeric attributes set to non-numeric values',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         // @ts-expect-error: check how the runtime handles a `toString` method on an object.
         toHtml(s('path', {strokeOpacity: {toString}}), {space: 'svg'}),
         '<path stroke-opacity="yup"></path>'
@@ -267,14 +267,14 @@ test('svg', async function (t) {
   )
 
   await t.test('should serialize other attributes', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg'}),
       '<svg viewBox="0 0 10 10"></svg>'
     )
   })
 
   await t.test('should serialize other falsey attributes', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('svg', {viewBox: ''}), {space: 'svg'}),
       '<svg viewBox=""></svg>'
     )
@@ -283,7 +283,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize other non-string attributes',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('i', {id: true}, 'bravo'), {space: 'svg'}),
         '<i id>bravo</i>'
       )
@@ -293,7 +293,7 @@ test('svg', async function (t) {
   await t.test(
     'should quote attribute values with single quotes if `quote: "\'"`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg', quote: "'"}),
         "<svg viewBox='0 0 10 10'></svg>"
       )
@@ -303,7 +303,7 @@ test('svg', async function (t) {
   await t.test(
     "should quote attribute values with double quotes if `quote: '\"'`",
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('svg', {viewBox: '0 0 10 10'}), {space: 'svg', quote: '"'}),
         '<svg viewBox="0 0 10 10"></svg>'
       )
@@ -313,7 +313,7 @@ test('svg', async function (t) {
   await t.test(
     'should quote smartly if the other quote is less prominent (#1)',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle', {title: '"some \' stuff"'}), {
           space: 'svg',
           quote: '"',
@@ -327,7 +327,7 @@ test('svg', async function (t) {
   await t.test(
     'should quote smartly if the other quote is less prominent (#2)',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle', {title: "'some \" stuff'"}), {
           space: 'svg',
           quote: '"',
@@ -339,21 +339,21 @@ test('svg', async function (t) {
   )
 
   await t.test('should omit quotes in `preferUnquoted`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('circle', {cx: 2}), {space: 'svg', preferUnquoted: true}),
       '<circle cx=2></circle>'
     )
   })
 
   await t.test('should encode entities in attribute names', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('circle', {'3<5\0': 'alpha'}), {space: 'svg'}),
       '<circle 3&#x3C;5&#x0;="alpha"></circle>'
     )
   })
 
   await t.test('should encode entities in attribute values', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(s('circle', {title: '3<5\0'}), {space: 'svg'}),
       '<circle title="3<5&#x0;"></circle>'
     )
@@ -362,7 +362,7 @@ test('svg', async function (t) {
   await t.test(
     'should encode characters in attribute names which cause parse errors, work, even though `allowParseErrors` mode is on',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle', {'3=5\0': 'alpha'}), {
           space: 'svg',
           allowParseErrors: true
@@ -375,7 +375,7 @@ test('svg', async function (t) {
   await t.test(
     'should encode characters in attribute values which cause parse errors, work, even though `allowParseErrors` mode is on',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle', {title: '3"5\0'}), {
           space: 'svg',
           allowParseErrors: true
@@ -388,7 +388,7 @@ test('svg', async function (t) {
   await t.test(
     'should not encode characters which cause XSS issues in older browsers, in `allowDangerousCharacters` mode',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(s('circle', {title: "3'5"}), {
           space: 'svg',
           allowDangerousCharacters: true
@@ -399,7 +399,8 @@ test('svg', async function (t) {
   )
 
   await t.test('should ignore attributes set to `null`', async function () {
-    assert.deepEqual(
+    assert.equal(
+      // @ts-expect-error: check how the runtime handles an invalid value.
       toHtml({
         type: 'element',
         tagName: 'circle',
@@ -413,7 +414,7 @@ test('svg', async function (t) {
   await t.test(
     'should ignore attributes set to `undefined`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'circle',
@@ -456,7 +457,7 @@ test('svg', async function (t) {
   await t.test(
     'should serialize SVG props on an `svg` element in HTML',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(
           h('div', [
             s(

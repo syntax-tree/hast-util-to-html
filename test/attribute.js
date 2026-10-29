@@ -6,7 +6,7 @@ import {toHtml} from 'hast-util-to-html'
 test('`element` attributes', async (t) => {
   await t.test('should support unknown properties', async function (t) {
     await t.test('should ignore unknowns set to `false`', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'i',
@@ -18,7 +18,7 @@ test('`element` attributes', async (t) => {
     })
 
     await t.test('should ignore unknowns set to `null`', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'i',
@@ -32,7 +32,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should ignore unknowns set to `undefined`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -45,11 +45,11 @@ test('`element` attributes', async (t) => {
     )
 
     await t.test('should ignore unknowns set to `NaN`', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'i',
-          properties: {unknown: Number.NaN},
+          properties: {unknown: NaN},
           children: []
         }),
         '<i></i>'
@@ -59,7 +59,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize unknowns set to `true` without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -74,7 +74,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize unknowns set to their name as their name',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -89,7 +89,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize unknown lists as space-separated',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -104,7 +104,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize unknowns set to an integer as it’s string version',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -117,7 +117,7 @@ test('`element` attributes', async (t) => {
     )
 
     await t.test('should serialize unknowns set to `0`', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'i',
@@ -129,11 +129,11 @@ test('`element` attributes', async (t) => {
     })
 
     await t.test('should serialize unknowns set to objects', async function () {
-      assert.deepEqual(
+      assert.equal(
+        // @ts-expect-error: check how the runtime handles a `toString` method on an object.
         toHtml({
           type: 'element',
           tagName: 'i',
-          // @ts-expect-error: check how the runtime handles a `toString` method on an object.
           properties: {unknown: {toString}},
           children: []
         }),
@@ -146,7 +146,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should ignore known booleans set to `false`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -159,7 +159,8 @@ test('`element` attributes', async (t) => {
     )
 
     await t.test('should ignore falsey known booleans', async function () {
-      assert.deepEqual(
+      assert.equal(
+        // @ts-expect-error: check how the runtime handles an invalid value.
         toHtml({
           type: 'element',
           tagName: 'i',
@@ -171,11 +172,12 @@ test('`element` attributes', async (t) => {
     })
 
     await t.test('should ignore NaN known booleans', async function () {
-      assert.deepEqual(
+      assert.equal(
+        // @ts-expect-error: check how the runtime handles an invalid value.
         toHtml({
           type: 'element',
           tagName: 'i',
-          properties: {hidden: Number.NaN},
+          properties: {hidden: NaN},
           children: []
         }),
         '<i></i>'
@@ -185,7 +187,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known booleans set to `true` without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -200,7 +202,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known booleans set to their name without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -215,7 +217,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize truthy known booleans without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -230,7 +233,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known booleans set to arbitrary strings with value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(h('div', {selected: 'something'})),
           '<div selected="something"></div>'
         )
@@ -240,17 +243,14 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known booleans set to an empty string without value',
       async function () {
-        assert.deepEqual(
-          toHtml(h('div', {selected: ''})),
-          '<div selected></div>'
-        )
+        assert.equal(toHtml(h('div', {selected: ''})), '<div selected></div>')
       }
     )
 
     await t.test(
       'should serialize known overloaded booleans set to arbitrary strings with value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(h('div', {download: 'something'})),
           '<div download="something"></div>'
         )
@@ -262,7 +262,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should ignore known overloaded booleans set to `false`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'a',
@@ -277,7 +277,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should ignore falsey known overloaded booleans',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'a',
@@ -292,11 +293,12 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should ignore NaN known overloaded booleans',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'a',
-            properties: {download: Number.NaN},
+            properties: {download: NaN},
             children: []
           }),
           '<a></a>'
@@ -307,7 +309,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known overloaded booleans set to `true` without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'a',
@@ -322,7 +324,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known overloaded booleans set to their name without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'a',
@@ -337,7 +339,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known overloaded booleans set to an empty string without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'a',
@@ -352,7 +354,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize truthy known overloaded booleans without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'a',
@@ -367,7 +370,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known overloaded booleans set to another string',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'a',
@@ -383,7 +386,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should ignore known numbers set to `false`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -396,11 +400,11 @@ test('`element` attributes', async (t) => {
     )
 
     await t.test('should ignore NaN known numbers', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'a',
-          properties: {cols: Number.NaN},
+          properties: {cols: NaN},
           children: []
         }),
         '<a></a>'
@@ -410,7 +414,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to `0`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -425,7 +429,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to `-1`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -440,7 +444,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to `1`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -455,7 +459,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to `Math.PI`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -470,7 +474,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to `true` as without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -485,7 +490,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to an empty string',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -500,7 +505,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to their name',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -515,7 +520,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to a string',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -530,11 +535,11 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to an object',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles a `toString` method on an object.
           toHtml({
             type: 'element',
             tagName: 'i',
-            // @ts-expect-error: check how the runtime handles a `toString` method on an object.
             properties: {cols: {toString}},
             children: []
           }),
@@ -546,7 +551,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to an array of strings',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -561,7 +567,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to an array of numbers',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -576,11 +583,11 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known numbers set to an array of booleans',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles booleans in an array.
           toHtml({
             type: 'element',
             tagName: 'i',
-            // @ts-expect-error: check how the runtime handles booleans in an array.
             properties: {cols: [true, false]},
             children: []
           }),
@@ -596,7 +603,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should ignore known space-separated lists set to `false`',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -611,11 +619,12 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should ignore NaN known space-separated lists',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'a',
-              properties: {className: Number.NaN},
+              properties: {className: NaN},
               children: []
             }),
             '<a></a>'
@@ -626,7 +635,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to `0`',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -641,7 +651,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to `true` as without value',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -656,7 +667,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to an empty string',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -671,7 +683,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to their attribute name',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -686,7 +699,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to their property name',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -701,7 +715,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to a string',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -716,11 +731,11 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to an object',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles a `toString` method on an object.
             toHtml({
               type: 'element',
               tagName: 'i',
-              // @ts-expect-error: check how the runtime handles a `toString` method on an object.
               properties: {className: {toString}},
               children: []
             }),
@@ -732,7 +747,7 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to an array of strings',
         async function () {
-          assert.deepEqual(
+          assert.equal(
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -747,7 +762,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to an array of numbers',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -762,11 +778,11 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known space-separated lists set to an array of booleans',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles booleans in an array.
             toHtml({
               type: 'element',
               tagName: 'i',
-              // @ts-expect-error: check how the runtime handles booleans in an array.
               properties: {className: [true, false]},
               children: []
             }),
@@ -783,7 +799,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should ignore known comma-separated lists set to `false`',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -798,11 +815,12 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should ignore NaN known comma-separated lists',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'a',
-              properties: {accept: Number.NaN},
+              properties: {accept: NaN},
               children: []
             }),
             '<a></a>'
@@ -813,7 +831,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to `0`',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -828,7 +847,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to `true` as without value',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -843,7 +863,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to an empty string',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -858,7 +879,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to their name',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -873,7 +895,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to a string',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -888,11 +911,11 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to an object',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles a `toString` method on an object.
             toHtml({
               type: 'element',
               tagName: 'i',
-              // @ts-expect-error: check how the runtime handles a `toString` method on an object.
               properties: {accept: {toString}},
               children: []
             }),
@@ -904,7 +927,7 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to an array of strings',
         async function () {
-          assert.deepEqual(
+          assert.equal(
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -919,7 +942,8 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to an array of numbers',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles an invalid value.
             toHtml({
               type: 'element',
               tagName: 'i',
@@ -934,11 +958,11 @@ test('`element` attributes', async (t) => {
       await t.test(
         'should serialize known comma-separated lists set to an array of booleans',
         async function () {
-          assert.deepEqual(
+          assert.equal(
+            // @ts-expect-error: check how the runtime handles booleans in an array.
             toHtml({
               type: 'element',
               tagName: 'i',
-              // @ts-expect-error: check how the runtime handles booleans in an array.
               properties: {accept: [true, false]},
               children: []
             }),
@@ -953,7 +977,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should ignore known normals set to `false`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -966,11 +991,12 @@ test('`element` attributes', async (t) => {
     )
 
     await t.test('should ignore NaN known normals', async function () {
-      assert.deepEqual(
+      assert.equal(
+        // @ts-expect-error: check how the runtime handles an invalid value.
         toHtml({
           type: 'element',
           tagName: 'i',
-          properties: {id: Number.NaN},
+          properties: {id: NaN},
           children: []
         }),
         '<i></i>'
@@ -980,7 +1006,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to `0`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -995,7 +1022,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to `true` as without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1010,7 +1038,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to an empty string',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1025,7 +1053,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to their name',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1040,7 +1068,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to a string',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1055,11 +1083,11 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to an object',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles a `toString` method on an object.
           toHtml({
             type: 'element',
             tagName: 'i',
-            // @ts-expect-error: check how the runtime handles a `toString` method on an object.
             properties: {id: {toString}},
             children: []
           }),
@@ -1071,7 +1099,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to an array of strings as a space-separated list',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1086,7 +1115,8 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to an array of numbers as a space-separated list',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles an invalid value.
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1101,11 +1131,11 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize known normals set to an array of booleans as a space-separated list',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles booleans in an array.
           toHtml({
             type: 'element',
             tagName: 'i',
-            // @ts-expect-error: check how the runtime handles booleans in an array.
             properties: {id: [true, false]},
             children: []
           }),
@@ -1119,7 +1149,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should ignore data properties set to `false`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1132,11 +1162,11 @@ test('`element` attributes', async (t) => {
     )
 
     await t.test('should ignore NaN data properties', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'i',
-          properties: {dataId: Number.NaN},
+          properties: {dataId: NaN},
           children: []
         }),
         '<i></i>'
@@ -1146,7 +1176,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to `0`',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1161,7 +1191,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to `true` as without value',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1176,7 +1206,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to an empty string',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1191,7 +1221,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to their property name',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1206,7 +1236,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to their attribute name',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1221,7 +1251,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to a string',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1236,7 +1266,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize numeric-first data properties set to a string',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1251,11 +1281,11 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to an object',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles a `toString` method on an object.
           toHtml({
             type: 'element',
             tagName: 'i',
-            // @ts-expect-error: check how the runtime handles a `toString` method on an object.
             properties: {dataId: {toString}},
             children: []
           }),
@@ -1267,7 +1297,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to an array of strings as a space-separated list',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1282,7 +1312,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to an array of numbers as a space-separated list',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1297,11 +1327,11 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize data properties set to an array of booleans as a space-separated list',
       async function () {
-        assert.deepEqual(
+        assert.equal(
+          // @ts-expect-error: check how the runtime handles booleans in an array.
           toHtml({
             type: 'element',
             tagName: 'i',
-            // @ts-expect-error: check how the runtime handles booleans in an array.
             properties: {dataId: [true, false]},
             children: []
           }),
@@ -1313,7 +1343,7 @@ test('`element` attributes', async (t) => {
 
   await t.test('should support `collapseEmptyAttributes`', async function (t) {
     await t.test('should show empty string attributes', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'i',
@@ -1327,7 +1357,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should collapse empty string attributes in `collapseEmptyAttributes` mode',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {type: 'element', tagName: 'i', properties: {id: ''}, children: []},
             {
@@ -1342,7 +1372,7 @@ test('`element` attributes', async (t) => {
 
   await t.test('should support `tightAttributes`', async function (t) {
     await t.test('should serialize multiple properties', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml({
           type: 'element',
           tagName: 'i',
@@ -1356,7 +1386,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize multiple properties tightly in `tightAttributes` mode',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1378,7 +1408,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize comma-separated attributes',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1393,7 +1423,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should serialize comma-separated attributes tighly in `tightCommaSeparatedLists` mode',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1415,7 +1445,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should quote attribute values with double quotes by default',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1430,7 +1460,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       "should quote attribute values with single quotes if `quote: '\\''`",
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1450,7 +1480,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       "should quote attribute values with double quotes if `quote: '\\\"'`",
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1470,7 +1500,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       "should quote attribute values with single quotes if `quote: '\\''` even if they occur in value",
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1490,7 +1520,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       "should quote attribute values with double quotes if `quote: '\\\"'` even if they occur in value",
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1522,7 +1552,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should quote attribute values with primary quotes by default',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1543,7 +1573,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should quote attribute values with primary quotes if the alternative occurs',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1564,7 +1594,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should quote attribute values with primary quotes if they occur less than the alternative',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1585,7 +1615,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should quote attribute values with primary quotes if they occur as much as alternatives (#1)',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1606,7 +1636,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should quote attribute values with primary quotes if they occur as much as alternatives (#1)',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1627,7 +1657,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should quote attribute values with alternative quotes if the primary occurs',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1648,7 +1678,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should quote attribute values with alternative quotes if they occur less than the primary',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1669,7 +1699,7 @@ test('`element` attributes', async (t) => {
 
   await t.test('should support `preferUnquoted`', async function (t) {
     await t.test('should omit quotes in `preferUnquoted`', async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(
           {type: 'element', tagName: 'i', properties: {id: 'a'}, children: []},
           {
@@ -1683,7 +1713,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should keep quotes in `preferUnquoted` and impossible',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1703,7 +1733,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should not add `=` when omitting quotes on empty values',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {type: 'element', tagName: 'i', properties: {id: ''}, children: []},
             {
@@ -1720,7 +1750,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should encode entities in attribute names',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1735,7 +1765,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should encode entities in attribute values',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml({
             type: 'element',
             tagName: 'i',
@@ -1750,7 +1780,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should not encode characters in attribute names which cause parse errors, but work, in `allowParseErrors` mode',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1770,7 +1800,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should not encode characters in attribute values which cause parse errors, but work, in `allowParseErrors` mode',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',
@@ -1790,7 +1820,7 @@ test('`element` attributes', async (t) => {
     await t.test(
       'should not encode characters which cause XSS issues in older browsers, in `allowDangerousCharacters` mode',
       async function () {
-        assert.deepEqual(
+        assert.equal(
           toHtml(
             {
               type: 'element',

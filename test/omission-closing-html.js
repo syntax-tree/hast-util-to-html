@@ -5,13 +5,13 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`html` (closing)', async function (t) {
   await t.test('should omit tag without following', async function () {
-    assert.deepEqual(toHtml(h('html'), {omitOptionalTags: true}), '')
+    assert.equal(toHtml(h('html'), {omitOptionalTags: true}), '')
   })
 
   await t.test(
     'should not omit tag if followed by `comment`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(
           {
             type: 'root',
@@ -27,7 +27,7 @@ test('`html` (closing)', async function (t) {
   await t.test(
     'should omit tag if not followed by `comment`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(
           {type: 'root', children: [h('html'), {type: 'text', value: 'alpha'}]},
           {omitOptionalTags: true}

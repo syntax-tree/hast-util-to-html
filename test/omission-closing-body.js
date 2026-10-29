@@ -5,13 +5,13 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`body` (closing)', async function (t) {
   await t.test('should omit tag without following', async function () {
-    assert.deepEqual(toHtml(h('body'), {omitOptionalTags: true}), '')
+    assert.equal(toHtml(h('body'), {omitOptionalTags: true}), '')
   })
 
   await t.test(
     'should not omit tag if followed by `comment`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('html', [h('body'), {type: 'comment', value: 'alpha'}]), {
           omitOptionalTags: true
         }),
@@ -23,7 +23,7 @@ test('`body` (closing)', async function (t) {
   await t.test(
     'should omit tag if not followed by `comment`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('html', [h('body'), {type: 'text', value: 'alpha'}]), {
           omitOptionalTags: true
         }),

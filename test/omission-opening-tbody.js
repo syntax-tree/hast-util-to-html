@@ -5,20 +5,17 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`tbody` (opening)', async function (t) {
   await t.test('should not omit tag without children', async function () {
-    assert.deepEqual(toHtml(h('tbody'), {omitOptionalTags: true}), '<tbody>')
+    assert.equal(toHtml(h('tbody'), {omitOptionalTags: true}), '<tbody>')
   })
 
   await t.test('should omit tag if head is `tr`', async function () {
-    assert.deepEqual(
-      toHtml(h('tbody', h('tr')), {omitOptionalTags: true}),
-      '<tr>'
-    )
+    assert.equal(toHtml(h('tbody', h('tr')), {omitOptionalTags: true}), '<tr>')
   })
 
   await t.test(
     'should not omit tag preceded by an omitted `thead` closing tag',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('table', [h('thead', h('tr')), h('tbody', h('tr'))]), {
           omitOptionalTags: true
         }),
@@ -30,7 +27,7 @@ test('`tbody` (opening)', async function (t) {
   await t.test(
     'should not omit tag preceded by an omitted `tbody` closing tag',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('table', [h('tbody', h('tr')), h('tbody', h('tr'))]), {
           omitOptionalTags: true
         }),

@@ -5,14 +5,14 @@ import {toHtml} from 'hast-util-to-html'
 
 test('`p` (closing)', async function (t) {
   await t.test('should omit tag without following', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml({type: 'root', children: [h('p')]}, {omitOptionalTags: true}),
       '<p>'
     )
   })
 
   await t.test('should omit tag if followed by `address`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(
         {type: 'root', children: [h('p'), h('address')]},
         {omitOptionalTags: true}
@@ -22,7 +22,7 @@ test('`p` (closing)', async function (t) {
   })
 
   await t.test('should omit tag if followed by `ul`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(
         {type: 'root', children: [h('p'), h('ul')]},
         {omitOptionalTags: true}
@@ -32,7 +32,7 @@ test('`p` (closing)', async function (t) {
   })
 
   await t.test('should not omit tag if followed by `a`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(
         {type: 'root', children: [h('p'), h('a')]},
         {omitOptionalTags: true}
@@ -42,7 +42,7 @@ test('`p` (closing)', async function (t) {
   })
 
   await t.test('should not omit tag if followed by `xmp`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(
         {type: 'root', children: [h('p'), h('xmp')]},
         {omitOptionalTags: true}
@@ -52,25 +52,25 @@ test('`p` (closing)', async function (t) {
   })
 
   await t.test('should omit tag without parent', async function () {
-    assert.deepEqual(toHtml(h('p'), {omitOptionalTags: true}), '<p>')
+    assert.equal(toHtml(h('p'), {omitOptionalTags: true}), '<p>')
   })
 
   await t.test('should not omit tag if parent is `a`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(h('a', [h('p')]), {omitOptionalTags: true}),
       '<a><p></p></a>'
     )
   })
 
   await t.test('should not omit tag if parented by `video`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(h('video', [h('p')]), {omitOptionalTags: true}),
       '<video><p></p></video>'
     )
   })
 
   await t.test('should not omit tag if parent is `article`', async function () {
-    assert.deepEqual(
+    assert.equal(
       toHtml(h('article', [h('p')]), {omitOptionalTags: true}),
       '<article><p></article>'
     )
@@ -79,7 +79,7 @@ test('`p` (closing)', async function (t) {
   await t.test(
     'should not omit tag if parented by `section`',
     async function () {
-      assert.deepEqual(
+      assert.equal(
         toHtml(h('section', [h('p')]), {omitOptionalTags: true}),
         '<section><p></section>'
       )
