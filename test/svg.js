@@ -510,6 +510,55 @@ test('svg', async function (t) {
       )
     }
   )
+
+  await t.test(
+    'should serialize the content of `foreignObject` as HTML',
+    async function () {
+      assert.equal(
+        toHtml(s('svg', s('foreignObject', h('p', [h('br'), h('img')])))),
+        '<svg><foreignObject><p><br><img></p></foreignObject></svg>'
+      )
+    }
+  )
+
+  await t.test(
+    'should serialize the content of `desc`, `title` as HTML',
+    async function () {
+      assert.equal(
+        toHtml(s('svg', [s('title', h('br')), s('desc', h('br'))])),
+        '<svg><title><br></title><desc><br></desc></svg>'
+      )
+    }
+  )
+
+  await t.test(
+    'should serialize the attributes of `foreignObject` as SVG',
+    async function () {
+      assert.equal(
+        toHtml(s('svg', s('foreignObject', {strokeWidth: 1}))),
+        '<svg><foreignObject stroke-width="1"></foreignObject></svg>'
+      )
+    }
+  )
+
+  await t.test('should serialize SVG in HTML in SVG as SVG', async function () {
+    assert.equal(
+      toHtml(s('svg', s('foreignObject', s('svg', s('circle')))), {
+        closeEmptyElements: true
+      }),
+      '<svg><foreignObject><svg><circle /></svg></foreignObject></svg>'
+    )
+  })
+
+  await t.test(
+    'should serialize the content of `foreignObject` as HTML in the SVG space',
+    async function () {
+      assert.equal(
+        toHtml(s('foreignObject', h('br')), {space: 'svg'}),
+        '<foreignObject><br></foreignObject>'
+      )
+    }
+  )
 })
 
 function toString() {

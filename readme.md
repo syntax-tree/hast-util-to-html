@@ -275,7 +275,8 @@ Which space the document is in
 
 When an `<svg>` element is found in the HTML space,
 this package already automatically switches to and from the SVG space when
-entering and exiting it.
+entering and exiting it,
+and goes to HTML inside `desc`, `foreignObject`, and `title`.
 
 > 👉 **Note**:
 > hast is not XML.
