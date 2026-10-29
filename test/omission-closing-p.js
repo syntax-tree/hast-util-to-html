@@ -69,6 +69,16 @@ test('`p` (closing)', async function (t) {
     )
   })
 
+  await t.test(
+    'should not omit tag if parented by an autonomous custom element',
+    async function () {
+      assert.equal(
+        toHtml(h('my-element', [h('p')]), {omitOptionalTags: true}),
+        '<my-element><p></p></my-element>'
+      )
+    }
+  )
+
   await t.test('should not omit tag if parent is `article`', async function () {
     assert.equal(
       toHtml(h('article', [h('p')]), {omitOptionalTags: true}),
