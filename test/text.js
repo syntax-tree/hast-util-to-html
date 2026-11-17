@@ -31,6 +31,36 @@ test('`text`', async function (t) {
     )
   })
 
+  await t.test(
+    'should not encode `text`s in other raw text elements',
+    async function () {
+      assert.equal(
+        toHtml(
+          h('div', [
+            h('iframe', [{type: 'text', value: '<b>3 < 5</b> &amp;'}]),
+            h('noembed', [{type: 'text', value: '<b>3 < 5</b> &amp;'}]),
+            h('noframes', [{type: 'text', value: '<b>3 < 5</b> &amp;'}]),
+            h('xmp', [{type: 'text', value: '<b>3 < 5</b> &amp;'}]),
+            h('plaintext', [{type: 'text', value: '<b>3 < 5</b> &amp;'}])
+          ])
+        ),
+        '<div><iframe><b>3 < 5</b> &amp;</iframe><noembed><b>3 < 5</b> &amp;</noembed><noframes><b>3 < 5</b> &amp;</noframes><xmp><b>3 < 5</b> &amp;</xmp><plaintext><b>3 < 5</b> &amp;</plaintext></div>'
+      )
+    }
+  )
+
+  await t.test(
+    'should encode `text`s in other raw text elements if they would close the element',
+    async function () {
+      assert.equal(
+        toHtml(
+          h('xmp', [{type: 'text', value: '</XMP><script>alert(1)</script>'}])
+        ),
+        '<xmp>&#x3C;/XMP>&#x3C;script>alert(1)&#x3C;/script></xmp>'
+      )
+    }
+  )
+
   await t.test('should encode `text`s in other nodes', async function () {
     assert.equal(
       toHtml(h('b', [{type: 'text', value: '3 < 5'}])),
