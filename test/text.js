@@ -61,6 +61,37 @@ test('`text`', async function (t) {
     }
   )
 
+  await t.test(
+    'should encode `text`s in other raw text elements if together they would close the element',
+    async function () {
+      assert.equal(
+        toHtml(
+          h('iframe', [
+            {type: 'text', value: '</'},
+            {type: 'text', value: 'iframe><script>alert(1)</script>'}
+          ])
+        ),
+        '<iframe>&#x3C;/iframe>&#x3C;script>alert(1)&#x3C;/script></iframe>'
+      )
+    }
+  )
+
+  await t.test(
+    'should encode `text`s in other raw text elements next to other nodes',
+    async function () {
+      assert.equal(
+        toHtml(
+          h('noembed', [
+            {type: 'text', value: '</'},
+            h('b', 'noembed'),
+            {type: 'text', value: ' 3 < 5'}
+          ])
+        ),
+        '<noembed>&#x3C;/<b>noembed</b> 3 &#x3C; 5</noembed>'
+      )
+    }
+  )
+
   await t.test('should encode `text`s in other nodes', async function () {
     assert.equal(
       toHtml(h('b', [{type: 'text', value: '3 < 5'}])),
