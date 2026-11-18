@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import {h} from 'hastscript'
+import {h, s} from 'hastscript'
 import {toHtml} from 'hast-util-to-html'
 
 test('`text`', async function (t) {
@@ -30,6 +30,46 @@ test('`text`', async function (t) {
       '<script>alert("3 < 5")</script>'
     )
   })
+
+  await t.test(
+    'should not encode `text`s in other raw text elements',
+    async function () {
+      assert.equal(
+        toHtml([
+          h('iframe', '<&'),
+          h('noembed', '<&'),
+          h('noframes', '<&'),
+          h('plaintext', '<&'),
+          h('xmp', '<&')
+        ]),
+        '<iframe><&</iframe><noembed><&</noembed><noframes><&</noframes><plaintext><&</plaintext><xmp><&</xmp>'
+      )
+    }
+  )
+
+  await t.test('should encode `text`s in `noscript`', async function () {
+    assert.equal(
+      toHtml(h('noscript', '<&')),
+      '<noscript>&#x3C;&#x26;</noscript>'
+    )
+  })
+
+  await t.test('should encode `text`s in SVG `style`', async function () {
+    assert.equal(
+      toHtml(s('svg', [s('style', '<&')])),
+      '<svg><style>&#x3C;&#x26;</style></svg>'
+    )
+  })
+
+  await t.test(
+    'should not encode `text`s in HTML `style` in SVG',
+    async function () {
+      assert.equal(
+        toHtml(s('svg', [s('foreignObject', [h('style', '<&')])])),
+        '<svg><foreignObject><style><&</style></foreignObject></svg>'
+      )
+    }
+  )
 
   await t.test('should encode `text`s in other nodes', async function () {
     assert.equal(
